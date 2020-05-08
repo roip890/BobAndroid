@@ -13,11 +13,6 @@ fun setErrorMessage(view: TextInputLayout, errorMessage: String?) {
     view.error = errorMessage
 }
 
-@InverseBindingAdapter(attribute = "layout_text_error")
-fun getErrorMessage(view: TextInputLayout): String? {
-    return view.error?.toString()
-}
-
 // text input layout background
 @BindingAdapter("layout_box_background_mode")
 fun setTextInputLayoutBoxBackgroundMode(view: TextInputLayout, backgroundMode: Int?) {

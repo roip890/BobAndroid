@@ -1,9 +1,9 @@
 package com.aptenobytes.bob
 
 import coil.ImageLoader
+import com.aptenobytes.bob.app.data.network.interceptors.UserAgentInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.aptenobytes.bob.app.data.moshi.SingleToArrayAdapter
-import com.aptenobytes.bob.app.data.retrofit.UserAgentInterceptor
+import com.aptenobytes.bob.app.data.utils.moshi.SingleToArrayAdapter
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

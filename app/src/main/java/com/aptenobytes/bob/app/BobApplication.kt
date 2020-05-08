@@ -16,9 +16,9 @@ import timber.log.Timber
 False positive "Unused symbol" for a custom Android application class referenced in AndroidManifest.xml file:
 https://youtrack.jetbrains.net/issue/KT-27971
 */
-class ShowcaseApplication : SplitCompatApplication(), KodeinAware {
+class BobApplication : SplitCompatApplication(), KodeinAware {
     override val kodein = Kodein.lazy {
-        import(androidXModule(this@ShowcaseApplication))
+        import(androidXModule(this@BobApplication))
         import(appModule)
         importAll(FeatureManager.kodeinModules)
 

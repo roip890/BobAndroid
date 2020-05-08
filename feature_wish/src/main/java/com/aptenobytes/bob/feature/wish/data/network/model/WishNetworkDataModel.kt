@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.wish.data.network.model
 
-import com.aptenobytes.bob.app.data.moshi.SingleToArray
+import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.feature.wish.data.network.enums.WishStatusNetworkDataType
 import com.aptenobytes.bob.feature.wish.data.network.enums.toDomainEnum
 import com.aptenobytes.bob.feature.wish.data.network.model.guest.GuestNetworkDataModel

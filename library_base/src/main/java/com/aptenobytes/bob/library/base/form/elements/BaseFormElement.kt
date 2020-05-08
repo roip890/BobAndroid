@@ -15,8 +15,10 @@ open class BaseFormElement<T>(
     var key: MutableLiveData<String> = MutableLiveData<String>(),
     var value: MutableLiveData<T> = MutableLiveData<T>(),
     var initialValue: MutableLiveData<T> = MutableLiveData<T>(),
-    var error: MutableLiveData<String> = MutableLiveData<String>(),
-    var validate: ((T?) -> String?)? = null,
+    var errors: MutableLiveData<List<String>> = MutableLiveData<List<String>>(),
+    var displayError: MutableLiveData<String> = MutableLiveData<String>(),
+    var validate: ((T?) -> List<String>?)? = null,
+    var displayErrorHandler: ((List<String>?) -> String?)? = {if (it != null && it.isNotEmpty()) it[0] else null},
     var valid: MutableLiveData<Boolean> = MutableLiveData<Boolean>(true),
     var width: MutableLiveData<Int> = MutableLiveData<Int>(ViewGroup.LayoutParams.MATCH_PARENT),
     var height: MutableLiveData<Int> = MutableLiveData<Int>(ViewGroup.LayoutParams.WRAP_CONTENT),
@@ -37,21 +39,22 @@ open class BaseFormElement<T>(
 ): ViewModel() {
 
     var valueValidationObserver: Observer<T?> = Observer { value: T? ->
-        this.error.postValue(validate?.invoke(value))
+        this.errors.postValue(validate?.invoke(value))
     }
-    var errorValidObserver: Observer<String?> = Observer { error: String? ->
-        this.valid.postValue(error == null)
+    var errorValidObserver: Observer<List<String>?> = Observer { errors: List<String>? ->
+        this.valid.postValue(errors == null || errors.isEmpty())
+        this.displayError.postValue(displayErrorHandler?.invoke(errors))
     }
 
     init {
         value.observeForever(valueValidationObserver)
-        error.observeForever(errorValidObserver)
+        errors.observeForever(errorValidObserver)
     }
 
     override fun onCleared() {
         super.onCleared()
         value.removeObserver(valueValidationObserver)
-        error.removeObserver(errorValidObserver)
+        errors.removeObserver(errorValidObserver)
     }
 
     fun clear() {}

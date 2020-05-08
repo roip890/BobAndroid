@@ -1,4 +1,4 @@
-package com.aptenobytes.bob.app.data.retrofit
+package com.aptenobytes.bob.app.data.network.interceptors
 
 import com.aptenobytes.bob.BuildConfig
 import okhttp3.Interceptor
@@ -13,7 +13,7 @@ import okhttp3.Response
  * Test user agent: https://faisalman.github.io/ua-parser-js/
  */
 class UserAgentInterceptor : Interceptor {
-    private val userAgent = "showcase/${BuildConfig.VERSION_NAME} ${System.getProperty("http.agent")}"
+    private val userAgent = "bob/${BuildConfig.VERSION_NAME} ${System.getProperty("http.agent")}"
 
     override fun intercept(chain: Interceptor.Chain): Response = chain
         .request()

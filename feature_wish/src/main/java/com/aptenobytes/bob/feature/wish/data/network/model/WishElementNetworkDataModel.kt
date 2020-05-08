@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.wish.data.network.model
 
-import com.aptenobytes.bob.feature.wish.domain.model.wishelement.WishElementDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishelement.DepartmentDomainModel
 import com.squareup.moshi.Json
 
 internal data class WishElementNetworkDataModel(
@@ -18,7 +18,7 @@ internal data class WishElementNetworkDataModel(
 )
 
 internal fun WishElementNetworkDataModel.toDomainModel() =
-    WishElementDomainModel(
+    DepartmentDomainModel(
         id = this.id,
 
         key = this.key,

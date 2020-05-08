@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.feature.wish.data.network.enums
 
+import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.UserType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.squareup.moshi.Json
 

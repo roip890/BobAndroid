@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.wish.data.db.model
 
-import com.aptenobytes.bob.feature.wish.domain.model.wishelement.WishElementDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishelement.DepartmentDomainModel
 import com.squareup.moshi.Json
 
 data class WishElementRoomDataModel(
@@ -18,7 +18,7 @@ data class WishElementRoomDataModel(
 )
 
 fun WishElementRoomDataModel.toDomainModel() =
-    WishElementDomainModel(
+    DepartmentDomainModel(
         id = this.id,
 
         key = this.key,

@@ -2,7 +2,7 @@ package com.aptenobytes.bob.feature.wish.data.db.model
 
 import androidx.annotation.NonNull
 import androidx.room.*
-import com.aptenobytes.bob.app.data.moshi.SingleToArray
+import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.feature.wish.data.db.enums.WishStatusRoomDataType
 import com.aptenobytes.bob.feature.wish.data.db.enums.toDomainEnum
 import com.aptenobytes.bob.feature.wish.data.db.model.guest.GuestRoomDataModel

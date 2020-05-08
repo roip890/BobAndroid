@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.feature.wish.domain.model.wishessettings.filter
 
+import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.UserType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 
 data class WishFilterDomainModel(

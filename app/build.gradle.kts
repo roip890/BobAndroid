@@ -80,29 +80,52 @@ android {
 }
 
 dependencies {
+    //kotlin android
+    api(LibraryDependency.K_ANDROID)
 
+    // base library
     api(project(ModuleDependency.LIBRARY_BASE))
 
-    api(LibraryDependency.NAVIGATION_FRAGMENT_KTX)
-    api(LibraryDependency.NAVIGATION_UI_KTX)
-    implementation(LibraryDependency.OK_HTTP)
-    implementation(LibraryDependency.LOGGING_INTERCEPTOR)
-    implementation(LibraryDependency.PLAY_CORE)
-    implementation(LibraryDependency.STETHO)
+    // material
+    api(LibraryDependency.MATERIAL)
 
-    implementation(LibraryDependency.STETHO_OK_HTTP)
-
-    api(LibraryDependency.RETROFIT)
-    api(LibraryDependency.RETROFIT_MOSHI_CONVERTER)
-
+    // layouts
     api(LibraryDependency.SUPPORT_CONSTRAINT_LAYOUT)
     api(LibraryDependency.COORDINATOR_LAYOUT)
     api(LibraryDependency.RECYCLER_VIEW)
-    api(LibraryDependency.MATERIAL)
     api(LibraryDependency.FRAGMENT_KTX)
-    api(LibraryDependency.K_ANDROID)
+
+    // navigation
+    api(LibraryDependency.NAVIGATION_FRAGMENT_KTX)
+    api(LibraryDependency.NAVIGATION_UI_KTX)
+
+    // ok http
+    implementation(LibraryDependency.OK_HTTP)
+    implementation(LibraryDependency.LOGGING_INTERCEPTOR)
+
+    // play core
+    implementation(LibraryDependency.PLAY_CORE)
+
+    // stetho
+    implementation(LibraryDependency.STETHO)
+    implementation(LibraryDependency.STETHO_OK_HTTP)
+
+    // retrofit
+    api(LibraryDependency.RETROFIT)
+    api(LibraryDependency.RETROFIT_MOSHI_CONVERTER)
+
+    // lottie
     api(LibraryDependency.LOTTIE)
 
+    // data binding
+    kapt(LibraryDependency.DATA_BINDING_COMPILER_KTX)
+
+    // room
+    api(LibraryDependency.ROOM_RUNTIME)
+    kapt(LibraryDependency.ROOM_COMPILER)
+    api(LibraryDependency.ROOM_KTX)
+
+    // tests
     addTestDependencies()
 }
 

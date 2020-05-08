@@ -1,7 +1,7 @@
 package com.aptenobytes.bob.feature.wish.domain.model.wish
 
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import com.aptenobytes.bob.feature.wish.domain.model.wishelement.WishElementDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishelement.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.guest.GuestDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.user.UserDomainModel
 
@@ -21,6 +21,6 @@ data class WishDomainModel(
     val isFavorite: Boolean? = false,
 
     val departments: List<String>? = listOf(),
-    val elements: List<WishElementDomainModel>? = listOf()
+    val elements: List<DepartmentDomainModel>? = listOf()
 
 )

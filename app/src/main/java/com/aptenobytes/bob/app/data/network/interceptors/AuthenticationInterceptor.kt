@@ -1,4 +1,4 @@
-package com.aptenobytes.bob.app.data.retrofit
+package com.aptenobytes.bob.app.data.network.interceptors
 
 import okhttp3.Interceptor
 import okhttp3.Response

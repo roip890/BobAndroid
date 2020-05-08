@@ -1,4 +1,4 @@
-package com.aptenobytes.bob.app.data.moshi
+package com.aptenobytes.bob.app.data.utils.moshi
 
 import com.squareup.moshi.JsonQualifier
 

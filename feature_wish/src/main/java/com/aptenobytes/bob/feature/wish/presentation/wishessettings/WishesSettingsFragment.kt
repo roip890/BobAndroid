@@ -15,6 +15,10 @@ import com.aptenobytes.bob.library.base.form.bindings.classes.marginAll
 import com.aptenobytes.bob.library.base.form.builder.*
 import com.aptenobytes.bob.library.base.presentation.extension.observe
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import com.mikepenz.iconics.utils.paddingDp
+import com.mikepenz.iconics.utils.sizeDp
 import kotlinx.android.synthetic.main.fragment_wish_settings.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -56,25 +60,17 @@ class WishesSettingsFragment : BaseContainerFragment(), WishesSettingsView {
             text<String> {
                 key.postValue("Title")
                 hint.postValue("Title")
-                validate = {value: String? -> value?.let {if (it.length < 5) "Less than 5" else null} }
-                width.postValue(250.dpToPx)
-                height.postValue(60.dpToPx)
-                horizontalGravity.postValue(
-                    horizontalGravity(
-                        center = true
-                    )
-                )
-                textSize.postValue(12.spToPx)
-                inputType.postValue(InputType.TYPE_CLASS_NUMBER)
+                validate = {value: String? -> value?.let {if (it.length < 5) listOf("Less than 5") else null} }
                 margin.postValue(
                     marginAll(
                         8.dpToPx
                     )
                 )
-//                startDrawable.postValue(IconicsDrawable(requireContext(), GoogleMaterial.Icon.gmd_person).apply {
-//                    sizeDp = 28
-//                    paddingDp = 4
-//                })
+                
+                endDrawable.postValue(IconicsDrawable(requireContext(), GoogleMaterial.Icon.gmd_text_fields).apply {
+                    sizeDp = 28
+                    paddingDp = 4
+                })
             }
             datetime {
                 key.postValue("Min Date")
