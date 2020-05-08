@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.aptenobytes.bob.library.base.form.elements.MultiChoiceElement" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_hint_color="@{viewModel.hintColor}"
+            app:layout_placeholder_color="@{viewModel.placeholderColor}"
+            app:layout_error_color="@{viewModel.errorColor}"
+            app:layout_box_background_mode="@{viewModel.boxBackgroundMode}"
+            app:layout_box_stroke_color="@{viewModel.boxStrokeColor}"
+            app:layout_box_background_color="@{viewModel.boxBackgroundColor}"
+            app:layout_box_corner_radius="@{viewModel.boxCornerRadius}"
+            app:layout_width="@{viewModel.width}"
+            app:layout_height="@{viewModel.height}"
+            app:layout_margin="@{viewModel.margin}"
+            app:layout_padding="@{viewModel.padding}"
+            app:layout_horizontal_gravity="@{viewModel.horizontalGravity}"
+            app:layout_vertical_gravity="@{viewModel.verticalGravity}"
+            android:hint="@{viewModel.hint}"
+            app:layout_text_error="@{viewModel.error}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.text}"
+                android:inputType="@{viewModel.inputType}"
+                app:layout_text_size="@{viewModel.textSize}"
+                android:drawableStart="@{viewModel.startDrawable}"
+                android:drawableEnd="@{viewModel.endDrawable}"
+                app:layout_text_read_only="@{true}"
+                app:layout_text_color="@{viewModel.textColor}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

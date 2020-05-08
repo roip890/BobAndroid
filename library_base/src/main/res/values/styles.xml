@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="text_input_layout_outline">
+        <item name="boxBackgroundMode">outline</item>
+    </style>
+    <style name="text_input_layout_filled">
+        <item name="boxBackgroundMode">filled</item>
+    </style>
+</resources>

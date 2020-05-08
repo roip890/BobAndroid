@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/sea_3</color>
+    <color name="colorPrimaryDark">@color/dark_blue</color>
+    <color name="colorAccent">@color/sun_3</color>
+
+    <color name="backgroundColor">@color/dark_blue</color>
+    <color name="iconColor">@color/white</color>
+    <color name="textColor">@color/white</color>
+</resources>

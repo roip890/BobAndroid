@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.aptenobytes.bob.feature.wish.presentation.allwishes.recyclerview.adapter.WishViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#24282B"
+            android:layout_margin="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/wishImage"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/wishType"
+                    android:text="@{viewModel.type}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    app:layout_constraintStart_toEndOf="@id/wishImage"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textStyle="bold"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/wishTimestamp"
+                    android:text="@{viewModel.timeStamp}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    app:layout_constraintStart_toEndOf="@id/wishImage"
+                    app:layout_constraintTop_toBottomOf="@+id/wishType"
+                    android:textStyle="italic"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/wishDepartments"
+                    android:text="@{viewModel.departmentsString}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    app:layout_constraintStart_toEndOf="@id/wishImage"
+                    app:layout_constraintTop_toBottomOf="@+id/wishTimestamp"
+                    android:textStyle="italic"
+                    android:textAlignment="textStart"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
