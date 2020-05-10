@@ -2,13 +2,19 @@ package com.aptenobytes.bob.feature.wish.data.db.model
 
 import androidx.annotation.NonNull
 import androidx.room.*
+import com.aptenobytes.bob.app.data.db.model.department.DepartmentRoomDataModel
+import com.aptenobytes.bob.app.data.db.model.department.toDomainModel
+import com.aptenobytes.bob.app.data.db.model.department.toRoomModel
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.feature.wish.data.db.enums.WishStatusRoomDataType
 import com.aptenobytes.bob.feature.wish.data.db.enums.toDomainEnum
-import com.aptenobytes.bob.feature.wish.data.db.model.guest.GuestRoomDataModel
-import com.aptenobytes.bob.feature.wish.data.db.model.guest.toDomainModel
-import com.aptenobytes.bob.feature.wish.data.db.model.user.UserRoomDataModel
-import com.aptenobytes.bob.feature.wish.data.db.model.user.toDomainModel
+import com.aptenobytes.bob.feature.wish.data.db.enums.toRoomModel
+import com.aptenobytes.bob.app.data.db.model.guest.GuestRoomDataModel
+import com.aptenobytes.bob.app.data.db.model.guest.toDomainModel
+import com.aptenobytes.bob.app.data.db.model.guest.toRoomModel
+import com.aptenobytes.bob.app.data.db.model.user.UserRoomDataModel
+import com.aptenobytes.bob.app.data.db.model.user.toDomainModel
+import com.aptenobytes.bob.app.data.db.model.user.toRoomModel
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.squareup.moshi.Json
 
@@ -52,7 +58,7 @@ data class WishRoomDataModel(
     @SingleToArray
     @ColumnInfo(name = "departments")
     @field:Json(name = "departments")
-    val departments: List<String>?,
+    val departments: List<DepartmentRoomDataModel>?,
     @SingleToArray
     @ColumnInfo(name = "elements")
     @field:Json(name = "elements")
@@ -68,6 +74,8 @@ internal fun WishRoomDataModel.toDomainModel(): WishDomainModel {
         ?.toDomainModel()
     val status = this.status
         ?.toDomainEnum()
+    val departments = this.departments
+        ?.map { it.toDomainModel() }
 
     return WishDomainModel(
         id = this.id,
@@ -83,29 +91,40 @@ internal fun WishRoomDataModel.toDomainModel(): WishDomainModel {
         status = status,
         isFavorite = this.isFavorite ?: false,
 
-        departments = this.departments ?: listOf(),
+        departments = departments ?: listOf(),
         elements = elements ?: listOf()
     )
 }
 
 internal fun WishDomainModel.toRoomModel(): WishRoomDataModel {
 
+    val elements = this.elements
+        ?.map { it.toRoomModel() }
+    val guest = this.guest
+        ?.toRoomModel()
+    val user = this.user
+        ?.toRoomModel()
+    val status = this.status
+        ?.toRoomModel()
+    val departments = this.departments
+        ?.map { it.toRoomModel() }
+
     return WishRoomDataModel(
         id = this.id,
 
-        guest = null,
-        user = null,
+        guest = guest,
+        user = user,
         bookingId = this.bookingId ?: 0,
 
         details = this.details ?: "",
         type = this.type ?: "",
         timeStamp = this.timeStamp ?: "",
         iconUrl = this.iconUrl ?: "",
-        status = WishStatusRoomDataType.DONE,
+        status = status,
         isFavorite = this.isFavorite ?: false,
 
-        departments = this.departments ?: listOf(),
-        elements = listOf()
+        departments = departments ?: listOf(),
+        elements = elements ?: listOf()
     )
 }
 

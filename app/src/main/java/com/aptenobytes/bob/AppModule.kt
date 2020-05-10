@@ -1,10 +1,15 @@
 package com.aptenobytes.bob
 
 import coil.ImageLoader
+import com.aptenobytes.bob.app.data.dataModule
 import com.aptenobytes.bob.app.data.network.interceptors.UserAgentInterceptor
+import com.aptenobytes.bob.app.data.utils.moshi.MoshiArrayListJsonAdapter
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArrayAdapter
+import com.aptenobytes.bob.app.domain.domainModule
+import com.aptenobytes.bob.app.presentation.presentationModule
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
@@ -13,8 +18,13 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.*
 
 val appModule = Kodein.Module("appModule") {
+
+    import(presentationModule)
+    import(domainModule)
+    import(dataModule)
 
     bind() from singleton { UserAgentInterceptor() }
 
@@ -26,7 +36,10 @@ val appModule = Kodein.Module("appModule") {
         }
     }
 
-    bind<Moshi.Builder>() with singleton { Moshi.Builder() }
+    bind<Moshi.Builder>() with singleton { Moshi.Builder()
+        .add(MoshiArrayListJsonAdapter.FACTORY)
+        .add(Date::class.java, Rfc3339DateJsonAdapter())
+    }
 
     bind<Retrofit.Builder>() with singleton { Retrofit.Builder() }
 

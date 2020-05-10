@@ -9,7 +9,7 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
 
-internal val networkDataModule = Kodein.Module("AppDataModule") {
+internal val networkDataModule = Kodein.Module("AppNetworkDataModule") {
 
     bind<AppNetworkDataSource>() with singleton { AppNetworkDataSourceImpl(instance()) }
 

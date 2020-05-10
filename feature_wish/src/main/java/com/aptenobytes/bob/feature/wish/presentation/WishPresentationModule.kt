@@ -20,7 +20,7 @@ internal val presentationModule = Kodein.Module("${FEATURE_NAME}PresentationModu
 
     // Wishes Settings
     bind<WishesSettingsViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {
-        KotlinViewModelProvider.of(context) { WishesSettingsViewModel(instance()) }
+        KotlinViewModelProvider.of(context) { WishesSettingsViewModel(instance(), instance(), instance()) }
     }
 
     // All Wishes

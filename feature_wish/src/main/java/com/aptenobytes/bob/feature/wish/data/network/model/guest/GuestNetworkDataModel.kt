@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.wish.data.network.model.guest
 
-import com.aptenobytes.bob.feature.wish.domain.model.guest.GuestDomainModel
+import com.aptenobytes.bob.app.domain.model.guest.GuestDomainModel
 import com.squareup.moshi.Json
 
 internal data class GuestNetworkDataModel(

@@ -16,7 +16,9 @@ internal class AppNetworkDataSourceImpl(
         )
             ?.response
             ?.departments
-            ?.map { it.toDepartmentDomainModel() }
+            ?.map {
+                it.toDepartmentDomainModel()
+            }
             ?: listOf()
 
 }

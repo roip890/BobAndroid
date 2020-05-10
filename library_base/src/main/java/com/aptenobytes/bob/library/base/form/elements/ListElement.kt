@@ -18,6 +18,9 @@ open class ListElement<T>(
         } ?: run {
             this.viewItemValue = { value -> value?.toString() }
         }
+        viewValue = { value: T? ->
+            this.viewItemValue.invoke(value).toString()
+        }
         text.removeObserver(valueTextObserver)
     }
 

@@ -1,7 +1,7 @@
 package com.aptenobytes.bob.feature.wish.data.network.model.user
 
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
-import com.aptenobytes.bob.feature.wish.domain.model.user.UserDomainModel
+import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.squareup.moshi.Json
 
 internal data class UserNetworkDataModel(

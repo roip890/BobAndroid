@@ -1,4 +1,4 @@
-package com.aptenobytes.bob.feature.wish.data.db.converters
+package com.aptenobytes.bob.feature.wish.data.db.converters.wishstatus
 
 import androidx.room.TypeConverter
 import com.aptenobytes.bob.feature.wish.data.db.enums.WishStatusRoomDataType

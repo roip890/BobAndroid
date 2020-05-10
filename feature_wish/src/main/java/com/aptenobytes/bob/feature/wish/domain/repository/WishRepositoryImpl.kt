@@ -3,13 +3,15 @@ package com.aptenobytes.bob.feature.wish.domain.repository
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishCacheDataSource
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishLocalDataSource
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishNetworkDataSource
+import com.aptenobytes.bob.feature.wish.domain.datasource.WishSharedPreferencesDataSource
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
 
 class WishRepositoryImpl(
     private val wishNetworkDataSource: WishNetworkDataSource,
     private val wishLocalDataSource: WishLocalDataSource,
-    private val wishCacheDataSource: WishCacheDataSource
+    private val wishCacheDataSource: WishCacheDataSource,
+    private val wishSharedPreferencesDataSource: WishSharedPreferencesDataSource
 ) : WishRepository {
 
     override suspend fun getWishes(
@@ -41,7 +43,11 @@ class WishRepositoryImpl(
     }
 
     override suspend fun getWishesSettings(): WishesSettingsDomainModel {
-        return wishCacheDataSource.getWishesSettings() ?: WishesSettingsDomainModel()
+        return wishSharedPreferencesDataSource.getWishesSettings() ?: WishesSettingsDomainModel()
+    }
+
+    override suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel): WishesSettingsDomainModel {
+        return wishSharedPreferencesDataSource.setWishesSettings(wishesSettings) ?: WishesSettingsDomainModel()
     }
 
 

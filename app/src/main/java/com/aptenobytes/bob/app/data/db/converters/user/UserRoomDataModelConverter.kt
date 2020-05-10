@@ -1,11 +1,11 @@
-package com.aptenobytes.bob.feature.wish.data.db.converters
+package com.aptenobytes.bob.app.data.db.converters.user
 
 import androidx.room.TypeConverter
-import com.aptenobytes.bob.feature.wish.data.db.model.user.UserRoomDataModel
+import com.aptenobytes.bob.app.data.db.model.user.UserRoomDataModel
 import com.squareup.moshi.Moshi
 
 
-internal class UserRoomDataModelConverter() {
+class UserRoomDataModelConverter() {
 
     @TypeConverter
     fun fromUserRoomDataModel(userRoomDataModel: UserRoomDataModel?): String? {

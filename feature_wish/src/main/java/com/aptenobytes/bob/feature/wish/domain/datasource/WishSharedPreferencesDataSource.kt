@@ -7,6 +7,6 @@ interface WishSharedPreferencesDataSource {
     // settings
     suspend fun getWishesSettings(): WishesSettingsDomainModel?
 
-    suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel?)
+    suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel?): WishesSettingsDomainModel?
 
 }

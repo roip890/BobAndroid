@@ -11,8 +11,8 @@ import org.kodein.di.generic.singleton
 
 internal val sharedPreferencesDataModule = Kodein.Module("${FEATURE_NAME}SharedPreferencesDataModule") {
 
-    bind<SharedPreferences>() with singleton { WishSharedPreferences(instance()) }
+    bind<SharedPreferences>("wish") with singleton { WishSharedPreferences(instance()) }
 
-    bind<WishSharedPreferencesDataSource>() with singleton { WishSharedPreferencesDataSourceImpl(instance(), instance()) }
+    bind<WishSharedPreferencesDataSource>() with singleton { WishSharedPreferencesDataSourceImpl(instance("wish"), instance()) }
 
 }

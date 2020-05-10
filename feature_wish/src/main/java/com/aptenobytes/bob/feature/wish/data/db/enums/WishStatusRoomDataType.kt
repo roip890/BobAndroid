@@ -20,3 +20,13 @@ enum class WishStatusRoomDataType {
 }
 
 fun WishStatusRoomDataType.toDomainEnum() = WishStatusType.valueOf(this.name)
+
+fun WishStatusType.toRoomModel(): WishStatusRoomDataType =
+    when(this) {
+        WishStatusType.NONE -> WishStatusRoomDataType.NONE
+        WishStatusType.WAITING -> WishStatusRoomDataType.WAITING
+        WishStatusType.PENDING -> WishStatusRoomDataType.PENDING
+        WishStatusType.IN_PROGRESS -> WishStatusRoomDataType.IN_PROGRESS
+        WishStatusType.DONE -> WishStatusRoomDataType.DONE
+        else -> WishStatusRoomDataType.UNKNOWN
+    }

@@ -22,6 +22,7 @@ private object LibraryVersion {
     const val COIL = "0.9.1"
     const val K_ANDROID = "0.8.8@aar"
     const val LOTTIE = "3.3.1"
+    const val MOSHI = "1.9.2"
 
     // third party libs
     const val MATERIAL_DIALOGS = "3.3.0"
@@ -94,6 +95,12 @@ object LibraryDependency {
     const val COIL = "io.coil-kt:coil:${LibraryVersion.COIL}"
     const val K_ANDROID = "com.pawegio.kandroid:kandroid:${LibraryVersion.K_ANDROID}"
 
+    // moshi
+    const val MOSHI = "com.squareup.moshi:moshi-kotlin:${LibraryVersion.MOSHI}"
+    const val MOSHI_CODE_GEN = "com.squareup.moshi:moshi-kotlin-codegen:${LibraryVersion.MOSHI}"
+    const val MOSHI_ADAPTERS = "com.squareup.moshi:moshi-adapters:${LibraryVersion.MOSHI}"
+
+    // lottie
     const val LOTTIE = "com.airbnb.android:lottie:${LibraryVersion.LOTTIE}"
 
     // material dialog

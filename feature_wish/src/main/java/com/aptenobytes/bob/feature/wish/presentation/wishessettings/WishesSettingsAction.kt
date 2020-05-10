@@ -4,6 +4,7 @@ import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettin
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseAction
 
 sealed class WishesSettingsAction : BaseAction {
+    object GetDepartmentsListAction : WishesSettingsAction()
     object GetWishesSettingsAction : WishesSettingsAction()
-    class SaveWishesSettingsAction(wishesSettings: WishesSettingsDomainModel) : WishesSettingsAction()
+    class SetWishesSettingsAction(val wishesSettings: WishesSettingsDomainModel) : WishesSettingsAction()
 }

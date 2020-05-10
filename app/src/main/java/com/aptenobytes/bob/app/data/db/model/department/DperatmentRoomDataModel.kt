@@ -13,7 +13,7 @@ import com.squareup.moshi.Json
 data class DepartmentRoomDataModel(
     @ColumnInfo(name = "department_name") @PrimaryKey @NonNull
     @field:Json(name = "name")
-    val name: String?
+    val name: String
 )
 
 fun DepartmentRoomDataModel.toDomainModel() =
@@ -21,7 +21,7 @@ fun DepartmentRoomDataModel.toDomainModel() =
         name = this.name
     )
 
-internal fun DepartmentDomainModel.toRoomModel(): DepartmentRoomDataModel {
+fun DepartmentDomainModel.toRoomModel(): DepartmentRoomDataModel {
     return DepartmentRoomDataModel(
         name = this.name
     )

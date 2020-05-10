@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.feature.wish.data.network.model
 
+import com.aptenobytes.bob.app.data.network.datasource.toDepartmentDomainModel
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.feature.wish.data.network.enums.WishStatusNetworkDataType
 import com.aptenobytes.bob.feature.wish.data.network.enums.toDomainEnum
@@ -51,6 +52,8 @@ internal fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
         ?.toDomainModel()
     val status = this.status
         ?.toDomainEnum()
+    val departments = this.departments
+        ?.map { it.toDepartmentDomainModel() }
 
     return WishDomainModel(
         id = this.id,
@@ -66,7 +69,7 @@ internal fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
         status = status,
         isFavorite = this.isFavorite ?: false,
 
-        departments = this.departments ?: listOf(),
+        departments = departments,
         elements = elements ?: listOf()
     )
 }

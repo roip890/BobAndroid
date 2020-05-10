@@ -1,11 +1,11 @@
-package com.aptenobytes.bob.app.data.db.converters
+package com.aptenobytes.bob.app.data.db.converters.guest
 
 import androidx.room.TypeConverter
 import com.aptenobytes.bob.app.data.db.model.guest.GuestRoomDataModel
 import com.squareup.moshi.Moshi
 
 
-internal class GuestRoomDataModelConverter() {
+class GuestRoomDataModelConverter() {
 
     @TypeConverter
     fun fromGuestRoomDataModel(guestRoomDataModel: GuestRoomDataModel?): String? {

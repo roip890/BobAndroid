@@ -39,3 +39,17 @@ fun GuestRoomDataModel.toDomainModel(): GuestDomainModel {
         hotelId = this.hotelId ?: 0
     )
 }
+
+fun GuestDomainModel.toRoomModel(): GuestRoomDataModel =
+    GuestRoomDataModel(
+        id = this.id,
+
+        email = this.email ?: "",
+        firstName = this.firstName ?: "",
+        lastName = this.lastName ?: "",
+        password = this.password ?: "",
+        phone = this.phone ?: "",
+        imageUrl = this.imageUrl ?: "",
+        room = this.room ?: 0,
+        hotelId = this.hotelId ?: 0
+    )

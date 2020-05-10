@@ -125,6 +125,11 @@ dependencies {
     kapt(LibraryDependency.ROOM_COMPILER)
     api(LibraryDependency.ROOM_KTX)
 
+    // moshi
+    implementation(LibraryDependency.MOSHI)
+    implementation(LibraryDependency.MOSHI_ADAPTERS)
+    kapt(LibraryDependency.MOSHI_CODE_GEN)
+
     // tests
     addTestDependencies()
 }

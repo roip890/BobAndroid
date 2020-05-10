@@ -54,17 +54,20 @@ fun UserRoomDataModel.toDomainModel(): UserDomainModel {
     )
 }
 
-//val id: Long = 0,
-//
-//val email: String = "",
-//val username: String = "",
-//val firstName:String = "",
-//val lastName: String = "",
-//val password: String = "",
-//val phone: String = "",
-//val status: String = "",
-//val birthday: String = "",
-//val imageUrl: String = "",
-//val permissionLevel: String = "",
-//val departments: List<String> = listOf(),
-//val hotelId: Long = 0
+fun UserDomainModel.toRoomModel(): UserRoomDataModel =
+    UserRoomDataModel(
+        id = this.id,
+
+        email = this.email ?: "",
+        username = this.username ?: "",
+        firstName = this.firstName ?: "",
+        lastName = this.lastName ?: "",
+        password = this.password ?: "",
+        phone = this.phone ?: "",
+        imageUrl = this.imageUrl ?: "",
+        status = this.status ?: "",
+        birthday = this.birthday ?: "",
+        permissionLevel = this.permissionLevel ?: "",
+        departments = this.departments ?: listOf(),
+        hotelId = this.hotelId ?: 0
+    )

@@ -4,7 +4,7 @@ import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettin
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseIntent
 
 sealed class WishesSettingsIntent : BaseIntent {
-    object InitialIntent : WishesSettingsIntent()
+    object GetDepartmentsListIntent : WishesSettingsIntent()
     object GetWishesSettingsIntent : WishesSettingsIntent()
-    class SaveWishesSettingsIntent(wishesSettings: WishesSettingsDomainModel) : WishesSettingsIntent()
+    class SetWishesSettingsIntent(val wishesSettings: WishesSettingsDomainModel) : WishesSettingsIntent()
 }

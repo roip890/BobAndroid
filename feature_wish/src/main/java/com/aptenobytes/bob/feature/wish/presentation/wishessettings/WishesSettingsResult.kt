@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishessettings
 
+import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseResult
 
@@ -10,9 +11,15 @@ sealed class WishesSettingsResult : BaseResult {
         data class Failure(val error: Throwable) : GetWishesSettingsResult()
     }
 
-    sealed class SaveWishesSettingsResult : WishesSettingsResult() {
-        object Loading : SaveWishesSettingsResult()
-        data class Success(val wishesSettings: WishesSettingsDomainModel) : SaveWishesSettingsResult()
-        data class Failure(val error: Throwable) : SaveWishesSettingsResult()
+    sealed class SetWishesSettingsResult : WishesSettingsResult() {
+        object Loading : SetWishesSettingsResult()
+        data class Success(val wishesSettings: WishesSettingsDomainModel) : SetWishesSettingsResult()
+        data class Failure(val error: Throwable) : SetWishesSettingsResult()
+    }
+
+    sealed class GetDepartmentsListResult : WishesSettingsResult() {
+        object Loading : GetDepartmentsListResult()
+        data class Success(val departments: List<DepartmentDomainModel>) : GetDepartmentsListResult()
+        data class Failure(val error: Throwable) : GetDepartmentsListResult()
     }
 }

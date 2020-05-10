@@ -22,7 +22,7 @@ class AppSharedPreferencesDataSourceImpl(
                 moshi.adapter<Any>(Types.newParameterizedType(MutableList::class.java, DepartmentDomainModel::class.java))
                     .fromJson(prefs.getString(APP_SHARED_PREFERENCES_DEPARTMENTS_NAME, null)!!)
             }
-            listOf()
+            listOf<DepartmentDomainModel>()
         }
     }
 

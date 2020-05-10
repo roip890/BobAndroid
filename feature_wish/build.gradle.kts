@@ -67,10 +67,16 @@ dependencies {
     kapt(LibraryDependency.ROOM_COMPILER)
     api(LibraryDependency.ROOM_KTX)
 
+    // iconics
     implementation(LibraryDependency.ICONICS)
     implementation(LibraryDependency.ICONICS_GOOGLE_MATERIAL)
     implementation(LibraryDependency.ICONICS_MATERIAL_DESIGN_ICONIC)
     implementation(LibraryDependency.ICONICS_FONTAWESOME)
+
+    // moshi
+    implementation(LibraryDependency.MOSHI)
+    implementation(LibraryDependency.MOSHI_ADAPTERS)
+    kapt(LibraryDependency.MOSHI_CODE_GEN)
 
     addTestDependencies()
 }

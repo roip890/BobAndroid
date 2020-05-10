@@ -3,6 +3,7 @@ package com.aptenobytes.bob.feature.wish.presentation.allwishes.recyclerview.ada
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 
@@ -12,7 +13,7 @@ class WishViewModel(
     val timeStamp: MutableLiveData<String> = MutableLiveData<String>(),
     val iconUrl: MutableLiveData<String> = MutableLiveData<String>(),
     val status: MutableLiveData<WishStatusType> = MutableLiveData<WishStatusType>(),
-    val departments: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+    val departments: MutableLiveData<List<DepartmentDomainModel>> = MutableLiveData<List<DepartmentDomainModel>>()
 ) {
 
     val statusString = MediatorLiveData<String>()
@@ -38,8 +39,8 @@ class WishViewModel(
             }
         }
 
-        @JvmStatic fun wishDepartmentsToString(departments: List<String>): String {
-            return departments.joinToString(separator = ", ")
+        @JvmStatic fun wishDepartmentsToString(departments: List<DepartmentDomainModel>): String {
+            return departments.joinToString(separator = ", ") { it.name }
         }
     }
 }
@@ -51,6 +52,6 @@ fun WishDomainModel.toViewModel(): WishViewModel {
         timeStamp = MutableLiveData<String>(this.timeStamp),
         iconUrl = MutableLiveData<String>(this.iconUrl),
         status = MutableLiveData<WishStatusType>(this.status),
-        departments = MutableLiveData<List<String>>(this.departments)
+        departments = MutableLiveData<List<DepartmentDomainModel>>(this.departments)
     )
 }
