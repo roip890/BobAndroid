@@ -18,7 +18,7 @@ data class WishDomainModel(
     val type: String? = "",
     val timeStamp: String? = "",
     val iconUrl: String? = "",
-    val status: WishStatusType? = WishStatusType.UNKNOWN,
+    var status: WishStatusType? = WishStatusType.UNKNOWN,
     val isFavorite: Boolean? = false,
 
     val departments: List<DepartmentDomainModel>? = listOf(),

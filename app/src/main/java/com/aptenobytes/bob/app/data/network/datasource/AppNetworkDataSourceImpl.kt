@@ -24,3 +24,5 @@ internal class AppNetworkDataSourceImpl(
 }
 
 fun String.toDepartmentDomainModel(): DepartmentDomainModel = DepartmentDomainModel(this)
+
+fun DepartmentDomainModel.toDepartmentNetworkModel(): String = this.name

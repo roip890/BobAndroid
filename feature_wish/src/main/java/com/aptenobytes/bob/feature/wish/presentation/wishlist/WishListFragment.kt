@@ -1,12 +1,18 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishlist
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aptenobytes.bob.feature.wish.R
-import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.adapter.*
+import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.SetWishStatusFragment
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewHolder
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewModel
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.toViewModel
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.wishesAdapter
 import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsFragment
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
 import com.aptenobytes.bob.library.base.recyclerview.adapter.RecyclerViewAdapter
@@ -41,7 +47,8 @@ class WishListFragment : BaseContainerFragment(), WishListView {
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val context = requireContext()
+        requireContext()
+        progressBar.visible = false
         setupSwipeRefreshLayout()
         setupWishesList()
         setupFloatingActionButton()
@@ -51,6 +58,8 @@ class WishListFragment : BaseContainerFragment(), WishListView {
     @FlowPreview
     @ExperimentalCoroutinesApi
     private fun setupSwipeRefreshLayout() {
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.colorAccent))
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.backgroundInverseColor))
         swipeRefreshLayout.setOnRefreshListener {
             flowOf(WishListIntent.GetWishListIntent)
                 .onEach { viewModel.processIntent(it) }
@@ -60,7 +69,15 @@ class WishListFragment : BaseContainerFragment(), WishListView {
 
     private fun setupWishesList() {
         val context = requireContext()
-        adapter = wishesAdapter(lifecycleOwner = viewLifecycleOwner)
+        adapter = wishesAdapter(
+            lifecycleOwner = viewLifecycleOwner,
+            onDebouncedClickListener = {wish ->
+                wish?.let {
+                    val setWishStatusFragment = SetWishStatusFragment.newInstance(wish)
+                    setWishStatusFragment.show(parentFragmentManager, SetWishStatusFragment.TAG)
+                }
+            }
+        )
         recycleView(
             recyclerView,
             LinearLayoutManager(context),
@@ -99,11 +116,12 @@ class WishListFragment : BaseContainerFragment(), WishListView {
 
     private fun render(viewState: WishListViewState) {
         adapter.items = viewState.wishes.map { it.toViewModel() }
-        progressBar.visible = viewState.isLoading
+//        progressBar.visible = viewState.isLoading
         errorAnimation.visible = viewState.error != null
         if (!viewState.isLoading) {
             swipeRefreshLayout.isRefreshing = false
         }
+        recyclerView.visible = viewState.error == null && !viewState.isLoading
     }
 
 }

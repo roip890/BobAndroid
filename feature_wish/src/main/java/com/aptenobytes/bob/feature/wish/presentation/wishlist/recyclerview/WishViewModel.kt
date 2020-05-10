@@ -1,5 +1,6 @@
-package com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.adapter
+package com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview
 
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -16,32 +17,11 @@ class WishViewModel(
     val departments: MutableLiveData<List<DepartmentDomainModel>> = MutableLiveData<List<DepartmentDomainModel>>()
 ) {
 
-    val statusString = MediatorLiveData<String>()
-    val departmentsString = MediatorLiveData<String>()
+    val statusString = MutableLiveData<String>()
+    val departmentsString = MutableLiveData<String>()
+    val icon = MutableLiveData<Drawable>()
 
     init {
-        statusString.addSource(status, Observer {
-            statusString.postValue(WishViewModel.wishStatusTypeToString(it))
-        })
-        departmentsString.addSource(departments, Observer {
-            departmentsString.postValue(WishViewModel.wishDepartmentsToString(it))
-        })
-    }
-
-    companion object {
-        @JvmStatic fun wishStatusTypeToString(status: WishStatusType): String {
-            return when(status) {
-                WishStatusType.WAITING -> "Wating"
-                WishStatusType.PENDING -> "Pending"
-                WishStatusType.IN_PROGRESS -> "In Progress"
-                WishStatusType.DONE -> "Done"
-                else -> ""
-            }
-        }
-
-        @JvmStatic fun wishDepartmentsToString(departments: List<DepartmentDomainModel>): String {
-            return departments.joinToString(separator = ", ") { it.name }
-        }
     }
 }
 
@@ -53,5 +33,16 @@ fun WishDomainModel.toViewModel(): WishViewModel {
         iconUrl = MutableLiveData<String>(this.iconUrl),
         status = MutableLiveData<WishStatusType>(this.status),
         departments = MutableLiveData<List<DepartmentDomainModel>>(this.departments)
+    )
+}
+
+fun WishViewModel.toDomainModel(): WishDomainModel {
+    return WishDomainModel(
+        id = this.id.value ?: 0,
+        type = this.type.value,
+        timeStamp = this.timeStamp.value,
+        iconUrl = this.iconUrl.value,
+        status = this.status.value,
+        departments = this.departments.value
     )
 }

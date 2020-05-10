@@ -1,19 +1,23 @@
 package com.aptenobytes.bob.feature.wish.data.network.model
 
 import com.aptenobytes.bob.app.data.network.datasource.toDepartmentDomainModel
+import com.aptenobytes.bob.app.data.network.datasource.toDepartmentNetworkModel
+import com.aptenobytes.bob.app.data.network.model.guest.GuestNetworkDataModel
+import com.aptenobytes.bob.app.data.network.model.guest.toDomainModel
+import com.aptenobytes.bob.app.data.network.model.guest.toNetworkModel
+import com.aptenobytes.bob.app.data.network.model.user.UserNetworkDataModel
+import com.aptenobytes.bob.app.data.network.model.user.toDomainModel
+import com.aptenobytes.bob.app.data.network.model.user.toNetworkModel
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.feature.wish.data.network.enums.WishStatusNetworkDataType
 import com.aptenobytes.bob.feature.wish.data.network.enums.toDomainEnum
-import com.aptenobytes.bob.feature.wish.data.network.model.guest.GuestNetworkDataModel
-import com.aptenobytes.bob.feature.wish.data.network.model.guest.toDomainModel
-import com.aptenobytes.bob.feature.wish.data.network.model.user.UserNetworkDataModel
-import com.aptenobytes.bob.feature.wish.data.network.model.user.toDomainModel
+import com.aptenobytes.bob.feature.wish.data.network.enums.toNetworkEnum
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class WishNetworkDataModel(
+data class WishNetworkDataModel(
     @field:Json(name = "wishId")
     val id: Long,
 
@@ -45,7 +49,7 @@ internal data class WishNetworkDataModel(
     val elements: List<WishElementNetworkDataModel>?
 )
 
-internal fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
+fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
     val elements = this.elements
         ?.map { it.toDomainModel() }
     val guest = this.guest
@@ -58,6 +62,37 @@ internal fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
         ?.map { it.toDepartmentDomainModel() }
 
     return WishDomainModel(
+        id = this.id,
+
+        guest = guest,
+        user = user,
+        bookingId = this.bookingId ?: 0,
+
+        details = this.details ?: "",
+        type = this.type ?: "",
+        timeStamp = this.timeStamp ?: "",
+        iconUrl = this.iconUrl ?: "",
+        status = status,
+        isFavorite = this.isFavorite ?: false,
+
+        departments = departments,
+        elements = elements ?: listOf()
+    )
+}
+
+fun WishDomainModel.toNetworkModel(): WishNetworkDataModel {
+    val elements = this.elements
+        ?.map { it.toNetworkModel() }
+    val guest = this.guest
+        ?.toNetworkModel()
+    val user = this.user
+        ?.toNetworkModel()
+    val status = this.status
+        ?.toNetworkEnum()
+    val departments = this.departments
+        ?.map { it.toDepartmentNetworkModel() }
+
+    return WishNetworkDataModel(
         id = this.id,
 
         guest = guest,

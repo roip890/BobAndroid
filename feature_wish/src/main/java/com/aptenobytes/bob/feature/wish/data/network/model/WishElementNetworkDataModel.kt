@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class WishElementNetworkDataModel(
+data class WishElementNetworkDataModel(
     @field:Json(name = "wishElementId")
     val id: Long = 0,
 
@@ -19,8 +19,18 @@ internal data class WishElementNetworkDataModel(
     val order: Long?
 )
 
-internal fun WishElementNetworkDataModel.toDomainModel() =
+fun WishElementNetworkDataModel.toDomainModel() =
     WishElementDomainModel(
+        id = this.id,
+
+        key = this.key,
+        value = this.value,
+        type = this.type,
+        order = this.order
+    )
+
+fun WishElementDomainModel.toNetworkModel() =
+    WishElementNetworkDataModel(
         id = this.id,
 
         key = this.key,

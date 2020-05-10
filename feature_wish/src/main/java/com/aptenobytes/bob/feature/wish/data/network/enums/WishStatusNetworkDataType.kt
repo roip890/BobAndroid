@@ -3,7 +3,7 @@ package com.aptenobytes.bob.feature.wish.data.network.enums
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.squareup.moshi.Json
 
-internal enum class WishStatusNetworkDataType {
+enum class WishStatusNetworkDataType {
 
     @field:Json(name = "none")
     NONE,
@@ -19,4 +19,6 @@ internal enum class WishStatusNetworkDataType {
     UNKNOWN
 }
 
-internal fun WishStatusNetworkDataType.toDomainEnum() = WishStatusType.valueOf(this.name)
+fun WishStatusNetworkDataType.toDomainEnum() = WishStatusType.valueOf(this.name)
+
+fun WishStatusType.toNetworkEnum() = WishStatusNetworkDataType.valueOf(this.name)

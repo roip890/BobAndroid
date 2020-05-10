@@ -9,8 +9,8 @@ class WishStatusViewModel(
     val status: MutableLiveData<WishStatusType> = MutableLiveData<WishStatusType>()
 ) {
 
-    val statusString = MediatorLiveData<String>()
-    val statusIcon = MediatorLiveData<Drawable>()
+    val statusString = MutableLiveData<String>()
+    val statusIcon = MutableLiveData<Drawable>()
 
     init {
     }
@@ -21,3 +21,5 @@ fun WishStatusType.toViewModel(): WishStatusViewModel {
         status = MutableLiveData<WishStatusType>(this)
     )
 }
+
+fun WishStatusViewModel.toDomainModel(): WishStatusType? = this.status.value

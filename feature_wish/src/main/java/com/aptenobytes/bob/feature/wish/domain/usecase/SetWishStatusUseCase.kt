@@ -9,6 +9,6 @@ class SetWishStatusUseCase(
     private val wishRepository: WishRepository
 ) {
     suspend fun execute(wish: WishDomainModel, status: WishStatusType): WishDomainModel {
-        return wishRepository.setWishStatus(wish = wish, status = status)
+        return wishRepository.setWishStatus(wish = wish, status = status) ?: wish
     }
 }

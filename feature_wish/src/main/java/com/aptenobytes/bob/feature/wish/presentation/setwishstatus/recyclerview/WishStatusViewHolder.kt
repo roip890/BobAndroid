@@ -7,20 +7,37 @@ import android.graphics.drawable.GradientDrawable
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.aptenobytes.bob.feature.wish.R
+import com.aptenobytes.bob.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentSetWishStatusItemBinding
-import com.aptenobytes.bob.feature.wish.databinding.FragmentWishListItemBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewModel
 
 
 class WishStatusViewHolder(val context: Context, val binding: FragmentSetWishStatusItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wishStatus: WishStatusViewModel) {
         binding.viewModel = wishStatus
-        wishStatus.statusString.addSource(wishStatus.status, Observer {
-            wishStatus.statusString.postValue(wishStatusTypeToString(it))
-            wishStatus.statusIcon.postValue(wishStatusTypeToIcon(it))
-        })
+        binding.lifecycleOwner?.let { lifecycleOwner ->
+            wishStatus.status.observe(lifecycleOwner, Observer {status ->
+                updateStatus(wishStatus = wishStatus, status = status)
+            })
+        }
+        updateStatus(wishStatus = wishStatus, status = wishStatus.status.value)
+    }
+
+    private fun updateStatus(wishStatus: WishStatusViewModel, status: WishStatusType?) {
+        status?.let {
+            wishStatus.statusString.postValue(
+                wishStatusTypeToString(
+                    status
+                )
+            )
+            wishStatus.statusIcon.postValue(
+                wishStatusTypeToIcon(
+                    status
+                )
+            )
+        }
     }
 
     private fun wishStatusTypeToString(status: WishStatusType): String {

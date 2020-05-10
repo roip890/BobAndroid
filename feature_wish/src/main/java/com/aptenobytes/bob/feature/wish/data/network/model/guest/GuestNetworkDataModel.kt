@@ -1,11 +1,11 @@
-package com.aptenobytes.bob.feature.wish.data.network.model.guest
+package com.aptenobytes.bob.app.data.network.model.guest
 
 import com.aptenobytes.bob.app.domain.model.guest.GuestDomainModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class GuestNetworkDataModel(
+data class GuestNetworkDataModel(
     @field:Json(name = "id")
     val id: Long,
 
@@ -27,8 +27,23 @@ internal data class GuestNetworkDataModel(
     val hotelId: Long?
 )
 
-internal fun GuestNetworkDataModel.toDomainModel(): GuestDomainModel {
+fun GuestNetworkDataModel.toDomainModel(): GuestDomainModel {
     return GuestDomainModel(
+        id = this.id,
+
+        email = this.email ?: "",
+        firstName = this.firstName ?: "",
+        lastName = this.lastName ?: "",
+        password = this.password ?: "",
+        phone = this.phone ?: "",
+        imageUrl = this.imageUrl ?: "",
+        room = this.room ?: 0,
+        hotelId = this.hotelId ?: 0
+    )
+}
+
+fun GuestDomainModel.toNetworkModel(): GuestNetworkDataModel {
+    return GuestNetworkDataModel(
         id = this.id,
 
         email = this.email ?: "",

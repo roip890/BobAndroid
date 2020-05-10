@@ -3,6 +3,7 @@ package com.aptenobytes.bob.feature.wish.presentation.wishsettings
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -92,7 +93,7 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_FRAME,0);
+//        setStyle(DialogFragment.STYLE_NO_FRAME,0);
     }
 
     @FlowPreview
@@ -101,9 +102,7 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
         super.onViewCreated(view, savedInstanceState)
         //super.onCreate(savedInstanceState)
         requireContext()
-
         setupForm()
-
         bind()
     }
 
@@ -121,6 +120,7 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
                 bottomSheetBehavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
             }
+            bottomSheet?.setBackgroundColor(Color.TRANSPARENT)
         }
         return bottomSheetDialog
 

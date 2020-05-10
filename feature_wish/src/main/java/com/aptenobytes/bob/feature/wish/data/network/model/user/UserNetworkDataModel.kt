@@ -1,4 +1,4 @@
-package com.aptenobytes.bob.feature.wish.data.network.model.user
+package com.aptenobytes.bob.app.data.network.model.user
 
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
@@ -6,7 +6,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class UserNetworkDataModel(
+data class UserNetworkDataModel(
     @field:Json(name = "id")
     val id: Long,
 
@@ -37,7 +37,7 @@ internal data class UserNetworkDataModel(
     val hotelId: Long?
 )
 
-internal fun UserNetworkDataModel.toDomainModel(): UserDomainModel {
+fun UserNetworkDataModel.toDomainModel(): UserDomainModel {
     return UserDomainModel(
         id = this.id,
 
@@ -56,17 +56,21 @@ internal fun UserNetworkDataModel.toDomainModel(): UserDomainModel {
     )
 }
 
-//val id: Long = 0,
-//
-//val email: String = "",
-//val username: String = "",
-//val firstName:String = "",
-//val lastName: String = "",
-//val password: String = "",
-//val phone: String = "",
-//val status: String = "",
-//val birthday: String = "",
-//val imageUrl: String = "",
-//val permissionLevel: String = "",
-//val departments: List<String> = listOf(),
-//val hotelId: Long = 0
+fun UserDomainModel.toNetworkModel(): UserNetworkDataModel {
+    return UserNetworkDataModel(
+        id = this.id,
+
+        email = this.email ?: "",
+        username = this.username ?: "",
+        firstName = this.firstName ?: "",
+        lastName = this.lastName ?: "",
+        password = this.password ?: "",
+        phone = this.phone ?: "",
+        imageUrl = this.imageUrl ?: "",
+        status = this.status ?: "",
+        birthday = this.birthday ?: "",
+        permissionLevel = this.permissionLevel ?: "",
+        departments = this.departments ?: listOf(),
+        hotelId = this.hotelId ?: 0
+    )
+}

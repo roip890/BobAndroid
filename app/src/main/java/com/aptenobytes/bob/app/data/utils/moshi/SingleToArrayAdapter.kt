@@ -13,8 +13,16 @@ class SingleToArrayAdapter(
             Collections.singletonList(elementAdapter.fromJson(reader))
         } else delegateAdapter.fromJson(reader)
 
-    override fun toJson(writer: JsonWriter, value: Any?) =
-        throw UnsupportedOperationException("SingleToArrayAdapter is only used to deserialize objects")
+    override fun toJson(writer: JsonWriter, value: Any?) {
+        if (value is Collection<*>) {
+            writer.beginArray()
+            for (element in value as Collection<*>) {
+                elementAdapter.toJson(writer, element)
+            }
+            writer.endArray()
+        } else elementAdapter.toJson(writer, value)
+    }
+//        throw UnsupportedOperationException("SingleToArrayAdapter is only used to deserialize objects")
 
     class SingleToArrayAdapterFactory : JsonAdapter.Factory {
         override fun create(type: Type, annotations: Set<Annotation>, moshi: Moshi): JsonAdapter<Any>? {

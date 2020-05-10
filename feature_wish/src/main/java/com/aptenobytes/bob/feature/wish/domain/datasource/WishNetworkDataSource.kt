@@ -22,5 +22,5 @@ interface WishNetworkDataSource {
         limit: Int? = 20
     ): List<WishDomainModel>
 
-    suspend fun setWishStatus(wish: WishDomainModel, status: WishStatusType): WishDomainModel
+    suspend fun setWishStatus(wish: WishDomainModel, status: WishStatusType): WishDomainModel?
 }
