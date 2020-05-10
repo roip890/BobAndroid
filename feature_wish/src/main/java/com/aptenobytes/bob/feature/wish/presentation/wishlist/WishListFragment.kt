@@ -1,6 +1,5 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishlist
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -23,6 +22,8 @@ import com.mikepenz.iconics.utils.paddingDp
 import com.mikepenz.iconics.utils.sizeDp
 import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.fragment_wish_list.*
+import kotlinx.android.synthetic.main.fragment_wish_list.progressBar
+import kotlinx.android.synthetic.main.fragment_wish_list.recyclerView
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOf
@@ -69,11 +70,18 @@ class WishListFragment : BaseContainerFragment(), WishListView {
 
     private fun setupWishesList() {
         val context = requireContext()
-        adapter = wishesAdapter(
-            lifecycleOwner = viewLifecycleOwner,
+                adapter = wishesAdapter(
+                lifecycleOwner = viewLifecycleOwner,
             onDebouncedClickListener = {wish ->
                 wish?.let {
-                    val setWishStatusFragment = SetWishStatusFragment.newInstance(wish)
+                    val setWishStatusFragment = SetWishStatusFragment.newInstance(
+                        wish = wish,
+                        onChangeStatusListener = {
+                            this.adapter.items = this.adapter.items.map {
+                                if (it.id.value == wish.id) { return@map wish.toViewModel() } else { return@map it }
+                            }
+                        }
+                    )
                     setWishStatusFragment.show(parentFragmentManager, SetWishStatusFragment.TAG)
                 }
             }

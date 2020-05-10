@@ -81,7 +81,7 @@
 
                 <View
                     android:id="@+id/wishStatusIcon"
-                    android:background="@{viewModel.icon}"
+                    android:background="@{viewModel.statusIcon}"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="4dp"

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.provider.SyncStateContract.Helpers.update
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -14,17 +13,11 @@ import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentWishListItemBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import timber.log.Timber
-
 
 class WishViewHolder(val context: Context, val binding: FragmentWishListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val iconUrlObserver = Observer<String> {
-        binding.wishImage.load(it) {
-            crossfade(true)
-            error(R.drawable.ic_image)
-            transformations(RoundedCornersTransformation(10F))
-        }
+    private val iconUrlObserver = Observer<String?> { iconUrl ->
+        updateIcon(iconUrl = iconUrl)
     }
 
     fun bind(wish: WishViewModel) {
@@ -38,8 +31,23 @@ class WishViewHolder(val context: Context, val binding: FragmentWishListItemBind
                 updateDepartments(wish = wish, departments = departments)
             })
         }
+        updateIcon(iconUrl = wish.iconUrl.value)
         updateStatus(wish = wish, status = wish.status.value)
         updateDepartments(wish = wish, departments = wish.departments.value)
+    }
+
+    private fun updateIcon(iconUrl: String?) {
+        try {
+            iconUrl?.let {
+                binding.wishImage.load(iconUrl) {
+                    crossfade(true)
+                    error(R.drawable.ic_image)
+                    transformations(RoundedCornersTransformation(10F))
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun updateStatus(wish: WishViewModel, status: WishStatusType?) {
@@ -49,7 +57,7 @@ class WishViewHolder(val context: Context, val binding: FragmentWishListItemBind
                     status
                 )
             )
-            wish.icon.postValue(
+            wish.statusIcon.postValue(
                 wishStatusTypeToIcon(
                     status
                 )

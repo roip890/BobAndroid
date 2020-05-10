@@ -18,8 +18,8 @@ class WishViewModel(
 ) {
 
     val statusString = MutableLiveData<String>()
+    val statusIcon = MutableLiveData<Drawable>()
     val departmentsString = MutableLiveData<String>()
-    val icon = MutableLiveData<Drawable>()
 
     init {
     }
