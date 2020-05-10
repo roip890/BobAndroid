@@ -1,5 +1,7 @@
 package com.aptenobytes.bob.library.base.presentation.viewmodel
 
+import com.aptenobytes.bob.library.base.presentation.mvi.BaseAction
+import com.aptenobytes.bob.library.base.presentation.mvi.BaseViewState
 import timber.log.Timber
 import kotlin.reflect.full.memberProperties
 

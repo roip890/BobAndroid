@@ -98,6 +98,7 @@ dependencies {
     // navigation
     api(LibraryDependency.NAVIGATION_FRAGMENT_KTX)
     api(LibraryDependency.NAVIGATION_UI_KTX)
+    api(LibraryDependency.NAVIGATION_RUNTIME)
 
     // ok http
     implementation(LibraryDependency.OK_HTTP)

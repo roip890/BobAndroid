@@ -2,7 +2,9 @@ package com.aptenobytes.bob.feature.wish.data.network.model.guest
 
 import com.aptenobytes.bob.app.domain.model.guest.GuestDomainModel
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class GuestNetworkDataModel(
     @field:Json(name = "id")
     val id: Long,

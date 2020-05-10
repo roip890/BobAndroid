@@ -4,5 +4,5 @@
             android:id="@+id/profile_nav_graph" app:startDestination="@+id/profileFragment">
     <fragment android:id="@+id/profileFragment"
               android:name="com.aptenobytes.bob.feature.profile.presentation.profile.ProfileFragment"
-              android:label="ProfileFragment"/>
+              android:label="Profile"/>
 </navigation>

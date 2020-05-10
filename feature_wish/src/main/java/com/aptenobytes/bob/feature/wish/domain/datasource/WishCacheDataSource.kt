@@ -1,7 +1,7 @@
 package com.aptenobytes.bob.feature.wish.domain.datasource
 
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
 
 interface WishCacheDataSource {
 
@@ -26,8 +26,8 @@ interface WishCacheDataSource {
     suspend fun insertAll(wishes: List<WishDomainModel>)
 
     // settings
-    suspend fun getWishesSettings(): WishesSettingsDomainModel?
+    suspend fun getWishSettings(): WishSettingsDomainModel?
 
-    suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel?)
+    suspend fun setWishSettings(wishSettings: WishSettingsDomainModel?)
 
 }

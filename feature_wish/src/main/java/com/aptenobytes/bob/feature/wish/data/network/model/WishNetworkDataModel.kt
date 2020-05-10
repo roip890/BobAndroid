@@ -10,7 +10,9 @@ import com.aptenobytes.bob.feature.wish.data.network.model.user.UserNetworkDataM
 import com.aptenobytes.bob.feature.wish.data.network.model.user.toDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class WishNetworkDataModel(
     @field:Json(name = "wishId")
     val id: Long,

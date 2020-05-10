@@ -67,6 +67,11 @@ dependencies {
     kapt(LibraryDependency.ROOM_COMPILER)
     api(LibraryDependency.ROOM_KTX)
 
+    // material dialog
+    implementation(LibraryDependency.MATERIAL_DIALOGS)
+    implementation(LibraryDependency.MATERIAL_DIALOGS_DATE_TIME)
+    implementation(LibraryDependency.MATERIAL_DIALOGS_BOTTOM_SHEET)
+
     // iconics
     implementation(LibraryDependency.ICONICS)
     implementation(LibraryDependency.ICONICS_GOOGLE_MATERIAL)

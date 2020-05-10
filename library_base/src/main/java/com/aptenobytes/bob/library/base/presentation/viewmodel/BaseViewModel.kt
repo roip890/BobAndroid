@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aptenobytes.bob.library.base.BuildConfig
 import com.aptenobytes.bob.library.base.presentation.extension.toLiveData
+import com.aptenobytes.bob.library.base.presentation.mvi.BaseAction
+import com.aptenobytes.bob.library.base.presentation.mvi.BaseViewState
 import kotlin.properties.Delegates
 
 abstract class BaseViewModel<ViewState : BaseViewState, ViewAction : BaseAction>(initialState: ViewState) :

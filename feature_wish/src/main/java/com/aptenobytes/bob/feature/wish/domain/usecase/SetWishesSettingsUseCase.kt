@@ -1,12 +1,12 @@
 package com.aptenobytes.bob.feature.wish.domain.usecase
 
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
 import com.aptenobytes.bob.feature.wish.domain.repository.WishRepository
 
-class SetWishesSettingsUseCase(
+class SetWishSettingsUseCase(
     private val wishRepository: WishRepository
 ) {
-    suspend fun execute(wishesSettings: WishesSettingsDomainModel): WishesSettingsDomainModel {
-        return wishRepository.setWishesSettings(wishesSettings)
+    suspend fun execute(wishSettings: WishSettingsDomainModel): WishSettingsDomainModel {
+        return wishRepository.setWishSettings(wishSettings)
     }
 }

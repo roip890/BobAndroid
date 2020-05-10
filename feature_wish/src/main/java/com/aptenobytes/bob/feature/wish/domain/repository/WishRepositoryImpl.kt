@@ -4,8 +4,10 @@ import com.aptenobytes.bob.feature.wish.domain.datasource.WishCacheDataSource
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishLocalDataSource
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishNetworkDataSource
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishSharedPreferencesDataSource
+import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import com.pawegio.kandroid.w
 
 class WishRepositoryImpl(
     private val wishNetworkDataSource: WishNetworkDataSource,
@@ -14,6 +16,7 @@ class WishRepositoryImpl(
     private val wishSharedPreferencesDataSource: WishSharedPreferencesDataSource
 ) : WishRepository {
 
+    // wishes
     override suspend fun getWishes(
         wishId: Long?,
         userId: Long?,
@@ -42,12 +45,18 @@ class WishRepositoryImpl(
         )
     }
 
-    override suspend fun getWishesSettings(): WishesSettingsDomainModel {
-        return wishSharedPreferencesDataSource.getWishesSettings() ?: WishesSettingsDomainModel()
+    // wish status
+    override suspend fun setWishStatus(wish: WishDomainModel, status: WishStatusType): WishDomainModel {
+        return wishNetworkDataSource.setWishStatus(wish = wish, status = status)
     }
 
-    override suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel): WishesSettingsDomainModel {
-        return wishSharedPreferencesDataSource.setWishesSettings(wishesSettings) ?: WishesSettingsDomainModel()
+    // wish settings
+    override suspend fun getWishSettings(): WishSettingsDomainModel {
+        return wishSharedPreferencesDataSource.getWishSettings() ?: WishSettingsDomainModel()
+    }
+
+    override suspend fun setWishSettings(wishSettings: WishSettingsDomainModel): WishSettingsDomainModel {
+        return wishSharedPreferencesDataSource.setWishSettings(wishSettings) ?: WishSettingsDomainModel()
     }
 
 

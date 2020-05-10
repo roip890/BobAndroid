@@ -2,7 +2,9 @@ package com.aptenobytes.bob.feature.wish.data.network.model
 
 import com.aptenobytes.bob.feature.wish.domain.model.wishelement.WishElementDomainModel
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class WishElementNetworkDataModel(
     @field:Json(name = "wishElementId")
     val id: Long = 0,

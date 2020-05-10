@@ -2,11 +2,11 @@ package com.aptenobytes.bob.feature.wish.data.cache.datasource
 
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishCacheDataSource
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
 
 class WishCacheDataSourceImpl() : WishCacheDataSource {
 
-    private var wishesSettings = WishesSettingsDomainModel()
+    private var wishSettings = WishSettingsDomainModel()
     private val wishes = mutableListOf<WishDomainModel>()
 
     // wishes
@@ -33,12 +33,12 @@ class WishCacheDataSourceImpl() : WishCacheDataSource {
     }
 
     // settings
-    override suspend fun getWishesSettings(): WishesSettingsDomainModel? {
-        return wishesSettings
+    override suspend fun getWishSettings(): WishSettingsDomainModel? {
+        return wishSettings
     }
 
-    override suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel?) {
-        if (wishesSettings != null) this.wishesSettings = wishesSettings
+    override suspend fun setWishSettings(wishSettings: WishSettingsDomainModel?) {
+        if (wishSettings != null) this.wishSettings = wishSettings
     }
 
 }

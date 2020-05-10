@@ -71,15 +71,22 @@ dependencies {
     kapt(LibraryDependency.DATA_BINDING_COMPILER_KTX)
     api(LibraryDependency.COIL)
 
+    api(LibraryDependency.SUPPORT_SWIPE_REFRESH_LAYOUT)
     api(LibraryDependency.SUPPORT_CONSTRAINT_LAYOUT)
     api(LibraryDependency.COORDINATOR_LAYOUT)
     api(LibraryDependency.RECYCLER_VIEW)
     api(LibraryDependency.MATERIAL)
     api(LibraryDependency.K_ANDROID)
 
+    // navigation
+    api(LibraryDependency.NAVIGATION_FRAGMENT_KTX)
+    api(LibraryDependency.NAVIGATION_UI_KTX)
+    api(LibraryDependency.NAVIGATION_RUNTIME)
+
     // material dialog
     implementation(LibraryDependency.MATERIAL_DIALOGS)
     implementation(LibraryDependency.MATERIAL_DIALOGS_DATE_TIME)
+    implementation(LibraryDependency.MATERIAL_DIALOGS_BOTTOM_SHEET)
 
     // icons
     implementation(LibraryDependency.ICONICS)

@@ -15,8 +15,8 @@ interface WishDao {
     suspend fun insertAll(wish: List<WishRoomDataModel>)
 
     @Query("DELETE FROM wish_table")
-    suspend fun clearAllWishes()
+    suspend fun clearWishList()
 
     @Query("SELECT * FROM wish_table ORDER BY wish_id ASC")
-    suspend fun getAllWishes(): List<@JvmSuppressWildcards WishRoomDataModel>
+    suspend fun getWishList(): List<@JvmSuppressWildcards WishRoomDataModel>
 }

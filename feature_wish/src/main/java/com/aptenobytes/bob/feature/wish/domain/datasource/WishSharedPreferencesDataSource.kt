@@ -1,12 +1,12 @@
 package com.aptenobytes.bob.feature.wish.domain.datasource
 
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
 
 interface WishSharedPreferencesDataSource {
 
     // settings
-    suspend fun getWishesSettings(): WishesSettingsDomainModel?
+    suspend fun getWishSettings(): WishSettingsDomainModel?
 
-    suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel?): WishesSettingsDomainModel?
+    suspend fun setWishSettings(wishSettings: WishSettingsDomainModel?): WishSettingsDomainModel?
 
 }

@@ -5,8 +5,8 @@ import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishSharedPreferencesDataSource
 import com.aptenobytes.bob.feature.wish.domain.enums.wishsort.WishSortType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.filter.WishFilterDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.filter.WishFilterDomainModel
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.reflect.Type
 
-private const val WISH_SHARED_PREFERENCES_SETTINGS_NAME = "wishesSettings"
+private const val WISH_SHARED_PREFERENCES_SETTINGS_NAME = "wishSettings"
 
 class WishSharedPreferencesDataSourceImpl(
     private val prefs: SharedPreferences,
@@ -23,24 +23,24 @@ class WishSharedPreferencesDataSourceImpl(
 ) : WishSharedPreferencesDataSource {
 
     // settings
-    override suspend fun getWishesSettings(): WishesSettingsDomainModel? {
+    override suspend fun getWishSettings(): WishSettingsDomainModel? {
         return withContext(Dispatchers.IO) {
             if (prefs.contains(WISH_SHARED_PREFERENCES_SETTINGS_NAME)) {
-                return@withContext moshi.adapter(WishesSettingsDomainModel::class.java).fromJson(prefs.getString(WISH_SHARED_PREFERENCES_SETTINGS_NAME, null)!!)
+                return@withContext moshi.adapter(WishSettingsDomainModel::class.java).fromJson(prefs.getString(WISH_SHARED_PREFERENCES_SETTINGS_NAME, null)!!)
             }
             return@withContext null
         }
     }
 
-    override suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel?): WishesSettingsDomainModel? {
+    override suspend fun setWishSettings(wishSettings: WishSettingsDomainModel?): WishSettingsDomainModel? {
         return withContext(Dispatchers.IO) {
-            if (wishesSettings != null) {
+            if (wishSettings != null) {
                 prefs.edit()
-                    .putString(WISH_SHARED_PREFERENCES_SETTINGS_NAME, moshi.adapter(WishesSettingsDomainModel::class.java)
-                        .toJson(wishesSettings)).apply()
+                    .putString(WISH_SHARED_PREFERENCES_SETTINGS_NAME, moshi.adapter(WishSettingsDomainModel::class.java)
+                        .toJson(wishSettings)).apply()
             }
             if (prefs.contains(WISH_SHARED_PREFERENCES_SETTINGS_NAME)) {
-                return@withContext moshi.adapter(WishesSettingsDomainModel::class.java).fromJson(prefs.getString(WISH_SHARED_PREFERENCES_SETTINGS_NAME, null)!!)
+                return@withContext moshi.adapter(WishSettingsDomainModel::class.java).fromJson(prefs.getString(WISH_SHARED_PREFERENCES_SETTINGS_NAME, null)!!)
             }
             return@withContext null
         }

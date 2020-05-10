@@ -15,6 +15,7 @@ private object LibraryVersion {
     // Android Q (adds Theme.MaterialComponents.DayNight)
     const val MATERIAL = "1.1.0"
     const val CONSTRAINT_LAYOUT = "1.1.3"
+    const val SWIPE_REFRESH_LAYOUT = "1.0.0"
     const val CORE_KTX = "1.1.0"
     const val FRAGMENT_KTX = "1.1.0"
     const val LIFECYCLE = "2.2.0-rc02"
@@ -65,6 +66,8 @@ object LibraryDependency {
     const val TIMBER = "com.jakewharton.timber:timber:${LibraryVersion.TIMBER}"
     const val SUPPORT_CONSTRAINT_LAYOUT =
         "androidx.constraintlayout:constraintlayout:${LibraryVersion.CONSTRAINT_LAYOUT}"
+    const val SUPPORT_SWIPE_REFRESH_LAYOUT =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${LibraryVersion.SWIPE_REFRESH_LAYOUT}"
     const val PLAY_CORE = "com.google.android.play:core:${LibraryVersion.PLAY_CORE}"
     const val APP_COMPAT = "androidx.appcompat:appcompat:${LibraryVersion.APP_COMPAT}"
     const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:${LibraryVersion.RECYCLER_VIEW}"
@@ -89,6 +92,7 @@ object LibraryDependency {
 
     const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:${CoreVersion.NAVIGATION}"
     const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${CoreVersion.NAVIGATION}"
+    const val NAVIGATION_RUNTIME = "androidx.navigation:navigation-runtime-ktx:${CoreVersion.NAVIGATION}"
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${CoreVersion.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${CoreVersion.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${CoreVersion.ROOM}"

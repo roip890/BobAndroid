@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.aptenobytes.bob.feature.wish.presentation.allwishes.recyclerview.adapter.WishViewModel" />
+            type="com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.adapter.WishViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

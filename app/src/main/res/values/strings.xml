@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">bob</string>
+    <string name="app_name">Bob</string>
 
     <!--Dynamic module titles-->
     <string name="feature_favourite">feature favourite</string>

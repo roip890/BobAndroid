@@ -12,4 +12,14 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
+    <!-- Toolbar -->
+    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="materialThemeOverlay">@style/MyThemeOverlay_Toolbar</item>
+    </style>
+
+    <style name="MyThemeOverlay_Toolbar" parent="">
+        <item name="android:textColorPrimary">@color/toolbarTitleColor</item>
+        <item name="colorOnPrimary">@color/toolbarTitleColor</item>
+    </style>
+
 </resources>

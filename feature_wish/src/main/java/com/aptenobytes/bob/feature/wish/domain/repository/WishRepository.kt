@@ -1,10 +1,12 @@
 package com.aptenobytes.bob.feature.wish.domain.repository
 
+import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishesSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
 
 interface WishRepository {
 
+    // wishes
     suspend fun getWishes(
         wishId: Long? = null,
 
@@ -22,8 +24,12 @@ interface WishRepository {
         limit: Int? = 20
     ): List<WishDomainModel>
 
-    suspend fun getWishesSettings(): WishesSettingsDomainModel
+    // wish status
+    suspend fun setWishStatus(wish: WishDomainModel, status: WishStatusType): WishDomainModel
 
-    suspend fun setWishesSettings(wishesSettings: WishesSettingsDomainModel): WishesSettingsDomainModel
+    // wish settings
+    suspend fun getWishSettings(): WishSettingsDomainModel
+
+    suspend fun setWishSettings(wishSettings: WishSettingsDomainModel): WishSettingsDomainModel
 
 }

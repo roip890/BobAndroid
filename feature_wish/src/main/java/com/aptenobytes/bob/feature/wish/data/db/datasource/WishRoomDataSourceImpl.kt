@@ -21,7 +21,7 @@ class WishRoomDataSourceImpl(private val dao: WishDao) : WishLocalDataSource {
         index: Int?,
         limit: Int?
     ): List<WishDomainModel> {
-        return dao.getAllWishes()
+        return dao.getWishList()
             .map { it.toDomainModel() }
     }
 

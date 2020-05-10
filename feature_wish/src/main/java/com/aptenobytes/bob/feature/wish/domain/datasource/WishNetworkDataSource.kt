@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.feature.wish.domain.datasource
 
+import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 
 interface WishNetworkDataSource {
@@ -21,4 +22,5 @@ interface WishNetworkDataSource {
         limit: Int? = 20
     ): List<WishDomainModel>
 
+    suspend fun setWishStatus(wish: WishDomainModel, status: WishStatusType): WishDomainModel
 }

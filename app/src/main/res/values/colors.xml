@@ -7,4 +7,5 @@
     <color name="backgroundColor">@color/white</color>
     <color name="iconColor">@color/dark_blue</color>
     <color name="textColor">@color/dark_blue</color>
+    <color name="toolbarTitleColor">@color/white</color>
 </resources>

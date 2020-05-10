@@ -15,7 +15,7 @@ abstract class BaseActivity : InjectionActivity() {
 
         setContentView(layoutResId)
 
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
 
         // The window will not be resized when virtual keyboard is shown (bottom navigation bar will be
         // hidden under virtual keyboard)
