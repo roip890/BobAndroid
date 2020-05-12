@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:moduleName="feature_wish"
+    app:startDestination="@+id/wishListFragment">
+
+    <fragment android:id="@+id/wishListFragment"
+        android:name="com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListFragment"
+        android:label="Wishes"
+        app:moduleName="feature_wish">
+
+        <action
+            android:id="@+id/actionWishListToWishDetail"
+            app:destination="@id/wishDetailFragment"/>
+
+    </fragment>
+
+    <fragment android:id="@+id/wishDetailFragment"
+        android:name="com.aptenobytes.bob.feature.wish.presentation.wishdetail.WishDetailFragment"
+        android:label="Wishes Settings"
+        app:moduleName="feature_wish">
+
+        <argument
+            android:name="wishId"
+            app:argType="long"/>
+
+    </fragment>
+
+</navigation>

@@ -1,7 +1,7 @@
 @file:Suppress("detekt.StringLiteralDuplication")
 
 private object LibraryVersion {
-    const val KODEIN = "6.5.1"
+    const val KODEIN = "6.5.5"
     const val RETROFIT = "2.7.1"
     const val OK_HTTP = "4.3.1"
     const val STETHO = "1.5.0"
@@ -23,6 +23,7 @@ private object LibraryVersion {
     const val COIL = "0.9.1"
     const val K_ANDROID = "0.8.8@aar"
     const val LOTTIE = "3.3.1"
+    const val CIRCLE_IMAGE_VIEW = "3.1.0"
     const val MOSHI = "1.9.2"
 
     // third party libs
@@ -90,13 +91,23 @@ object LibraryDependency {
     const val DATA_BINDING_COMPILER_KTX =
         "androidx.databinding:databinding-compiler:${LibraryVersion.DATA_BINDING}"
 
+    // navigation
     const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:${CoreVersion.NAVIGATION}"
     const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${CoreVersion.NAVIGATION}"
     const val NAVIGATION_RUNTIME = "androidx.navigation:navigation-runtime-ktx:${CoreVersion.NAVIGATION}"
+    // dynamic feature module support for navigation
+    const val NAVIGATION_DYNAMIC_FEATURE_FRAGMENT_KTX =
+        "androidx.navigation:navigation-dynamic-features-fragment:${CoreVersion.NAVIGATION}"
+
+    // room
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${CoreVersion.ROOM}"
     const val ROOM_COMPILER = "androidx.room:room-compiler:${CoreVersion.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${CoreVersion.ROOM}"
+
+    // coil
     const val COIL = "io.coil-kt:coil:${LibraryVersion.COIL}"
+
+    // kotlin android
     const val K_ANDROID = "com.pawegio.kandroid:kandroid:${LibraryVersion.K_ANDROID}"
 
     // moshi
@@ -106,6 +117,9 @@ object LibraryDependency {
 
     // lottie
     const val LOTTIE = "com.airbnb.android:lottie:${LibraryVersion.LOTTIE}"
+
+    // circle image view
+    const val CIRCLE_IMAGE_VIEW = "de.hdodenhof:circleimageview:${LibraryVersion.CIRCLE_IMAGE_VIEW}"
 
     // material dialog
     const val MATERIAL_DIALOGS = "com.afollestad.material-dialogs:core:${LibraryVersion.MATERIAL_DIALOGS}"

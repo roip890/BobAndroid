@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.aptenobytes.bob.library.base.form.elements.DateTimeElement" />
+            type="com.aptenobytes.bob.library.base.presentation.form.elements.DateTimeElement" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

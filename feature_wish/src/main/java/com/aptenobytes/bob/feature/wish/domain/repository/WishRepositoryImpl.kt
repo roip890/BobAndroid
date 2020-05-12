@@ -38,17 +38,16 @@ class WishRepositoryImpl(
         index: Int?,
         limit: Int?
     ): List<WishDomainModel> {
-        val wishSettingsDomainModel: WishSettingsDomainModel = this.getWishSettings()
         return wishNetworkDataSource.getWishes(
-            wishId = wishSettingsDomainModel.filter?.wishId,
-            userId = wishSettingsDomainModel.filter?.userId,
-            guestId = wishSettingsDomainModel.filter?.guestId,
-            bookingId = wishSettingsDomainModel.filter?.bookingId,
-            minTimestamp = wishSettingsDomainModel.filter?.minTimestamp,
-            maxTimestamp = wishSettingsDomainModel.filter?.maxTimestamp,
-            statuses = wishSettingsDomainModel.filter?.statuses,
-            departments = wishSettingsDomainModel.filter?.departments,
-            sort = wishSettingsDomainModel.sort,
+            wishId = wishId,
+            userId = userId,
+            guestId = guestId,
+            bookingId = bookingId,
+            minTimestamp = minTimestamp,
+            maxTimestamp = maxTimestamp,
+            statuses = statuses,
+            departments = departments,
+            sort = sort,
             index = index,
             limit = limit
         )

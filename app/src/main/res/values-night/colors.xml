@@ -9,4 +9,5 @@
     <color name="iconColor">@color/white</color>
     <color name="textColor">@color/white</color>
     <color name="toolbarTitleColor">@color/white</color>
+    <color name="toolbarSubtitleColor">@color/white</color>
 </resources>

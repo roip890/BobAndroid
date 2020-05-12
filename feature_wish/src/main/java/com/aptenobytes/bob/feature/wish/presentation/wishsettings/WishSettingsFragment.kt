@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
@@ -20,11 +19,11 @@ import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDo
 import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.filter.WishFilterDomainModel
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
 import com.aptenobytes.bob.library.base.extensions.ui.dpToPx
-import com.aptenobytes.bob.library.base.form.bindings.classes.marginAll
-import com.aptenobytes.bob.library.base.form.builder.*
-import com.aptenobytes.bob.library.base.form.elements.DateTimeElement
-import com.aptenobytes.bob.library.base.form.elements.EditTextElement
-import com.aptenobytes.bob.library.base.form.elements.MultiChoiceElement
+import com.aptenobytes.bob.library.base.presentation.form.bindings.classes.marginAll
+import com.aptenobytes.bob.library.base.presentation.form.builder.*
+import com.aptenobytes.bob.library.base.presentation.form.elements.DateTimeElement
+import com.aptenobytes.bob.library.base.presentation.form.elements.EditTextElement
+import com.aptenobytes.bob.library.base.presentation.form.elements.MultiChoiceElement
 import com.aptenobytes.bob.library.base.presentation.bottomsheetdialogfragment.BaseContainerBottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog

@@ -1,17 +1,16 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview
 
-import android.graphics.PorterDuff
-import android.os.Build
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.RecyclerView
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
+import com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel
+import com.aptenobytes.bob.feature.wish.presentation.model.toDomainModel
 import com.aptenobytes.bob.library.base.presentation.extension.setOnDebouncedClickListener
-import com.aptenobytes.bob.library.base.recyclerview.loadmore.adapter.BasicLoadingViewHolder
-import com.aptenobytes.bob.library.base.recyclerview.loadmore.adapter.RecyclerViewLoadMoreAdapter
-import com.aptenobytes.bob.library.base.recyclerview.loadmore.adapter.loadMoreAdapter
+import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapter.BasicLoadingViewHolder
+import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapter.RecyclerViewLoadMoreAdapter
+import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapter.loadMoreAdapter
 
 
 fun wishesAdapter(

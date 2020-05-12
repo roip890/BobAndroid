@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.SetWishStatusFragment
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewHolder
-import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewModel
-import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.toViewModel
+import com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel
+import com.aptenobytes.bob.feature.wish.presentation.model.toViewModel
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.wishesAdapter
 import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsFragment
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
-import com.aptenobytes.bob.library.base.recyclerview.builder.recycleView
-import com.aptenobytes.bob.library.base.recyclerview.loadmore.adapter.RecyclerViewLoadMoreAdapter
-import com.aptenobytes.bob.library.base.recyclerview.loadmore.listener.RecyclerViewLoadMoreScrollListener
+import com.aptenobytes.bob.library.base.presentation.recyclerview.builder.recycleView
+import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapter.RecyclerViewLoadMoreAdapter
+import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.listener.RecyclerViewLoadMoreScrollListener
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import com.mikepenz.iconics.utils.paddingDp
@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
 
 class WishListFragment : BaseContainerFragment(), WishListView {
@@ -84,18 +83,19 @@ class WishListFragment : BaseContainerFragment(), WishListView {
             lifecycleOwner = viewLifecycleOwner,
             onDebouncedClickListener = {wish ->
                 wish?.let {
-                    val setWishStatusFragment = SetWishStatusFragment.newInstance(
-                        wish = wish,
-                        onChangeStatusListener = {wishAfterChange ->
-                            this.adapter.items.forEachIndexed {index, wishFromList ->
-                                if (wishFromList?.id?.value == wish.id) {
-                                    wishFromList.status.value = wishAfterChange?.status
-                                }
-                                this.adapter.notifyItemChanged(index)
-                            }
-                        }
-                    )
-                    setWishStatusFragment.show(parentFragmentManager, SetWishStatusFragment.TAG)
+                    viewModel.navigateToWishDetail(wishId = it.id)
+//                    val setWishStatusFragment = SetWishStatusFragment.newInstance(
+//                        wish = wish,
+//                        onChangeStatusListener = {wishAfterChange ->
+//                            this.adapter.items.forEachIndexed {index, wishFromList ->
+//                                if (wishFromList?.id?.value == wish.id) {
+//                                    wishFromList.status.value = wishAfterChange?.status
+//                                }
+//                                this.adapter.notifyItemChanged(index)
+//                            }
+//                        }
+//                    )
+//                    setWishStatusFragment.show(parentFragmentManager, SetWishStatusFragment.TAG)
                 }
             }
         )
@@ -143,7 +143,7 @@ class WishListFragment : BaseContainerFragment(), WishListView {
 
     @ExperimentalCoroutinesApi
     override fun intents() = merge(
-        flowOf(WishListIntent.InitialIntent(index = 0, limit = loadAmount))
+        flowOf(WishListIntent.GetWishListIntent(index = 0, limit = loadAmount, refresh = true))
     )
 
     private fun render(viewState: WishListViewState) {

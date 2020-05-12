@@ -83,5 +83,8 @@ dependencies {
     implementation(LibraryDependency.MOSHI_ADAPTERS)
     kapt(LibraryDependency.MOSHI_CODE_GEN)
 
+    // circle image view
+    implementation(LibraryDependency.CIRCLE_IMAGE_VIEW)
+
     addTestDependencies()
 }

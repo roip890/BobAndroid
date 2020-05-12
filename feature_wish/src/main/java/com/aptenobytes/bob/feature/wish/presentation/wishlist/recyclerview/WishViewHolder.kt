@@ -13,18 +13,16 @@ import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentWishListItemBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import timber.log.Timber
+import com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel
 
 class WishViewHolder(val context: Context, val binding: FragmentWishListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    private val iconUrlObserver = Observer<String?> { iconUrl ->
-        updateIcon(iconUrl = iconUrl)
-    }
 
     fun bind(wish: WishViewModel) {
         binding.viewModel = wish
         binding.lifecycleOwner?.let { lifecycleOwner ->
-            wish.iconUrl.observe(lifecycleOwner, iconUrlObserver)
+            wish.iconUrl.observe(lifecycleOwner, Observer<String?> { iconUrl ->
+                updateIcon(iconUrl = iconUrl)
+            })
             wish.status.observe(lifecycleOwner, Observer {status ->
                 updateStatus(wish = wish, status = status)
             })

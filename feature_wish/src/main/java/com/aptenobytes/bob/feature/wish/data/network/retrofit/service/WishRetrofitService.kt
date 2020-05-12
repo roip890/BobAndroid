@@ -10,7 +10,7 @@ internal interface WishRetrofitService {
     @GET("./WishManagement/services/wishes/getPage?")
     suspend fun getWishesAsync(
 
-        @Query("id") wishId: Long? = null,
+        @Query("wishId") wishId: Long? = null,
 
         @Query("user") userId: Long? = null,
         @Query("guest") guestId: Long? = null,

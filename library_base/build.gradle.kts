@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+
     api(LibraryDependency.KOTLIN)
     api(LibraryDependency.KOTLIN_REFLECT)
 
@@ -78,10 +79,14 @@ dependencies {
     api(LibraryDependency.MATERIAL)
     api(LibraryDependency.K_ANDROID)
 
+    // circle image view
+    implementation(LibraryDependency.CIRCLE_IMAGE_VIEW)
+
     // navigation
     api(LibraryDependency.NAVIGATION_FRAGMENT_KTX)
     api(LibraryDependency.NAVIGATION_UI_KTX)
     api(LibraryDependency.NAVIGATION_RUNTIME)
+    api(LibraryDependency.NAVIGATION_DYNAMIC_FEATURE_FRAGMENT_KTX)
 
     // material dialog
     implementation(LibraryDependency.MATERIAL_DIALOGS)

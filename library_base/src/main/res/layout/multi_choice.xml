@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.aptenobytes.bob.library.base.form.elements.MultiChoiceElement" />
+            type="com.aptenobytes.bob.library.base.presentation.form.elements.MultiChoiceElement" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

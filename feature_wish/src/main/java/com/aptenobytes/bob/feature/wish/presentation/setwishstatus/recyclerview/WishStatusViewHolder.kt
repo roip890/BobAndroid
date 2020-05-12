@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aptenobytes.bob.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentSetWishStatusItemBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewModel
 
 
 class WishStatusViewHolder(val context: Context, val binding: FragmentSetWishStatusItemBinding) : RecyclerView.ViewHolder(binding.root) {

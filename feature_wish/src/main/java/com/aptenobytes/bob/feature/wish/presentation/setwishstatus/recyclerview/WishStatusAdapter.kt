@@ -6,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.library.base.presentation.extension.setOnDebouncedClickListener
-import com.aptenobytes.bob.library.base.recyclerview.adapter.RecyclerViewAdapter
-import com.aptenobytes.bob.library.base.recyclerview.adapter.adapter
+import com.aptenobytes.bob.library.base.presentation.recyclerview.adapter.RecyclerViewAdapter
+import com.aptenobytes.bob.library.base.presentation.recyclerview.adapter.adapter
 
 fun wishStatusAdapter(
     lifecycleOwner: LifecycleOwner,

@@ -1,8 +1,10 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishlist
 
 import androidx.lifecycle.viewModelScope
+import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishesListFromSettingsUseCase
 import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishesListUseCase
 import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsResult
+import com.aptenobytes.bob.library.base.presentation.navigation.NavManager
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -14,7 +16,9 @@ import timber.log.Timber
 @FlowPreview
 @ExperimentalCoroutinesApi
 class WishListViewModel(
-    private val getWishesListUseCase: GetWishesListUseCase
+    private val navManager: NavManager,
+    private val getWishesListUseCase: GetWishesListUseCase,
+    private val getWishesListFromSettingsUseCase: GetWishesListFromSettingsUseCase
 ) : BaseViewModel<WishListViewState, WishListAction>(WishListViewState.initial()) {
 
     private val intentChannel = BroadcastChannel<WishListIntent>(capacity = Channel.CONFLATED)
@@ -25,10 +29,7 @@ class WishListViewModel(
     init {
         val intentFlow = intentChannel.asFlow()
         merge(
-            intentFlow.filterIsInstance<WishListIntent.InitialIntent>().take(1),
-            intentFlow.filterNot {
-                it is WishListIntent.InitialIntent
-            }
+            intentFlow
         )
             .toActionFlow()
             .processResult()
@@ -38,12 +39,6 @@ class WishListViewModel(
 
     private fun <T: WishListIntent> Flow<T>.toActionFlow(): Flow<WishListAction> {
         return merge(
-            filterIsInstance<WishListIntent.InitialIntent>()
-                .flatMapConcat { flow {
-                    Timber.v("filterIsInstance")
-                    logAction(WishListAction.GetWishListAction(it.index, it.limit, true))
-                    emit(WishListAction.GetWishListAction(it.index, it.limit, true))
-                } },
             filterIsInstance<WishListIntent.GetWishListIntent>()
                 .flatMapConcat { flow {
                     logAction(WishListAction.GetWishListAction(it.index, it.limit, it.refresh))
@@ -63,7 +58,7 @@ class WishListViewModel(
 
     private fun processGetWishList(index: Int, limit: Int, refresh: Boolean): Flow<WishListResult.GetWishListResult> {
         return flow {
-            emit(getWishesListUseCase.execute(index, limit))
+            emit(getWishesListFromSettingsUseCase.execute(index, limit))
         }
             .map {
                 WishListResult.GetWishListResult.Success(it, refresh) as WishListResult.GetWishListResult
@@ -100,7 +95,10 @@ class WishListViewModel(
         }
     }
 
+    // navigation
+    fun navigateToWishDetail(wishId: Long) {
+        val navDirections = WishListFragmentDirections.actionWishListToWishDetail(wishId)
+        navManager.navigate(navDirections)
+    }
 
 }
-
-

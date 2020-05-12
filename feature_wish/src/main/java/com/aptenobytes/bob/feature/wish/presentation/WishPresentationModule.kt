@@ -4,6 +4,7 @@ import com.aptenobytes.bob.feature.wish.FEATURE_NAME
 import org.kodein.di.Kodein
 import androidx.fragment.app.Fragment
 import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.SetWishStatusViewModel
+import com.aptenobytes.bob.feature.wish.presentation.wishdetail.WishDetailViewModel
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListViewModel
 import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsViewModel
 import com.aptenobytes.bob.library.base.di.KotlinViewModelProvider
@@ -24,14 +25,19 @@ internal val presentationModule = Kodein.Module("${FEATURE_NAME}PresentationModu
         KotlinViewModelProvider.of(context) { WishSettingsViewModel(instance(), instance(), instance()) }
     }
 
-    // All Wishes
-    bind<WishListViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {
-        KotlinViewModelProvider.of(context) { WishListViewModel(instance()) }
-    }
-
-    // All Wishes
+    // Set Status
     bind<SetWishStatusViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {
         KotlinViewModelProvider.of(context) { SetWishStatusViewModel(instance()) }
+    }
+
+    // Wish List
+    bind<WishListViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {
+        KotlinViewModelProvider.of(context) { WishListViewModel(instance(), instance(), instance()) }
+    }
+
+    // Wish Details
+    bind<WishDetailViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {
+        KotlinViewModelProvider.of(context) { WishDetailViewModel(instance(), instance()) }
     }
 
 }

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.aptenobytes.bob.library.base.form.elements.EmptyElement" />
+            type="com.aptenobytes.bob.library.base.presentation.form.elements.EmptyElement" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -22,8 +22,8 @@ import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.recyclerview.
 import com.aptenobytes.bob.library.base.extensions.ui.action
 import com.aptenobytes.bob.library.base.extensions.ui.snack
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
-import com.aptenobytes.bob.library.base.recyclerview.adapter.RecyclerViewAdapter
-import com.aptenobytes.bob.library.base.recyclerview.builder.recycleView
+import com.aptenobytes.bob.library.base.presentation.recyclerview.adapter.RecyclerViewAdapter
+import com.aptenobytes.bob.library.base.presentation.recyclerview.builder.recycleView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.pawegio.kandroid.visible

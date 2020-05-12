@@ -20,8 +20,9 @@ abstract class InjectionFragment : Fragment(), KodeinAware {
 
     final override val kodein: Kodein by kodein()
 
-    final override val kodeinTrigger: KodeinTrigger?
-        get() = if (BuildConfig.DEBUG) KodeinTrigger() else super.kodeinTrigger
+    final override val kodeinTrigger: KodeinTrigger? by lazy {
+        if (BuildConfig.DEBUG) KodeinTrigger() else super.kodeinTrigger
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
