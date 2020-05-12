@@ -4,14 +4,16 @@ import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.aptenobytes.bob.library.base.presentation.mvi.BaseViewState
 
 data class WishListViewState(
+    val refresh: Boolean = false,
     val isLoading: Boolean = false,
     val wishes: List<WishDomainModel> = emptyList(),
     val error: Throwable? = null
 ) : BaseViewState {
     companion object {
         fun initial() = WishListViewState(
-            wishes = emptyList(),
+            refresh = false,
             isLoading = false,
+            wishes = emptyList(),
             error = null
         )
     }

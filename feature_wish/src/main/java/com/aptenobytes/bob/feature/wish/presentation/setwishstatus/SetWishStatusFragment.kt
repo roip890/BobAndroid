@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +27,7 @@ import com.aptenobytes.bob.library.base.recyclerview.builder.recycleView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.pawegio.kandroid.visible
-import kotlinx.android.synthetic.main.fragment_wish_list.*
+import kotlinx.android.synthetic.main.fragment_set_wish_status.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOf
@@ -112,7 +111,7 @@ class SetWishStatusFragment(
         ).apply {
             setHasFixedSize(true)
         }
-        adapter.items = listOf(
+        adapter.items = arrayListOf(
             WishStatusType.WAITING.toViewModel(),
             WishStatusType.PENDING.toViewModel(),
             WishStatusType.IN_PROGRESS.toViewModel(),

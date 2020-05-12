@@ -13,7 +13,7 @@ fun wishStatusAdapter(
     lifecycleOwner: LifecycleOwner,
     onDebouncedClickListener: ((status: WishStatusType?) -> Unit)? = null
     ): RecyclerViewAdapter<WishStatusViewModel, WishStatusViewHolder> {
-    return adapter(
+    return adapter<WishStatusViewModel, WishStatusViewHolder>(
         items = arrayListOf(),
         withGetItemCount = { adapter -> adapter.items.size },
         withGetItemViewType = { _, _ -> 0 },
@@ -27,8 +27,8 @@ fun wishStatusAdapter(
             }
         },
         withOnBindViewHolder = { adapter, holder, position ->
-            holder.itemView.setOnDebouncedClickListener { onDebouncedClickListener?.invoke(adapter.items[position].toDomainModel()) }
-            holder.bind(adapter.items[position])
+            holder.itemView.setOnDebouncedClickListener { onDebouncedClickListener?.invoke(adapter.items[position]?.toDomainModel()) }
+            adapter.items[position]?.let { holder.bind(it) }
         }
     )
 }

@@ -3,20 +3,20 @@ package com.aptenobytes.bob.feature.wish.data.network.enums
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.squareup.moshi.Json
 
-enum class WishStatusNetworkDataType {
+enum class WishStatusNetworkDataType(val value: String) {
 
     @field:Json(name = "none")
-    NONE,
+    NONE(value = "none"),
     @field:Json(name = "waiting")
-    WAITING,
+    WAITING(value = "waiting"),
     @field:Json(name = "pending")
-    PENDING,
+    PENDING(value = "pending"),
     @field:Json(name = "in_progress")
-    IN_PROGRESS,
+    IN_PROGRESS(value = "in_progress"),
     @field:Json(name = "done")
-    DONE,
+    DONE(value = "done"),
     @field:Json(name = "")
-    UNKNOWN
+    UNKNOWN(value = "")
 }
 
 fun WishStatusNetworkDataType.toDomainEnum() = WishStatusType.valueOf(this.name)

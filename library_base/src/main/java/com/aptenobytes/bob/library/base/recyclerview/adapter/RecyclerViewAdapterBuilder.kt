@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 @DslMarker
 annotation class FormDsl
 fun <T, VH : RecyclerView.ViewHolder> adapter(
-    items: ArrayList<T>,
+    adapter: RecyclerViewAdapter<T, VH> = RecyclerViewAdapter<T, VH>(),
+    items: ArrayList<T?>,
     withOnCreateViewHolder: (adapter: RecyclerViewAdapter<T, VH>, parent: ViewGroup, viewType: Int) -> VH,
     withOnBindViewHolder: (adapter: RecyclerViewAdapter<T, VH>, holder: VH, position: Int) -> Unit,
     withGetItemCount: (adapter: RecyclerViewAdapter<T, VH>) -> Int,
     withGetItemViewType: (adapter: RecyclerViewAdapter<T, VH>, position: Int) -> Int): RecyclerViewAdapter<T, VH> {
-    val adapter = RecyclerViewAdapter<T, VH>()
     adapter.let {
         it.items = items
         it.withOnCreateViewHolder = withOnCreateViewHolder

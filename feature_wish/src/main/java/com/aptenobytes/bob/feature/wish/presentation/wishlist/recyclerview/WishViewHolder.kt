@@ -13,6 +13,7 @@ import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentWishListItemBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
+import timber.log.Timber
 
 class WishViewHolder(val context: Context, val binding: FragmentWishListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -41,6 +42,7 @@ class WishViewHolder(val context: Context, val binding: FragmentWishListItemBind
             iconUrl?.let {
                 binding.wishImage.load(iconUrl) {
                     crossfade(true)
+                    placeholder(R.drawable.ic_image)
                     error(R.drawable.ic_image)
                     transformations(RoundedCornersTransformation(10F))
                 }

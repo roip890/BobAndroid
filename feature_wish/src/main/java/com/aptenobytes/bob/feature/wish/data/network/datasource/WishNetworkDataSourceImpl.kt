@@ -1,13 +1,21 @@
 package com.aptenobytes.bob.feature.wish.data.network.datasource
 
+import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
+import com.aptenobytes.bob.feature.wish.data.network.constants.WISH_DATE_FORMAT
+import com.aptenobytes.bob.feature.wish.data.network.enums.toNetworkEnum
 import com.aptenobytes.bob.feature.wish.data.network.model.toDomainModel
 import com.aptenobytes.bob.feature.wish.data.network.model.toNetworkModel
 import com.aptenobytes.bob.feature.wish.data.network.retrofit.request.SetWishStatusRequest
 import com.aptenobytes.bob.feature.wish.data.network.retrofit.request.SetWishStatusRequestWrapper
 import com.aptenobytes.bob.feature.wish.data.network.retrofit.service.WishRetrofitService
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishNetworkDataSource
+import com.aptenobytes.bob.feature.wish.domain.enums.wishsort.WishSortType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
+import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 internal class WishNetworkDataSourceImpl(
     private val wishRetrofitService: WishRetrofitService
@@ -21,12 +29,12 @@ internal class WishNetworkDataSourceImpl(
         guestId: Long?,
         bookingId: Long?,
 
-        minTimestamp: String?,
-        maxTimestamp: String?,
-        statuses: ArrayList<String>?,
-        departments: ArrayList<String>?,
+        minTimestamp: Date?,
+        maxTimestamp: Date?,
+        statuses: ArrayList<WishStatusType>?,
+        departments: ArrayList<DepartmentDomainModel>?,
 
-        sort: String?,
+        sort: WishSortType?,
         index: Int?,
         limit: Int?
 
@@ -36,11 +44,15 @@ internal class WishNetworkDataSourceImpl(
             userId = userId,
             guestId = guestId,
             bookingId = bookingId,
-            minTimestamp = minTimestamp,
-            maxTimestamp = maxTimestamp,
-            statuses = statuses,
-            departments = departments,
-            sort = sort,
+            minTimestamp = minTimestamp.toNetworkFormat(),
+            maxTimestamp = maxTimestamp.toNetworkFormat(),
+            statuses = statuses?.map {
+                it.toNetworkEnum().value
+            }?.toArrayList(),
+            departments = departments?.map {
+                it.name
+            }?.toArrayList(),
+            sort = sort?.toNetworkEnum()?.value,
             index = index,
             limit = limit
         )
@@ -69,4 +81,10 @@ internal class WishNetworkDataSourceImpl(
             ?.firstOrNull()
     }
 
+}
+
+fun Date?.toNetworkFormat(): String? {
+    return this?.let {
+        SimpleDateFormat(WISH_DATE_FORMAT, Locale.ENGLISH).format(this)
+    }
 }

@@ -6,10 +6,10 @@ import com.aptenobytes.bob.library.base.recyclerview.adapter.RecyclerViewAdapter
 
 @DslMarker
 annotation class RecyclerViewDsl
-fun <T, VH : RecyclerView.ViewHolder> recycleView(
+fun <VH : RecyclerView.ViewHolder> recycleView(
     recyclerView: RecyclerView,
     layoutManager: RecyclerView.LayoutManager,
-    adapter: RecyclerViewAdapter<T, VH>): RecyclerView {
+    adapter: RecyclerView.Adapter<VH>): RecyclerView {
     recyclerView.let {
         it.itemAnimator = DefaultItemAnimator()
         it.layoutManager = layoutManager

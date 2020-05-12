@@ -13,24 +13,25 @@ import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishV
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.toViewModel
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.wishesAdapter
 import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsFragment
+import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
-import com.aptenobytes.bob.library.base.recyclerview.adapter.RecyclerViewAdapter
 import com.aptenobytes.bob.library.base.recyclerview.builder.recycleView
+import com.aptenobytes.bob.library.base.recyclerview.loadmore.adapter.RecyclerViewLoadMoreAdapter
+import com.aptenobytes.bob.library.base.recyclerview.loadmore.listener.RecyclerViewLoadMoreScrollListener
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import com.mikepenz.iconics.utils.paddingDp
 import com.mikepenz.iconics.utils.sizeDp
 import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.fragment_wish_list.*
-import kotlinx.android.synthetic.main.fragment_wish_list.progressBar
-import kotlinx.android.synthetic.main.fragment_wish_list.recyclerView
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import org.kodein.di.generic.instance
+import timber.log.Timber
+
 
 class WishListFragment : BaseContainerFragment(), WishListView {
 
@@ -40,7 +41,10 @@ class WishListFragment : BaseContainerFragment(), WishListView {
 
     override val layoutResourceId = R.layout.fragment_wish_list
 
-    private lateinit var adapter: RecyclerViewAdapter<WishViewModel, WishViewHolder>
+    private lateinit var adapter: RecyclerViewLoadMoreAdapter<WishViewModel, WishViewHolder>
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var loadMoreListener: RecyclerViewLoadMoreScrollListener
+    private var loadAmount = 20
 
     private val stateObserver = Observer<WishListViewState> { render(it) }
 
@@ -49,7 +53,6 @@ class WishListFragment : BaseContainerFragment(), WishListView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireContext()
-        progressBar.visible = false
         setupSwipeRefreshLayout()
         setupWishesList()
         setupFloatingActionButton()
@@ -62,23 +65,33 @@ class WishListFragment : BaseContainerFragment(), WishListView {
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.colorAccent))
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.backgroundInverseColor))
         swipeRefreshLayout.setOnRefreshListener {
-            flowOf(WishListIntent.GetWishListIntent)
-                .onEach { viewModel.processIntent(it) }
-                .launchIn(lifecycleScope)
+            viewModel.stateLiveData.value?.isLoading?.let { isLoading ->
+                if (!isLoading) {
+                    this.loadMoreListener.keepLoad = true
+                    flowOf(WishListIntent.GetWishListIntent(index = 0, limit = loadAmount, refresh = true))
+                        .onEach { viewModel.processIntent(it) }
+                        .launchIn(lifecycleScope)
+                }
+            }
         }
     }
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     private fun setupWishesList() {
         val context = requireContext()
-                adapter = wishesAdapter(
-                lifecycleOwner = viewLifecycleOwner,
+        adapter = wishesAdapter(
+            lifecycleOwner = viewLifecycleOwner,
             onDebouncedClickListener = {wish ->
                 wish?.let {
                     val setWishStatusFragment = SetWishStatusFragment.newInstance(
                         wish = wish,
-                        onChangeStatusListener = {
-                            this.adapter.items = this.adapter.items.map {
-                                if (it.id.value == wish.id) { return@map wish.toViewModel() } else { return@map it }
+                        onChangeStatusListener = {wishAfterChange ->
+                            this.adapter.items.forEachIndexed {index, wishFromList ->
+                                if (wishFromList?.id?.value == wish.id) {
+                                    wishFromList.status.value = wishAfterChange?.status
+                                }
+                                this.adapter.notifyItemChanged(index)
                             }
                         }
                     )
@@ -86,12 +99,23 @@ class WishListFragment : BaseContainerFragment(), WishListView {
                 }
             }
         )
+        layoutManager = LinearLayoutManager(context)
+        loadMoreListener = RecyclerViewLoadMoreScrollListener(layoutManager as LinearLayoutManager).apply {
+            this.onLoadMore = {
+                loadMoreListener.keepLoad = true
+                adapter.addLoadingView()
+                flowOf(WishListIntent.GetWishListIntent(index = adapter.itemCount, limit = loadAmount, refresh = false))
+                    .onEach { viewModel.processIntent(it) }
+                    .launchIn(lifecycleScope)
+            }
+        }
         recycleView(
             recyclerView,
-            LinearLayoutManager(context),
+            layoutManager,
             adapter
         ).apply {
             setHasFixedSize(true)
+            addOnScrollListener(loadMoreListener)
         }
     }
 
@@ -119,12 +143,39 @@ class WishListFragment : BaseContainerFragment(), WishListView {
 
     @ExperimentalCoroutinesApi
     override fun intents() = merge(
-        flowOf(WishListIntent.InitialIntent)
+        flowOf(WishListIntent.InitialIntent(index = 0, limit = loadAmount))
     )
 
     private fun render(viewState: WishListViewState) {
-        adapter.items = viewState.wishes.map { it.toViewModel() }
-//        progressBar.visible = viewState.isLoading
+        if (viewState.error == null && !viewState.isLoading) {
+            if (viewState.wishes.isEmpty()) {
+                this.loadMoreListener.keepLoad = false
+                this.adapter.removeLoadingView()
+            } else {
+                val previousItemCount = adapter.items.size
+                if (viewState.refresh) {
+                    adapter.items = viewState.wishes.map { it.toViewModel() }.toArrayList()
+                } else {
+                    adapter.removeLoadingView()
+                    adapter.items.addAll(viewState.wishes
+                        .filter { newWish -> !adapter.items.map { it?.id?.value }.contains(newWish.id) }.map {
+                            it.toViewModel()
+                        }
+                    )
+                    adapter.notifyItemRangeInserted(
+                        previousItemCount.coerceAtLeast(0) - 1,
+                        (adapter.items.size - previousItemCount).coerceAtLeast(0)
+                    )
+                }
+                // keep fill the screen
+                if (layoutManager.findLastCompletelyVisibleItemPosition() == -1
+                    || (previousItemCount.coerceAtMost(layoutManager.findLastCompletelyVisibleItemPosition())
+                            + (adapter.items.size - previousItemCount).coerceAtLeast(0) >= adapter.itemCount - 1)) {
+                    loadMoreListener.onLoadMore?.invoke()
+                }
+            }
+        }
+        this.loadMoreListener.isLoading = viewState.isLoading
         errorAnimation.visible = viewState.error != null
         if (!viewState.isLoading) {
             swipeRefreshLayout.isRefreshing = false

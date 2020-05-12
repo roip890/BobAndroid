@@ -14,7 +14,7 @@ import com.aptenobytes.bob.library.base.recyclerview.adapter.adapter
 fun formAdapter(
     context: Context,
     lifecycleOwner: LifecycleOwner
-): RecyclerViewAdapter<BaseFormElement<*>, BaseFormElementViewHolder> {
+): RecyclerViewAdapter<BaseFormElement<*>?, BaseFormElementViewHolder> {
     return adapter(
         items = arrayListOf(),
         withGetItemCount = { adapter -> adapter.items.size },
@@ -60,7 +60,7 @@ fun formAdapter(
             }
         },
         withOnBindViewHolder = { adapter, holder, position ->
-            holder.bind(adapter.items[position])
+            adapter.items[position]?.let { holder.bind(it) }
         }
     )
 }

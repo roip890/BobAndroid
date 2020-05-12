@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 @FormDsl
 class RecyclerViewAdapterBuildHelper<T, VH: RecyclerView.ViewHolder>
 @JvmOverloads constructor(
-    var items: ArrayList<T>,
+    var items: ArrayList<T?>,
     var withOnCreateViewHolder: (adapter: RecyclerViewAdapter<T, VH>, parent: ViewGroup, viewType: Int) -> VH,
     var withOnBindViewHolder: (adapter: RecyclerViewAdapter<T, VH>, holder: VH, position: Int) -> Unit,
     var withGetItemCount: (adapter: RecyclerViewAdapter<T, VH>) -> Int,
@@ -17,9 +17,7 @@ class RecyclerViewAdapterBuildHelper<T, VH: RecyclerView.ViewHolder>
         initializeFormBuildHelper()
     }
 
-
     lateinit var adapter: RecyclerViewAdapter<T, VH>
-
 
     private fun initializeFormBuildHelper() {
         this.adapter = RecyclerViewAdapter()

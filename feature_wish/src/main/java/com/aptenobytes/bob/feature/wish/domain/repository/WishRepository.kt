@@ -1,8 +1,12 @@
 package com.aptenobytes.bob.feature.wish.domain.repository
 
+import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
+import com.aptenobytes.bob.feature.wish.domain.enums.wishsort.WishSortType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface WishRepository {
 
@@ -14,12 +18,12 @@ interface WishRepository {
         guestId: Long? = null,
         bookingId: Long? = null,
 
-        minTimestamp: String? = null,
-        maxTimestamp: String? = null,
-        statuses: ArrayList<String>? = null,
-        departments: ArrayList<String>? = null,
+        minTimestamp: Date? = null,
+        maxTimestamp: Date? = null,
+        statuses: ArrayList<WishStatusType>? = arrayListOf(),
+        departments: ArrayList<DepartmentDomainModel>? = arrayListOf(),
 
-        sort: String? = null,
+        sort: WishSortType? = null,
         index: Int? = 0,
         limit: Int? = 20
     ): List<WishDomainModel>

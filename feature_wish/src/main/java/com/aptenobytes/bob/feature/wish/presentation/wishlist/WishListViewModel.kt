@@ -41,32 +41,32 @@ class WishListViewModel(
             filterIsInstance<WishListIntent.InitialIntent>()
                 .flatMapConcat { flow {
                     Timber.v("filterIsInstance")
-                    logAction(WishListAction.GetWishListAction)
-                    emit(WishListAction.GetWishListAction)
+                    logAction(WishListAction.GetWishListAction(it.index, it.limit, true))
+                    emit(WishListAction.GetWishListAction(it.index, it.limit, true))
                 } },
             filterIsInstance<WishListIntent.GetWishListIntent>()
                 .flatMapConcat { flow {
-                    logAction(WishListAction.GetWishListAction)
-                    emit(WishListAction.GetWishListAction)
+                    logAction(WishListAction.GetWishListAction(it.index, it.limit, it.refresh))
+                    emit(WishListAction.GetWishListAction(it.index, it.limit, it.refresh))
                 } }
         )
     }
 
     private fun <T: WishListAction> Flow<T>.processResult(): Flow<WishListResult> {
         return merge(
-            filterIsInstance<WishListAction>()
+            filterIsInstance<WishListAction.GetWishListAction>()
                 .flatMapConcat {
-                    processGetWishList()
+                    processGetWishList(it.index, it.limit, it.refresh)
                 }
         )
     }
 
-    private fun processGetWishList(): Flow<WishListResult.GetWishListResult> {
+    private fun processGetWishList(index: Int, limit: Int, refresh: Boolean): Flow<WishListResult.GetWishListResult> {
         return flow {
-            emit(getWishesListUseCase.execute())
+            emit(getWishesListUseCase.execute(index, limit))
         }
             .map {
-                WishListResult.GetWishListResult.Success(it) as WishListResult.GetWishListResult
+                WishListResult.GetWishListResult.Success(it, refresh) as WishListResult.GetWishListResult
             }
             .onStart {
                 emit(WishListResult.GetWishListResult.Loading)
@@ -85,6 +85,7 @@ class WishListViewModel(
                     error = null
                 )
                 is WishListResult.GetWishListResult.Success -> state.copy(
+                    refresh = it.refresh,
                     isLoading = false,
                     wishes = it.wishes,
                     error = null
