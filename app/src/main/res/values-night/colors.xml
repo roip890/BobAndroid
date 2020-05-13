@@ -10,4 +10,9 @@
     <color name="textColor">@color/white</color>
     <color name="toolbarTitleColor">@color/white</color>
     <color name="toolbarSubtitleColor">@color/white</color>
+
+    <!--    login-->
+    <color name="loginPrimaryBackgroundColor">@color/sea_5</color>
+    <color name="loginSecondaryBackgroundColor">@color/sea_3</color>
+
 </resources>

@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-// text input layout background
+// floating action button background
 @BindingAdapter("fab_background_color")
 fun setFloatingActionButtonBackgroundColor(view: FloatingActionButton, backgroundColor: Int?) {
     backgroundColor?.let {

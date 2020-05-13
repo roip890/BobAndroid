@@ -1,6 +1,7 @@
 package com.aptenobytes.bob.app.presentation
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.plusAssign
 import androidx.navigation.ui.setupWithNavController
@@ -21,6 +22,8 @@ class NavHostActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 //        // get fragment
 //        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment)!!

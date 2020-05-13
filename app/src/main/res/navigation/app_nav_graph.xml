@@ -2,21 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/app_navigation_graph"
-    app:startDestination="@id/featureWishNavGraph">
+    app:startDestination="@id/loginFragment">
 
-    <include-dynamic
-        android:id="@+id/featureWishNavGraph"
-        app:graphResName="feature_wish_nav_graph"
-        app:moduleName="feature_wish"/>
+    <fragment android:id="@+id/loginFragment"
+        android:name="com.aptenobytes.bob.app.presentation.login.LoginFragment"
+        android:label="Wishes"
+        app:moduleName="feature_wish">
 
-    <include-dynamic
-        android:id="@+id/featureFavouriteNavGraph"
-        app:graphResName="feature_favourite_nav_graph"
-        app:moduleName="feature_favourite"/>
+        <action
+            android:id="@+id/actionWishListToWishDetail"
+            app:destination="@id/bottomNavGraph"/>
 
-    <include-dynamic
-        android:id="@+id/featureProfileNavGraph"
-        app:graphResName="feature_profile_nav_graph"
-        app:moduleName="feature_profile"/>
+    </fragment>
+
+    <include
+        android:id="@+id/bottomNavGraph"
+        app:graph="@navigation/bottom_nav_graph"/>
 
 </navigation>

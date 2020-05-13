@@ -11,4 +11,14 @@
     <color name="textColor">@color/dark_blue</color>
     <color name="toolbarTitleColor">@color/white</color>
     <color name="toolbarSubtitleColor">@color/white</color>
+
+    <!--    login-->
+    <color name="loginPrimaryBackgroundColor">@color/sea_3</color>
+    <color name="loginSecondaryBackgroundColor">@color/sea_1</color>
+
+    <!--    social-->
+    <color name="facebookColor">#3b5998</color>
+    <color name="twitterColor">#00acee</color>
+    <color name="googlePlusColor">#db4a39</color>
+
 </resources>

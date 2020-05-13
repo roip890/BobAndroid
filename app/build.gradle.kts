@@ -131,6 +131,12 @@ dependencies {
     implementation(LibraryDependency.MOSHI_ADAPTERS)
     kapt(LibraryDependency.MOSHI_CODE_GEN)
 
+    // iconics
+    implementation(LibraryDependency.ICONICS)
+    implementation(LibraryDependency.ICONICS_GOOGLE_MATERIAL)
+    implementation(LibraryDependency.ICONICS_MATERIAL_DESIGN_ICONIC)
+    implementation(LibraryDependency.ICONICS_FONTAWESOME)
+
     // tests
     addTestDependencies()
 }

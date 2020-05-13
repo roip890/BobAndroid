@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
+import com.aptenobytes.bob.feature.wish.BR
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentWishDetailBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
@@ -69,6 +71,7 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
             binding = FragmentWishDetailBinding.inflate(inflater, null, false).also {
                 Timber.v("onCreateView ${javaClass.simpleName}")
             }
+            binding.lifecycleOwner = viewLifecycleOwner
             binding.root
         }
     }
@@ -142,6 +145,8 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
 
     private fun bindWishViewModel(wish: WishViewModel) {
         binding.viewModel = wish
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.executePendingBindings()
         binding.viewModel?.iconUrl?.observe(viewLifecycleOwner, Observer<String?> { iconUrl ->
             updateIcon(iconUrl = iconUrl)
         })

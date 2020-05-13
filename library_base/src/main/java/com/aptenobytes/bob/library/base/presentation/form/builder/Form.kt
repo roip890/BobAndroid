@@ -72,5 +72,4 @@ class Form
     val value: Map<String?, *>
         get() = this.adapter.items.associate { it?.key?.value to it?.value?.value }
 
-
 }

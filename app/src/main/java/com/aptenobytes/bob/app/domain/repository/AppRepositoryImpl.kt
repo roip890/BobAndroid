@@ -4,6 +4,7 @@ import com.aptenobytes.bob.app.domain.datasource.AppCacheDataSource
 import com.aptenobytes.bob.app.domain.datasource.AppLocalDataSource
 import com.aptenobytes.bob.app.domain.datasource.AppNetworkDataSource
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
+import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 
 class AppRepositoryImpl(
     private val appNetworkDataSource: AppNetworkDataSource,
@@ -16,6 +17,14 @@ class AppRepositoryImpl(
     ): List<DepartmentDomainModel> {
         return appNetworkDataSource.getDepartments(
             hotelId = hotelId
+        )
+    }
+
+    override suspend fun emailLogin(
+        user: UserDomainModel?
+    ): UserDomainModel? {
+        return appNetworkDataSource.emailLogin(
+            user = user
         )
     }
 
