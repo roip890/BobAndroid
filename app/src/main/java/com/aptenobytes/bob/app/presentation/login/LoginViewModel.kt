@@ -1,11 +1,11 @@
 package com.aptenobytes.bob.app.presentation.login
 
-import android.util.Patterns
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.aptenobytes.bob.app.domain.usecase.EmailLoginUseCase
+import com.aptenobytes.bob.library.base.presentation.navigation.NavManager
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -18,22 +18,24 @@ import java.util.regex.Pattern.compile
 @FlowPreview
 @ExperimentalCoroutinesApi
 class LoginViewModel(
+    private val navManager: NavManager,
     private val emailLoginUseCase: EmailLoginUseCase
 ) : BaseViewModel<LoginViewState, LoginAction>(LoginViewState.initial()) {
 
     val email = MutableLiveData<String>()
-    val emailError = MutableLiveData<String>()
+    val emailError = MutableLiveData<String>("")
     val password = MutableLiveData<String>()
-    val passwordError = MutableLiveData<String>()
+    val passwordError = MutableLiveData<String>("")
     val displayError = MutableLiveData<String>()
     val loginFormValid = MediatorLiveData<Boolean>()
 
     companion object {
-        val PASSWORD_PATTERN: Pattern = compile("^(?=.*[0-9])" +
+        val PASSWORD_PATTERN: Pattern = compile("" +
+                "^(?=.*[0-9])" +
                 "(?=.*[a-z])" +
                 "(?=.*[A-Z])" +
-                "(?=\\\\S+\$)" +
-                ".{4,}\$")
+                "(?=\\S+\$)" +
+                ".{8,}")
         val EMAIL_PATTERN: Pattern = compile("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                 "\\@" +
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
@@ -44,18 +46,22 @@ class LoginViewModel(
     }
 
     fun validateEmail(text: String?): String? {
-        return text?.let {
-            if (EMAIL_PATTERN.matcher(text).matches()) null else "Please enter valid email!"
-        } ?: run {
+        return if (text == null || text.isEmpty()) {
             "Email required!"
+        } else if (!EMAIL_PATTERN.matcher(text).matches()) {
+            "Please enter valid email!"
+        } else {
+            null
         }
     }
 
     fun validatePassword(text: String?): String? {
-        return text?.let {
-            if (PASSWORD_PATTERN.matcher(text).matches()) null else "Please enter valid password!"
-        } ?: run {
+        return if (text == null || text.isEmpty()) {
             "Password required!"
+        } else if (!PASSWORD_PATTERN.matcher(text).matches()) {
+            "Please enter valid password!"
+        } else {
+            null
         }
     }
 

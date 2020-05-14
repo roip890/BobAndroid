@@ -1,5 +1,8 @@
 package com.aptenobytes.bob.app.domain.model.user
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class UserDomainModel(
     val id: Long = 0,
 

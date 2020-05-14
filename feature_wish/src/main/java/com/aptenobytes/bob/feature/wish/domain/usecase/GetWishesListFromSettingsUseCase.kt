@@ -1,7 +1,7 @@
 package com.aptenobytes.bob.feature.wish.domain.usecase
 
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 import com.aptenobytes.bob.feature.wish.domain.repository.WishRepository
 
 class GetWishesListFromSettingsUseCase(

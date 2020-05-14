@@ -11,7 +11,7 @@ import org.kodein.di.generic.singleton
 
 internal val domainModule = Kodein.Module("AppDomainModule") {
 
-    bind<AppRepository>() with singleton { AppRepositoryImpl(instance(), instance(), instance()) }
+    bind<AppRepository>() with singleton { AppRepositoryImpl(instance(), instance(), instance(), instance()) }
 
     bind() from singleton { GetDepartmentsListUseCase(instance()) }
 

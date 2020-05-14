@@ -2,7 +2,7 @@ package com.aptenobytes.bob.feature.wish.data.cache.datasource
 
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishCacheDataSource
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 
 class WishCacheDataSourceImpl() : WishCacheDataSource {
 

@@ -10,9 +10,9 @@
         app:moduleName="feature_wish"/>
 
     <include-dynamic
-        android:id="@+id/featureFavouriteNavGraph"
-        app:graphResName="feature_favourite_nav_graph"
-        app:moduleName="feature_favourite"/>
+        android:id="@+id/featureNotificationNavGraph"
+        app:graphResName="feature_notification_nav_graph"
+        app:moduleName="feature_notification"/>
 
     <include-dynamic
         android:id="@+id/featureProfileNavGraph"

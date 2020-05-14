@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.wish.domain.datasource
 
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 
 interface WishSharedPreferencesDataSource {
 

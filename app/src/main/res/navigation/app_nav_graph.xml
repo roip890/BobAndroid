@@ -9,10 +9,6 @@
         android:label="Wishes"
         app:moduleName="feature_wish">
 
-        <action
-            android:id="@+id/actionWishListToWishDetail"
-            app:destination="@id/bottomNavGraph"/>
-
     </fragment>
 
     <include

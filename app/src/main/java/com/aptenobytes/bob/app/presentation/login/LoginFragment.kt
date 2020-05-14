@@ -6,21 +6,30 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.TextPaint
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavGraph
+import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.aptenobytes.bob.R
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
+import com.aptenobytes.bob.app.presentation.NavHostActivity
 import com.aptenobytes.bob.databinding.FragmentLoginBinding
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
 import com.mikepenz.iconics.utils.sizeDp
+import com.pawegio.kandroid.visible
+import kotlinx.android.synthetic.main.activity_nav_host.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -74,8 +83,17 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
         setupForgotPassword()
         setupSocialIcons()
         setupGoToSignUp()
+        setupSubmitButton()
         bindForm()
         bind()
+    }
+
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    private fun setupSubmitButton() {
+        loginSubmitButton.setOnClickListener {
+            submitForm()
+        }
     }
 
     private fun setupForgotPassword() {
@@ -111,7 +129,6 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
         spannableStringBuilder.append(" ")
         spannableStringBuilder.append(signUpSpannable)
         goToSignUp.text = spannableStringBuilder
-        goToSignUp.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun setupSocialIcons() {
@@ -147,10 +164,10 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
             viewModel.passwordError.postValue(viewModel.validatePassword(text))
         })
         viewModel.loginFormValid.addSource(viewModel.emailError) {
-            viewModel.loginFormValid.value = viewModel.passwordError.value == null && it == null
+            viewModel.loginFormValid.value = viewModel.passwordError.value == null && viewModel.emailError.value == null
         }
         viewModel.loginFormValid.addSource(viewModel.passwordError) {
-            viewModel.loginFormValid.value = viewModel.emailError.value == null && it == null
+            viewModel.loginFormValid.value = viewModel.emailError.value == null && viewModel.passwordError.value == null
         }
     }
 
@@ -158,6 +175,10 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
     @FlowPreview
     private fun bind() {
         binding.viewModel = viewModel
+        // dummy
+        binding.viewModel?.email?.postValue("r@r.r")
+        binding.viewModel?.password?.postValue("Aa111111")
+
         viewModel.stateLiveData.observe(viewLifecycleOwner, stateObserver)
         intents()
             .onEach { viewModel.processIntent(it) }
@@ -172,8 +193,21 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
     @FlowPreview
     @ExperimentalCoroutinesApi
     private fun render(viewState: LoginViewState) {
-        viewModel.displayError.postValue(viewState.error?.localizedMessage)
-
+        viewState.user?.let {
+            val activity = activity as? NavHostActivity
+            activity?.let {
+                activity.navHostFragment?.findNavController()?.navInflater?.inflate(R.navigation.bottom_nav_graph)?.let { navGraph ->
+                    activity.navHostFragment.findNavController().graph = navGraph
+                    activity.appBarLayout.visible = true
+                    activity.bottomNav.visible = true
+                }
+            }
+        } ?: run {
+            loginSubmitButton.visible = !viewState.isLoading
+            progressBar.visible = viewState.isLoading
+            loginError.visible = viewState.error != null
+            viewModel.displayError.postValue(viewState.error?.localizedMessage)
+        }
     }
 
     @FlowPreview

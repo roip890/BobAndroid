@@ -92,12 +92,6 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
     }
 
     private fun setupFloatingActionButton() {
-        this.floatingActionButton.setImageDrawable(
-            IconicsDrawable(requireContext(), GoogleMaterial.Icon.gmd_filter).apply {
-                sizeDp = 28
-                paddingDp = 4
-            }
-        )
         this.floatingActionButton.setOnClickListener {
             binding.viewModel?.let { wishViewModel ->
                 val setWishStatusFragment = SetWishStatusFragment.newInstance(

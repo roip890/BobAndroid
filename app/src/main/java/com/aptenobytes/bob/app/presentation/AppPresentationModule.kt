@@ -18,7 +18,7 @@ internal val presentationModule = Kodein.Module("AppPresentationModule") {
 
     // Login
     bind<LoginViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {
-        KotlinViewModelProvider.of(context) { LoginViewModel(instance()) }
+        KotlinViewModelProvider.of(context) { LoginViewModel(instance(), instance()) }
     }
 
 }

@@ -2,13 +2,13 @@
     <string name="app_name">Bob</string>
 
     <!--Dynamic module titles-->
-    <string name="feature_favourite">feature favourite</string>
+    <string name="feature_notification">feature notification</string>
     <string name="feature_profile">feature profile</string>
     <string name="feature_wish">feature wish</string>
     <string name="feature_department">feature department</string>
 
     <!--Bottom menu-->
-    <string name="favorites">Favorites</string>
+    <string name="notification">Notifications</string>
     <string name="profile">Profile</string>
     <string name="wish">Wish</string>
 </resources>

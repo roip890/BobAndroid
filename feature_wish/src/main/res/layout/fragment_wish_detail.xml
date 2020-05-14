@@ -191,20 +191,6 @@
                     android:textStyle="italic"
                     android:textAlignment="textStart"/>
 
-                <TextView
-                    android:id="@+id/wishSmallDepartments"
-                    android:text="@{viewModel.departmentsString}"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginStart="40dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/wishSmallTimestamp"
-                    android:textStyle="italic"
-                    android:textAlignment="textStart"/>
-
                 <View
                     android:id="@+id/wishSmallStatusIcon"
                     android:background="@{viewModel.statusIcon}"

@@ -3,7 +3,7 @@ package com.aptenobytes.bob.feature.wish.presentation.wishsettings
 import androidx.lifecycle.viewModelScope
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.app.domain.usecase.GetDepartmentsListUseCase
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishSettingsUseCase
 import com.aptenobytes.bob.feature.wish.domain.usecase.SetWishSettingsUseCase
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseViewModel

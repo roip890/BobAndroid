@@ -2,7 +2,6 @@ package com.aptenobytes.bob.feature.wish.domain.usecase
 
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
 import com.aptenobytes.bob.feature.wish.domain.repository.WishRepository
 
 class SetWishStatusUseCase(

@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/featureWishNavGraph"
-        android:icon="@drawable/ic_round_person"
+        android:icon="@drawable/ic_round_room_service"
         android:title="@string/wish" />
     <item
-        android:id="@+id/featureFavouriteNavGraph"
+        android:id="@+id/featureProfileNavGraph"
         android:icon="@drawable/ic_round_person"
         android:title="@string/profile" />
     <item
-        android:id="@+id/featureProfileNavGraph"
-        android:title="@string/favorites"
-        android:icon="@drawable/ic_round_favorite"/>
+        android:id="@+id/featureNotificationNavGraph"
+        android:title="@string/notification"
+        android:icon="@drawable/ic_round_notifications"/>
 </menu>

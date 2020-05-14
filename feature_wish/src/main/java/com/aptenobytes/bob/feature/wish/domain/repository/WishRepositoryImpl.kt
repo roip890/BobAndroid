@@ -8,8 +8,7 @@ import com.aptenobytes.bob.feature.wish.domain.datasource.WishSharedPreferencesD
 import com.aptenobytes.bob.feature.wish.domain.enums.wishsort.WishSortType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
-import com.pawegio.kandroid.w
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 import java.util.*
 import kotlin.collections.ArrayList
 

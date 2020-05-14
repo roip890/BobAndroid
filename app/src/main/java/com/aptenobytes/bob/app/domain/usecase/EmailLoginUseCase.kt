@@ -7,6 +7,8 @@ class EmailLoginUseCase(
     private val appRepository: AppRepository
 ) {
     suspend fun execute(user: UserDomainModel?): UserDomainModel? {
-        return appRepository.emailLogin(user = user)
+        return appRepository.setUserSession(
+            user = appRepository.emailLogin(user = user)
+        )
     }
 }

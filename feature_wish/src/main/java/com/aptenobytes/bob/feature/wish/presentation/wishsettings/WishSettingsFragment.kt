@@ -15,8 +15,8 @@ import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.domain.enums.wishsort.WishSortType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.filter.WishFilterDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.filter.WishFilterDomainModel
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
 import com.aptenobytes.bob.library.base.extensions.ui.dpToPx
 import com.aptenobytes.bob.library.base.presentation.form.bindings.classes.marginAll

@@ -9,7 +9,7 @@ object ModuleDependency {
     const val APP = ":app"
     const val FEATURE_WISH = ":feature_wish"
     const val FEATURE_PROFILE = ":feature_profile"
-    const val FEATURE_FAVOURITE = ":feature_favourite"
+    const val FEATURE_NOTIFICATION = ":feature_notification"
     const val LIBRARY_BASE = ":library_base"
     const val LIBRARY_TEST_UTILS = ":library_test_utils"
 

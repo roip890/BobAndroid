@@ -1,19 +1,11 @@
 package com.aptenobytes.bob.feature.wish.data.prefs.datasource
 
 import android.content.SharedPreferences
-import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishSharedPreferencesDataSource
-import com.aptenobytes.bob.feature.wish.domain.enums.wishsort.WishSortType
-import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.filter.WishFilterDomainModel
-import com.squareup.moshi.JsonAdapter
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import timber.log.Timber
-import java.lang.reflect.Type
 
 private const val WISH_SHARED_PREFERENCES_SETTINGS_NAME = "wishSettings"
 

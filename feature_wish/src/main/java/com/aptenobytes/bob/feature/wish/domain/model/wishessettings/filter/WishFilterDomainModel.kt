@@ -1,4 +1,4 @@
-package com.aptenobytes.bob.feature.wish.domain.model.wishsettings.filter
+package com.aptenobytes.bob.feature.wish.domain.model.wishessettings.filter
 
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType

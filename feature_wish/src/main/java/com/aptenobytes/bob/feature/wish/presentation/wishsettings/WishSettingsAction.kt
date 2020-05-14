@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishsettings
 
-import com.aptenobytes.bob.feature.wish.domain.model.wishsettings.WishSettingsDomainModel
+import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 import com.aptenobytes.bob.library.base.presentation.mvi.BaseAction
 
 sealed class WishSettingsAction : BaseAction {
