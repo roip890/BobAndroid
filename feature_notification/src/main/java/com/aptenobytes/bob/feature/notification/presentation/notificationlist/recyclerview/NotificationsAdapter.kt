@@ -22,7 +22,6 @@ fun notificationsAdapter(
         withOnCreateViewHolder = { _, parent, _ ->
             val inflater = LayoutInflater.from(parent.context)
             NotificationViewHolder(
-                parent.context,
                 DataBindingUtil.inflate(inflater, R.layout.fragment_notification_list_item, parent, false)).apply {
                 binding.lifecycleOwner = lifecycleOwner
             }

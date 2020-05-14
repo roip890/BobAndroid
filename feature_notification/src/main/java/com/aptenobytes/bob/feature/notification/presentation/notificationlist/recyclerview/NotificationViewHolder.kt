@@ -1,6 +1,5 @@
 package com.aptenobytes.bob.feature.notification.presentation.notificationlist.recyclerview
 
-import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
@@ -11,7 +10,7 @@ import com.aptenobytes.bob.feature.notification.databinding.FragmentNotification
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NotificationViewHolder(val context: Context, val binding: FragmentNotificationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class NotificationViewHolder(val binding: FragmentNotificationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(notification: NotificationViewModel) {
         binding.viewModel = notification
