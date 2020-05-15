@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@+id/profileFragment">
+    app:startDestination="@+id/profilePageFragment">
 
-    <fragment android:id="@+id/profileFragment"
-        android:name="com.aptenobytes.bob.feature.profile.presentation.profile.ProfileFragment"
+    <fragment android:id="@+id/profilePageFragment"
+        android:name="com.aptenobytes.bob.feature.profile.presentation.profilepage.ProfilePageFragment"
         android:label="Profile"
         app:moduleName="feature_profile"/>
 

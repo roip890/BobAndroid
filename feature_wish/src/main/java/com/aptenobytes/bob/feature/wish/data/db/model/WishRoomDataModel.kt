@@ -17,6 +17,7 @@ import com.aptenobytes.bob.app.data.db.model.user.toDomainModel
 import com.aptenobytes.bob.app.data.db.model.user.toRoomModel
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.squareup.moshi.Json
+import java.util.*
 
 @Entity(
     tableName = "wish_table"
@@ -44,7 +45,7 @@ data class WishRoomDataModel(
     val type: String?,
     @ColumnInfo(name = "insert_ts")
     @field:Json(name = "insertTs")
-    val timeStamp: String?,
+    val timeStamp: Date?,
     @ColumnInfo(name = "wish_icon_url")
     @field:Json(name = "wishIconUrl")
     val iconUrl: String?,
@@ -82,14 +83,14 @@ internal fun WishRoomDataModel.toDomainModel(): WishDomainModel {
 
         guest = guest,
         user = user,
-        bookingId = this.bookingId ?: 0,
+        bookingId = this.bookingId,
 
-        details = this.details ?: "",
-        type = this.type ?: "",
-        timeStamp = this.timeStamp ?: "",
-        iconUrl = this.iconUrl ?: "",
+        details = this.details,
+        type = this.type,
+        timeStamp = this.timeStamp,
+        iconUrl = this.iconUrl,
         status = status,
-        isFavorite = this.isFavorite ?: false,
+        isFavorite = this.isFavorite,
 
         departments = departments ?: listOf(),
         elements = elements ?: listOf()
@@ -114,14 +115,14 @@ internal fun WishDomainModel.toRoomModel(): WishRoomDataModel {
 
         guest = guest,
         user = user,
-        bookingId = this.bookingId ?: 0,
+        bookingId = this.bookingId,
 
-        details = this.details ?: "",
-        type = this.type ?: "",
-        timeStamp = this.timeStamp ?: "",
+        details = this.details,
+        type = this.type,
+        timeStamp = this.timeStamp,
         iconUrl = this.iconUrl ?: "",
         status = status,
-        isFavorite = this.isFavorite ?: false,
+        isFavorite = this.isFavorite,
 
         departments = departments ?: listOf(),
         elements = elements ?: listOf()

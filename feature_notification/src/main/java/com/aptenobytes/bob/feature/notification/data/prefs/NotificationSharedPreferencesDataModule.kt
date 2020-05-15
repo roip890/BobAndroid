@@ -11,8 +11,8 @@ import org.kodein.di.generic.singleton
 
 internal val sharedPreferencesDataModule = Kodein.Module("${FEATURE_NAME}SharedPreferencesDataModule") {
 
-    bind<SharedPreferences>("notification") with singleton { NotificationSharedPreferences(instance()) }
+    bind<SharedPreferences>(FEATURE_NAME) with singleton { NotificationSharedPreferences(instance()) }
 
-    bind<NotificationSharedPreferencesDataSource>() with singleton { NotificationSharedPreferencesDataSourceImpl(instance("notification"), instance()) }
+    bind<NotificationSharedPreferencesDataSource>() with singleton { NotificationSharedPreferencesDataSourceImpl(instance(FEATURE_NAME), instance()) }
 
 }

@@ -3,6 +3,7 @@ package com.aptenobytes.bob.feature.wish.data.network.datasource
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.data.network.constants.WISH_DATE_FORMAT
 import com.aptenobytes.bob.feature.wish.data.network.enums.toNetworkEnum
+import com.aptenobytes.bob.feature.wish.data.network.model.WishNetworkDataModel
 import com.aptenobytes.bob.feature.wish.data.network.model.toDomainModel
 import com.aptenobytes.bob.feature.wish.data.network.model.toNetworkModel
 import com.aptenobytes.bob.feature.wish.data.network.retrofit.request.SetWishStatusRequest
@@ -44,8 +45,8 @@ internal class WishNetworkDataSourceImpl(
             userId = userId,
             guestId = guestId,
             bookingId = bookingId,
-            minTimestamp = minTimestamp.toNetworkFormat(),
-            maxTimestamp = maxTimestamp.toNetworkFormat(),
+            minTimestamp = minTimestamp?.let { SimpleDateFormat(WISH_DATE_FORMAT, Locale.ENGLISH).format(minTimestamp)} ?: run { null },
+            maxTimestamp = minTimestamp?.let { SimpleDateFormat(WISH_DATE_FORMAT, Locale.ENGLISH).format(minTimestamp)} ?: run { null },
             statuses = statuses?.map {
                 it.toNetworkEnum().value
             }?.toArrayList(),
@@ -63,15 +64,17 @@ internal class WishNetworkDataSourceImpl(
 
     // wish status
     override suspend fun setWishStatus(
-        wish: WishDomainModel,
+        wishId: Long,
         status: WishStatusType): WishDomainModel? {
-        wish.status = status
         return wishRetrofitService.setWishStatusAsync(
                     setWishStatusRequestWrapper = SetWishStatusRequestWrapper(
                     request = SetWishStatusRequest(
-                        wish = wish.toNetworkModel()
+                        wish = WishNetworkDataModel(
+                            id = wishId,
+                            status = status.toNetworkEnum()
+                        )
                     )
-                    )
+                )
         )
             ?.response
             ?.wishes
@@ -81,10 +84,4 @@ internal class WishNetworkDataSourceImpl(
             ?.firstOrNull()
     }
 
-}
-
-fun Date?.toNetworkFormat(): String? {
-    return this?.let {
-        SimpleDateFormat(WISH_DATE_FORMAT, Locale.ENGLISH).format(this)
-    }
 }

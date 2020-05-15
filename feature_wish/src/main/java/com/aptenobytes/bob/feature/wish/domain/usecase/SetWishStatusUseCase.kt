@@ -7,7 +7,7 @@ import com.aptenobytes.bob.feature.wish.domain.repository.WishRepository
 class SetWishStatusUseCase(
     private val wishRepository: WishRepository
 ) {
-    suspend fun execute(wish: WishDomainModel, status: WishStatusType): WishDomainModel {
-        return wishRepository.setWishStatus(wish = wish, status = status) ?: wish
+    suspend fun execute(wishId: Long, status: WishStatusType): WishDomainModel? {
+        return wishRepository.setWishStatus(wishId = wishId, status = status)
     }
 }

@@ -9,8 +9,4 @@ interface AppNetworkDataSource {
         hotelId: Long? = null
     ): List<DepartmentDomainModel>
 
-    suspend fun emailLogin(
-        user: UserDomainModel?
-    ): UserDomainModel?
-
 }

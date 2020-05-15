@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_navigation_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/featureAuthNavGraph">
 
-    <fragment android:id="@+id/loginFragment"
-        android:name="com.aptenobytes.bob.app.presentation.login.LoginFragment"
-        android:label="Login">
-
-    </fragment>
+    <include-dynamic
+        android:id="@+id/featureAuthNavGraph"
+        app:graphResName="feature_auth_nav_graph"
+        app:moduleName="feature_auth"/>
 
     <include
         android:id="@+id/bottomNavGraph"

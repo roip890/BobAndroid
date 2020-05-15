@@ -9,12 +9,15 @@ import com.aptenobytes.bob.app.data.network.model.user.UserNetworkDataModel
 import com.aptenobytes.bob.app.data.network.model.user.toDomainModel
 import com.aptenobytes.bob.app.data.network.model.user.toNetworkModel
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
+import com.aptenobytes.bob.feature.wish.data.network.constants.WISH_DATE_FORMAT
 import com.aptenobytes.bob.feature.wish.data.network.enums.WishStatusNetworkDataType
 import com.aptenobytes.bob.feature.wish.data.network.enums.toDomainEnum
 import com.aptenobytes.bob.feature.wish.data.network.enums.toNetworkEnum
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.text.SimpleDateFormat
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class WishNetworkDataModel(
@@ -22,31 +25,31 @@ data class WishNetworkDataModel(
     val id: Long,
 
     @field:Json(name = "guest")
-    val guest: GuestNetworkDataModel?,
+    val guest: GuestNetworkDataModel? = null,
     @field:Json(name = "userAssigned")
-    val user: UserNetworkDataModel?,
+    val user: UserNetworkDataModel? = null,
     @field:Json(name = "bookingId")
-    val bookingId: Long?,
+    val bookingId: Long? = null,
 
     @field:Json(name = "wishDetails")
-    val details: String?,
+    val details: String? = null,
     @field:Json(name = "wishType")
-    val type: String?,
+    val type: String? = null,
     @field:Json(name = "insertTs")
-    val timeStamp: String?,
+    val timeStamp: String? = null,
     @field:Json(name = "wishIconUrl")
-    val iconUrl: String?,
+    val iconUrl: String? = null,
     @field:Json(name = "wishStatus")
-    val status: WishStatusNetworkDataType?,
+    val status: WishStatusNetworkDataType? = null,
     @field:Json(name = "isFavorite")
-    val isFavorite: Boolean?,
+    val isFavorite: Boolean? = null,
 
     @SingleToArray
     @field:Json(name = "departments")
-    val departments: List<String>?,
+    val departments: List<String>? = null,
     @SingleToArray
     @field:Json(name = "elements")
-    val elements: List<WishElementNetworkDataModel>?
+    val elements: List<WishElementNetworkDataModel>? = null
 )
 
 fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
@@ -66,16 +69,16 @@ fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
 
         guest = guest,
         user = user,
-        bookingId = this.bookingId ?: 0,
+        bookingId = this.bookingId,
 
-        details = this.details ?: "",
-        type = this.type ?: "",
-        timeStamp = this.timeStamp ?: "",
-        iconUrl = this.iconUrl ?: "",
+        details = this.details,
+        type = this.type,
+        timeStamp = this.timeStamp?.let { SimpleDateFormat(WISH_DATE_FORMAT, Locale.ENGLISH).parse(this.timeStamp)} ?: run { null },
+        iconUrl = this.iconUrl,
         status = status,
-        isFavorite = this.isFavorite ?: false,
+        isFavorite = this.isFavorite,
 
-        departments = departments,
+        departments = departments ?: listOf(),
         elements = elements ?: listOf()
     )
 }
@@ -97,16 +100,16 @@ fun WishDomainModel.toNetworkModel(): WishNetworkDataModel {
 
         guest = guest,
         user = user,
-        bookingId = this.bookingId ?: 0,
+        bookingId = this.bookingId,
 
-        details = this.details ?: "",
-        type = this.type ?: "",
-        timeStamp = this.timeStamp ?: "",
-        iconUrl = this.iconUrl ?: "",
+        details = this.details,
+        type = this.type,
+        timeStamp = this.timeStamp?.let { SimpleDateFormat(WISH_DATE_FORMAT, Locale.ENGLISH).format(this.timeStamp)} ?: run { null },
+        iconUrl = this.iconUrl,
         status = status,
-        isFavorite = this.isFavorite ?: false,
+        isFavorite = this.isFavorite,
 
-        departments = departments,
+        departments = departments ?: listOf(),
         elements = elements ?: listOf()
     )
 }

@@ -38,13 +38,4 @@ class AppRepositoryImpl(
         appSharedPreferencesDataSource.clearUserSession()
     }
 
-    // login
-    override suspend fun emailLogin(
-        user: UserDomainModel?
-    ): UserDomainModel? {
-        return appNetworkDataSource.emailLogin(
-            user = user
-        )
-    }
-
 }

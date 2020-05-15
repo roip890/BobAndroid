@@ -3,6 +3,8 @@ package com.aptenobytes.bob.feature.wish.data.cache.datasource
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishCacheDataSource
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class WishCacheDataSourceImpl() : WishCacheDataSource {
 
@@ -15,8 +17,8 @@ class WishCacheDataSourceImpl() : WishCacheDataSource {
         userId: Long?,
         guestId: Long?,
         bookingId: Long?,
-        minTimestamp: String?,
-        maxTimestamp: String?,
+        minTimestamp: Date?,
+        maxTimestamp: Date?,
         statuses: ArrayList<String>?,
         departments: ArrayList<String>?,
         sort: String?,

@@ -1,5 +1,8 @@
 package com.aptenobytes.bob.app.data.network.model.user
 
+import com.aptenobytes.bob.app.data.network.enums.UserStatusNetworkDataType
+import com.aptenobytes.bob.app.data.network.enums.toDomainEnum
+import com.aptenobytes.bob.app.data.network.enums.toNetworkEnum
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.squareup.moshi.Json
@@ -25,7 +28,7 @@ data class UserNetworkDataModel(
     @field:Json(name = "imageUrl")
     val imageUrl: String?,
     @field:Json(name = "status")
-    val status: String?,
+    val status: UserStatusNetworkDataType?,
     @field:Json(name = "birthday")
     val birthday: String?,
     @field:Json(name = "permissionLevel")
@@ -41,16 +44,16 @@ fun UserNetworkDataModel.toDomainModel(): UserDomainModel {
     return UserDomainModel(
         id = this.id,
 
-        email = this.email ?: "",
-        username = this.username ?: "",
-        firstName = this.firstName ?: "",
-        lastName = this.lastName ?: "",
-        password = this.password ?: "",
-        phone = this.phone ?: "",
-        imageUrl = this.imageUrl ?: "",
-        status = this.status ?: "",
-        birthday = this.birthday ?: "",
-        permissionLevel = this.permissionLevel ?: "",
+        email = this.email,
+        username = this.username,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        password = this.password,
+        phone = this.phone,
+        imageUrl = this.imageUrl,
+        status = this.status?.toDomainEnum(),
+        birthday = this.birthday,
+        permissionLevel = this.permissionLevel,
         departments = this.departments ?: listOf(),
         hotelId = this.hotelId ?: 0
     )
@@ -60,16 +63,16 @@ fun UserDomainModel.toNetworkModel(): UserNetworkDataModel {
     return UserNetworkDataModel(
         id = this.id,
 
-        email = this.email ?: "",
-        username = this.username ?: "",
-        firstName = this.firstName ?: "",
-        lastName = this.lastName ?: "",
-        password = this.password ?: "",
-        phone = this.phone ?: "",
-        imageUrl = this.imageUrl ?: "",
-        status = this.status ?: "",
-        birthday = this.birthday ?: "",
-        permissionLevel = this.permissionLevel ?: "",
+        email = this.email,
+        username = this.username,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        password = this.password,
+        phone = this.phone,
+        imageUrl = this.imageUrl,
+        status = this.status?.toNetworkEnum(),
+        birthday = this.birthday,
+        permissionLevel = this.permissionLevel,
         departments = this.departments ?: listOf(),
         hotelId = this.hotelId ?: 0
     )

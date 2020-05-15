@@ -7,7 +7,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class GetWishesResponse(
+internal data class SetWishStatusResponse(
 
     @field:Json(name = "statusResponse")
     val statusResponse: AppStatusResponse?,
@@ -19,7 +19,7 @@ internal data class GetWishesResponse(
 )
 
 @JsonClass(generateAdapter = true)
-internal data class GetWishesResponseWrapper(
+internal data class SetWishStatusResponseWrapper(
     @field:Json(name = "response")
     val response: GetWishesResponse?
 )

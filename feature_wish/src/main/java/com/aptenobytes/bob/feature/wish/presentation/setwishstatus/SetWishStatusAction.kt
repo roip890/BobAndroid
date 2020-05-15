@@ -5,5 +5,5 @@ import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.aptenobytes.bob.library.base.presentation.mvi.BaseAction
 
 sealed class SetWishStatusAction : BaseAction {
-    class SetStatusAction(val wish: WishDomainModel, val status: WishStatusType) : SetWishStatusAction()
+    class SetStatusAction(val wishId: Long, val status: WishStatusType) : SetWishStatusAction()
 }

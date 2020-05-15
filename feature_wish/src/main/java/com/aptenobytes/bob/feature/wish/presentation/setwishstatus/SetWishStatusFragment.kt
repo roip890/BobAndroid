@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.onEach
 import org.kodein.di.generic.instance
 
 class SetWishStatusFragment(
-    val wish: WishDomainModel,
+    val wishId: Long,
     val onChangeStatusListener: ((status: WishDomainModel?) -> Unit)? = null
 ) : BaseContainerFragment(), SetWishStatusView {
 
@@ -54,10 +54,10 @@ class SetWishStatusFragment(
     companion object{
         val TAG = "SET_WISHES"
         fun newInstance(
-            wish: WishDomainModel,
+            wishId: Long,
             onChangeStatusListener: ((status: WishDomainModel?) -> Unit)? = null
         ): SetWishStatusFragment {
-            return SetWishStatusFragment(wish = wish, onChangeStatusListener = onChangeStatusListener)
+            return SetWishStatusFragment(wishId = wishId, onChangeStatusListener = onChangeStatusListener)
         }
     }
 
@@ -98,7 +98,7 @@ class SetWishStatusFragment(
             lifecycleOwner = viewLifecycleOwner,
             onDebouncedClickListener = {status ->
                 status?.let {
-                    flowOf(SetWishStatusIntent.SetStatusIntent(wish = wish, status = status))
+                    flowOf(SetWishStatusIntent.SetStatusIntent(wishId = wishId, status = status))
                         .onEach { intent -> viewModel.processIntent(intent) }
                         .launchIn(lifecycleScope)
                 }

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aptenobytes.bob.feature.wish.R
-import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewHolder
-import com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel
-import com.aptenobytes.bob.feature.wish.presentation.model.toViewModel
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishItemViewHolder
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishItemViewModel
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.wishesAdapter
 import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsFragment
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import org.kodein.di.generic.instance
 
-
 class WishListFragment : BaseContainerFragment(), WishListView {
 
     @ExperimentalCoroutinesApi
@@ -39,7 +38,7 @@ class WishListFragment : BaseContainerFragment(), WishListView {
 
     override val layoutResourceId = R.layout.fragment_wish_list
 
-    private lateinit var adapter: RecyclerViewLoadMoreAdapter<WishViewModel, WishViewHolder>
+    private lateinit var adapter: RecyclerViewLoadMoreAdapter<WishItemViewModel, WishItemViewHolder>
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var loadMoreListener: RecyclerViewLoadMoreScrollListener
     private var loadAmount = 20
@@ -153,12 +152,14 @@ class WishListFragment : BaseContainerFragment(), WishListView {
             } else {
                 val previousItemCount = adapter.items.size
                 if (viewState.refresh) {
-                    adapter.items = viewState.wishes.map { it.toViewModel() }.toArrayList()
+                    adapter.items = viewState.wishes.map {
+                        WishItemViewModel(wishLiveDate = MutableLiveData(it))
+                    }.toArrayList()
                 } else {
                     adapter.removeLoadingView()
                     adapter.items.addAll(viewState.wishes
-                        .filter { newWish -> !adapter.items.map { it?.id?.value }.contains(newWish.id) }.map {
-                            it.toViewModel()
+                        .filter { newWish -> !adapter.items.map { it?.wishLiveDate?.value?.id }.contains(newWish.id) }.map {
+                            WishItemViewModel(wishLiveDate = MutableLiveData(it))
                         }
                     )
                     adapter.notifyItemRangeInserted(

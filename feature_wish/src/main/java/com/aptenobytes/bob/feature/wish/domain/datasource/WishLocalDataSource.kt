@@ -1,6 +1,8 @@
 package com.aptenobytes.bob.feature.wish.domain.datasource
 
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface WishLocalDataSource {
 
@@ -11,8 +13,8 @@ interface WishLocalDataSource {
         guestId: Long? = null,
         bookingId: Long? = null,
 
-        minTimestamp: String? = null,
-        maxTimestamp: String? = null,
+        minTimestamp: Date? = null,
+        maxTimestamp: Date? = null,
         statuses: ArrayList<String>? = null,
         departments: ArrayList<String>? = null,
 

@@ -53,8 +53,8 @@ class WishRepositoryImpl(
     }
 
     // wish status
-    override suspend fun setWishStatus(wish: WishDomainModel, status: WishStatusType): WishDomainModel? {
-        return wishNetworkDataSource.setWishStatus(wish = wish, status = status)
+    override suspend fun setWishStatus(wishId: Long, status: WishStatusType): WishDomainModel? {
+        return wishNetworkDataSource.setWishStatus(wishId = wishId, status = status)
     }
 
     // wish settings

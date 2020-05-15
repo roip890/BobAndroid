@@ -1,17 +1,11 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishdetail
 
-import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
@@ -20,16 +14,12 @@ import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentWishDetailBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
-import com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel
-import com.aptenobytes.bob.feature.wish.presentation.model.toDomainModel
-import com.aptenobytes.bob.feature.wish.presentation.model.toViewModel
+import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.SetWishStatusFragment
+import com.aptenobytes.bob.feature.wish.presentation.utils.*
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
+import com.aptenobytes.bob.library.base.presentation.utils.startAlphaAnimation
 import com.google.android.material.appbar.AppBarLayout
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import com.mikepenz.iconics.utils.paddingDp
-import com.mikepenz.iconics.utils.sizeDp
 import kotlinx.android.synthetic.main.fragment_wish_detail.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -39,6 +29,7 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import org.kodein.di.generic.instance
 import timber.log.Timber
+import java.util.*
 import kotlin.math.abs
 
 
@@ -59,10 +50,12 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
 
     lateinit var binding: FragmentWishDetailBinding
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private val stateObserver = Observer<WishDetailViewState> { render(it) }
 
-    private var isSmallWishInfoVisible = false
-    private var isBigWishInfoVisible = true
+    private var isWishSmallHeaderVisible = false
+    private var isWishBigHeaderVisible = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return this.view?.let {
@@ -88,16 +81,18 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
 
     private fun setupAppBarCollapsingImage() {
         appBarLayout.addOnOffsetChangedListener(this)
-        startAlphaAnimation(wishSmallInfoLayout, 0, View.INVISIBLE)
+        startAlphaAnimation(wishSmallHeader, 0, View.INVISIBLE)
     }
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     private fun setupFloatingActionButton() {
         this.floatingActionButton.setOnClickListener {
             binding.viewModel?.let { wishViewModel ->
                 val setWishStatusFragment = SetWishStatusFragment.newInstance(
-                    wish = wishViewModel.toDomainModel(),
+                    wishId = viewModel.getWishId(),
                     onChangeStatusListener = {wishAfterChange ->
-                        wishViewModel.status.postValue(wishAfterChange?.status)
+                        wishViewModel.wishLiveData.postValue(wishAfterChange)
                     }
                 )
                 setWishStatusFragment.show(parentFragmentManager, SetWishStatusFragment.TAG)
@@ -120,10 +115,12 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
         flowOf(WishDetailIntent.GetWishDetailIntent(wishId = viewModel.getWishId()))
     )
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     private fun render(viewState: WishDetailViewState) {
 
         viewState.wish?.let {
-            bindWishViewModel(viewState.wish.toViewModel())
+            bindWishViewModel(viewState.wish)
         }
 
         this.progressBar.visibility = if (viewState.isLoading) VISIBLE else GONE
@@ -137,21 +134,37 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
 
     }
 
-    private fun bindWishViewModel(wish: WishViewModel) {
-        binding.viewModel = wish
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    private fun bindWishViewModel(wish: WishDomainModel) {
+
+        binding.viewModel.wishLiveData.postValue(wish)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.executePendingBindings()
-        binding.viewModel?.iconUrl?.observe(viewLifecycleOwner, Observer<String?> { iconUrl ->
-            updateIcon(iconUrl = iconUrl)
+        binding.viewModel?.wishLiveData?.observe(viewLifecycleOwner, Observer<WishDomainModel?> { wishLiveData ->
+            updateWish(wish = wishLiveData)
         })
-        binding.viewModel?.status?.observe(viewLifecycleOwner, Observer {status ->
-            updateStatus(status = status)
-        })
-        binding.viewModel?.departments?.observe(viewLifecycleOwner, Observer {departments ->
-            updateDepartments(departments = departments)
-        })
-        updateStatus(status = binding.viewModel?.status?.value)
-        updateDepartments(departments = binding.viewModel?.departments?.value)
+        updateWish(wish = wish)
+
+    }
+
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    private fun updateWish(wish: WishDomainModel?) {
+        updateType(type = wish?.type)
+        updateIcon(iconUrl = wish?.iconUrl)
+        updateStatus(status = wish?.status)
+        updateDepartments(departments = wish?.departments)
+        updateTimeStamp(timeStamp = wish?.timeStamp)
+    }
+
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    private fun updateType(type: String?) {
+        type?.let {
+            binding.viewModel?.typeString?.postValue(type)
+        }
     }
 
     private fun updateIcon(iconUrl: String?) {
@@ -169,69 +182,46 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
         }
     }
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private fun updateStatus(status: WishStatusType?) {
-        binding.viewModel?.let { wishViewModel ->
-            status?.let {
-                wishViewModel.statusString.postValue(
-                    wishStatusTypeToString(
-                        status
-                    )
+        status?.let {
+            binding.viewModel?.statusString?.postValue(
+                wishStatusTypeToString(
+                    status
                 )
-                wishViewModel.statusIcon.postValue(
-                    wishStatusTypeToIcon(
-                        status
-                    )
+            )
+            binding.viewModel?.statusIcon?.postValue(
+                wishStatusTypeToIcon(
+                    status,
+                    requireContext()
                 )
-                wishViewModel.statusColor.postValue(
-                    wishStatusTypeToColor(
-                        status
-                    )
-                )
-            }
+            )
         }
     }
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private fun updateDepartments(departments: List<DepartmentDomainModel>?) {
-        binding.viewModel?.let { wishViewModel ->
-            departments?.let {
-                wishViewModel.departmentsString.postValue(
-                    wishDepartmentsToString(
-                        departments
-                    )
+        departments?.let {
+            binding.viewModel?.departmentsString?.postValue(
+                wishDepartmentsToString(
+                    departments
                 )
-            }
+            )
         }
     }
 
-    private fun wishStatusTypeToString(status: WishStatusType): String {
-        return when(status) {
-            WishStatusType.WAITING -> "Wating"
-            WishStatusType.PENDING -> "Pending"
-            WishStatusType.IN_PROGRESS -> "In Progress"
-            WishStatusType.DONE -> "Done"
-            else -> ""
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    private fun updateTimeStamp(timeStamp: Date?) {
+        timeStamp?.let {
+            binding.viewModel?.timeStampString?.postValue(
+                wishTimeStampToString(
+                    timeStamp
+                )
+            )
         }
-    }
-
-    private fun wishStatusTypeToIcon(status: WishStatusType): Drawable {
-        return GradientDrawable().apply {
-            this.shape = GradientDrawable.OVAL
-            this.color = ColorStateList.valueOf(wishStatusTypeToColor(status))
-        }
-    }
-
-    private fun wishStatusTypeToColor(status: WishStatusType): Int {
-        return when(status) {
-            WishStatusType.WAITING -> ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.faded_red)
-            WishStatusType.PENDING -> ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.faded_orange)
-            WishStatusType.IN_PROGRESS -> ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.faded_yellow)
-            WishStatusType.DONE -> ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.faded_green)
-            else -> ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.faded_blue)
-        }
-    }
-
-    private fun wishDepartmentsToString(departments: List<DepartmentDomainModel>): String {
-        return departments.joinToString(separator = ", ") { it.name }
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, offset: Int) {
@@ -243,55 +233,46 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
 
     private fun handleAlphaOnSecondTitle(percentage: Float) {
         if (percentage >= PERCENTAGE_TO_SHOW_TITLE) {
-            if (!isSmallWishInfoVisible) {
+            if (!isWishSmallHeaderVisible) {
                 startAlphaAnimation(
-                    wishSmallInfoLayout,
+                    wishSmallHeader,
                     ALPHA_ANIMATIONS_DURATION.toLong(),
-                    View.VISIBLE
+                    VISIBLE
                 )
-                isSmallWishInfoVisible = true
+                isWishSmallHeaderVisible = true
             }
         } else {
-            if (isSmallWishInfoVisible) {
+            if (isWishSmallHeaderVisible) {
                 startAlphaAnimation(
-                    wishSmallInfoLayout,
+                    wishSmallHeader,
                     ALPHA_ANIMATIONS_DURATION.toLong(),
                     View.INVISIBLE
                 )
-                isSmallWishInfoVisible = false
+                isWishSmallHeaderVisible = false
             }
         }
     }
 
     private fun handleAlphaOnMainTitle(percentage: Float) {
         if (percentage >= PERCENTAGE_TO_HIDE_SECOND_TITTLE) {
-            if (isBigWishInfoVisible) {
+            if (isWishBigHeaderVisible) {
                 startAlphaAnimation(
-                    wishBigInfoLayout,
+                    wishBigHeader,
                     ALPHA_ANIMATIONS_DURATION.toLong(),
                     View.INVISIBLE
                 )
-                isBigWishInfoVisible = false
+                isWishBigHeaderVisible = false
             }
         } else {
-            if (!isBigWishInfoVisible) {
+            if (!isWishBigHeaderVisible) {
                 startAlphaAnimation(
-                    wishBigInfoLayout,
+                    wishBigHeader,
                     ALPHA_ANIMATIONS_DURATION.toLong(),
-                    View.VISIBLE
+                    VISIBLE
                 )
-                isBigWishInfoVisible = true
+                isWishBigHeaderVisible = true
             }
         }
     }
-
-    private fun startAlphaAnimation(v: View, duration: Long, visibility: Int) {
-        val alphaAnimation =
-            if (visibility == View.VISIBLE) AlphaAnimation(0f, 1f) else AlphaAnimation(1f, 0f)
-        alphaAnimation.duration = duration
-        alphaAnimation.fillAfter = true
-        v.startAnimation(alphaAnimation)
-    }
-
 
 }

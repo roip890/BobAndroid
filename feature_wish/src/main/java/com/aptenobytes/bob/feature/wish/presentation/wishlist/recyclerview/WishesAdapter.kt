@@ -5,8 +5,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
-import com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel
-import com.aptenobytes.bob.feature.wish.presentation.model.toDomainModel
 import com.aptenobytes.bob.library.base.presentation.extension.setOnDebouncedClickListener
 import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapter.BasicLoadingViewHolder
 import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapter.RecyclerViewLoadMoreAdapter
@@ -16,14 +14,14 @@ import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapt
 fun wishesAdapter(
     lifecycleOwner: LifecycleOwner,
     onDebouncedClickListener: ((status: WishDomainModel?) -> Unit)? = null
-): RecyclerViewLoadMoreAdapter<WishViewModel, WishViewHolder> {
-    return loadMoreAdapter<WishViewModel, WishViewHolder>(
+): RecyclerViewLoadMoreAdapter<WishItemViewModel, WishItemViewHolder> {
+    return loadMoreAdapter<WishItemViewModel, WishItemViewHolder>(
         items = arrayListOf(),
         withGetItemCount = { adapter -> adapter.items.size },
         withGetItemViewType = { _, _ -> 0 },
         withOnCreateViewHolder = { _, parent, _ ->
             val inflater = LayoutInflater.from(parent.context)
-            WishViewHolder(
+            WishItemViewHolder(
                 parent.context,
                 DataBindingUtil.inflate(inflater, R.layout.fragment_wish_list_item, parent, false)).apply {
                 binding.lifecycleOwner = lifecycleOwner
@@ -35,7 +33,7 @@ fun wishesAdapter(
             BasicLoadingViewHolder(view)
         },
         withOnBindViewHolder = { adapter, holder, position ->
-            holder.itemView.setOnDebouncedClickListener { onDebouncedClickListener?.invoke(adapter.items[position]?.toDomainModel()) }
+            holder.itemView.setOnDebouncedClickListener { onDebouncedClickListener?.invoke(adapter.items[position]?.wishLiveDate?.value) }
             adapter.items[position]?.let { holder.bind(it) }
         }
     )

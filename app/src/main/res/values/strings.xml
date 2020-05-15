@@ -2,10 +2,10 @@
     <string name="app_name">Bob</string>
 
     <!--Dynamic module titles-->
-    <string name="feature_notification">feature notification</string>
+    <string name="feature_auth">feature auth</string>
     <string name="feature_profile">feature profile</string>
+    <string name="feature_notification">feature notification</string>
     <string name="feature_wish">feature wish</string>
-    <string name="feature_department">feature department</string>
 
     <!--Bottom menu-->
     <string name="notification">Notifications</string>

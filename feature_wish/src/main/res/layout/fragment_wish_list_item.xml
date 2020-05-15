@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel" />
+            type="com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +48,7 @@
 
                 <TextView
                     android:id="@+id/wishType"
-                    android:text="@{viewModel.type}"
+                    android:text="@{viewModel.typeString}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
@@ -59,7 +59,7 @@
 
                 <TextView
                     android:id="@+id/wishTimestamp"
-                    android:text="@{viewModel.timeStamp}"
+                    android:text="@{viewModel.timeStampString}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"

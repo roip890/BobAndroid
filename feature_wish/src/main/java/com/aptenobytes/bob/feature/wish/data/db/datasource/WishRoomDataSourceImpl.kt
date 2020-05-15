@@ -5,6 +5,8 @@ import com.aptenobytes.bob.feature.wish.data.db.model.toDomainModel
 import com.aptenobytes.bob.feature.wish.data.db.model.toRoomModel
 import com.aptenobytes.bob.feature.wish.domain.datasource.WishLocalDataSource
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class WishRoomDataSourceImpl(private val dao: WishDao) : WishLocalDataSource {
 
@@ -13,8 +15,8 @@ class WishRoomDataSourceImpl(private val dao: WishDao) : WishLocalDataSource {
         userId: Long?,
         guestId: Long?,
         bookingId: Long?,
-        minTimestamp: String?,
-        maxTimestamp: String?,
+        minTimestamp: Date?,
+        maxTimestamp: Date?,
         statuses: ArrayList<String>?,
         departments: ArrayList<String>?,
         sort: String?,

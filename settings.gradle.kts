@@ -83,6 +83,7 @@ rootProject.buildFileName = "build.gradle.kts"
 
 // workaround because pluginManagement change after migrating from 5.6.4 to 6.4
 include(":app")
+include(":feature_auth")
 include(":feature_wish")
 include(":feature_profile")
 include(":feature_notification")

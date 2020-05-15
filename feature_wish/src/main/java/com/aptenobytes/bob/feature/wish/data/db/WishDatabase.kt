@@ -11,7 +11,7 @@ import com.aptenobytes.bob.app.data.db.converters.guest.GuestRoomDataModelConver
 import com.aptenobytes.bob.app.data.db.converters.user.UserRoomDataModelConverter
 import com.aptenobytes.bob.feature.wish.data.db.converters.wishelement.WishElementListRoomDataModelConverter
 import com.aptenobytes.bob.feature.wish.data.db.converters.wishelement.WishElementRoomDataModelConverter
-import com.aptenobytes.bob.feature.wish.data.db.converters.wishstatus.WishStatusListRoomDataModelConverter
+import com.aptenobytes.bob.feature.wish.data.db.converters.wishstatus.UserStatusListRoomDataModelConverter
 import com.aptenobytes.bob.feature.wish.data.db.converters.wishstatus.WishStatusRoomDataTypeConverter
 import com.aptenobytes.bob.feature.wish.data.db.model.WishRoomDataModel
 
@@ -24,7 +24,7 @@ import com.aptenobytes.bob.feature.wish.data.db.model.WishRoomDataModel
     WishElementRoomDataModelConverter::class,
     WishElementListRoomDataModelConverter::class,
     WishStatusRoomDataTypeConverter::class,
-    WishStatusListRoomDataModelConverter::class
+    UserStatusListRoomDataModelConverter::class
 )
 abstract class WishDatabase : RoomDatabase() {
     abstract fun wishDao(): WishDao

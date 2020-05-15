@@ -1,6 +1,7 @@
 package com.aptenobytes.bob.app.data.db.model.user
 
 import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
+import com.aptenobytes.bob.app.domain.enums.userstatus.UserStatusType
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.squareup.moshi.Json
 
@@ -23,7 +24,7 @@ data class UserRoomDataModel(
     @field:Json(name = "imageUrl")
     val imageUrl: String?,
     @field:Json(name = "status")
-    val status: String?,
+    val status: UserStatusType?,
     @field:Json(name = "birthday")
     val birthday: String?,
     @field:Json(name = "permissionLevel")
@@ -39,18 +40,18 @@ fun UserRoomDataModel.toDomainModel(): UserDomainModel {
     return UserDomainModel(
         id = this.id,
 
-        email = this.email ?: "",
-        username = this.username ?: "",
-        firstName = this.firstName ?: "",
-        lastName = this.lastName ?: "",
-        password = this.password ?: "",
-        phone = this.phone ?: "",
-        imageUrl = this.imageUrl ?: "",
-        status = this.status ?: "",
-        birthday = this.birthday ?: "",
-        permissionLevel = this.permissionLevel ?: "",
+        email = this.email,
+        username = this.username,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        password = this.password,
+        phone = this.phone,
+        imageUrl = this.imageUrl,
+        status = this.status,
+        birthday = this.birthday,
+        permissionLevel = this.permissionLevel,
         departments = this.departments ?: listOf(),
-        hotelId = this.hotelId ?: 0
+        hotelId = this.hotelId
     )
 }
 
@@ -58,16 +59,16 @@ fun UserDomainModel.toRoomModel(): UserRoomDataModel =
     UserRoomDataModel(
         id = this.id,
 
-        email = this.email ?: "",
-        username = this.username ?: "",
-        firstName = this.firstName ?: "",
-        lastName = this.lastName ?: "",
-        password = this.password ?: "",
-        phone = this.phone ?: "",
-        imageUrl = this.imageUrl ?: "",
-        status = this.status ?: "",
-        birthday = this.birthday ?: "",
-        permissionLevel = this.permissionLevel ?: "",
+        email = this.email,
+        username = this.username,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        password = this.password,
+        phone = this.phone,
+        imageUrl = this.imageUrl,
+        status = this.status,
+        birthday = this.birthday,
+        permissionLevel = this.permissionLevel,
         departments = this.departments ?: listOf(),
-        hotelId = this.hotelId ?: 0
+        hotelId = this.hotelId
     )

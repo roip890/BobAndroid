@@ -7,6 +7,7 @@ private const val FEATURE_PREFIX = ":feature_"
 object ModuleDependency {
     // All consts are accessed via reflection
     const val APP = ":app"
+    const val FEATURE_AUTH = ":feature_auth"
     const val FEATURE_WISH = ":feature_wish"
     const val FEATURE_PROFILE = ":feature_profile"
     const val FEATURE_NOTIFICATION = ":feature_notification"

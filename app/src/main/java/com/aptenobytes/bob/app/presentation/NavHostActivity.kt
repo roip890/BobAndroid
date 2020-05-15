@@ -27,7 +27,6 @@ class NavHostActivity : BaseActivity() {
 
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-
         navManager.setOnDirectionNavEvent {
             navController.navigate(it)
         }

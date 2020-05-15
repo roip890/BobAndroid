@@ -18,9 +18,4 @@ interface AppRepository {
 
     suspend fun clearUserSession()
 
-    // login
-    suspend fun emailLogin(
-        user: UserDomainModel?
-    ): UserDomainModel?
-
 }

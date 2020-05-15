@@ -29,7 +29,7 @@ interface WishRepository {
     ): List<WishDomainModel>
 
     // wish status
-    suspend fun setWishStatus(wish: WishDomainModel, status: WishStatusType): WishDomainModel?
+    suspend fun setWishStatus(wishId: Long, status: WishStatusType): WishDomainModel?
 
     // wish settings
     suspend fun getWishSettings(): WishSettingsDomainModel

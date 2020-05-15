@@ -37,8 +37,8 @@ class SetWishStatusViewModel(
         return merge(
             filterIsInstance<SetWishStatusIntent.SetStatusIntent>()
                 .flatMapConcat { flow {
-                    logAction(SetWishStatusAction.SetStatusAction(wish = it.wish, status = it.status))
-                    emit(SetWishStatusAction.SetStatusAction(wish = it.wish, status = it.status))
+                    logAction(SetWishStatusAction.SetStatusAction(wishId = it.wishId, status = it.status))
+                    emit(SetWishStatusAction.SetStatusAction(wishId = it.wishId, status = it.status))
                 } }
         )
     }
@@ -47,14 +47,14 @@ class SetWishStatusViewModel(
         return merge(
             filterIsInstance<SetWishStatusAction.SetStatusAction>()
                 .flatMapConcat {
-                    processSetWishStatus(wish = it.wish, status = it.status)
+                    processSetWishStatus(wishId = it.wishId, status = it.status)
                 }
         )
     }
 
-    private fun processSetWishStatus(wish: WishDomainModel, status: WishStatusType): Flow<SetWishStatusResult.SetStatusResult> {
+    private fun processSetWishStatus(wishId: Long, status: WishStatusType): Flow<SetWishStatusResult.SetStatusResult> {
         return flow {
-            emit(setWishStatusUseCase.execute(wish = wish, status = status))
+            emit(setWishStatusUseCase.execute(wishId = wishId, status = status))
         }
             .map {
                 SetWishStatusResult.SetStatusResult.Success(it) as SetWishStatusResult.SetStatusResult

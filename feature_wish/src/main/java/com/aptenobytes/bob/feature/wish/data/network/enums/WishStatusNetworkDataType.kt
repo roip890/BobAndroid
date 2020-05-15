@@ -4,7 +4,6 @@ import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.squareup.moshi.Json
 
 enum class WishStatusNetworkDataType(val value: String) {
-
     @field:Json(name = "none")
     NONE(value = "none"),
     @field:Json(name = "waiting")
