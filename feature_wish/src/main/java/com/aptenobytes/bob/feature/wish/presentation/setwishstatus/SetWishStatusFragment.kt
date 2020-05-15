@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
 import android.widget.FrameLayout
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
@@ -26,7 +27,6 @@ import com.aptenobytes.bob.library.base.presentation.recyclerview.adapter.Recycl
 import com.aptenobytes.bob.library.base.presentation.recyclerview.builder.recycleView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
-import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.fragment_set_wish_status.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -72,7 +72,7 @@ class SetWishStatusFragment(
         super.onViewCreated(view, savedInstanceState)
         requireContext()
         setupWishesList()
-        progressBar.visible = false
+        progressBar.visibility = GONE
         bind()
     }
 
@@ -131,8 +131,8 @@ class SetWishStatusFragment(
     )
 
     private fun render(viewState: SetWishStatusViewState) {
-        progressBar.visible = viewState.isLoading
-        recyclerView.visible = viewState.error == null && !viewState.isLoading
+        progressBar.visibility = if (viewState.isLoading) View.VISIBLE else GONE
+        recyclerView.visibility = if (viewState.error == null && !viewState.isLoading) View.VISIBLE else GONE
         if (viewState.error != null) {
             this.view?.snack(message = "Failed to changed status!", length = Snackbar.LENGTH_LONG) {
                 this.view.setBackgroundColor(ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.faded_red))

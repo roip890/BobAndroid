@@ -1,7 +1,14 @@
+var kotlin_version = CoreVersion.KOTLIN
+var core_ktx_version = LibraryVersion.CORE_KTX
+
 plugins {
     id(GradlePluginId.ANDROID_LIBRARY)
     id(GradlePluginId.KOTLIN_ANDROID)
     id(GradlePluginId.KOTLIN_ANDROID_EXTENSIONS)
+}
+apply {
+    plugin("kotlin-android")
+    plugin("kotlin-android-extensions")
 }
 
 android {
@@ -43,4 +50,9 @@ dependencies {
     implementation(LibraryDependency.KOTLIN)
     implementation(TestLibraryDependency.JUNIT)
     implementation(TestLibraryDependency.COROUTINES_TEST)
+    implementation("androidx.core:core-ktx:${core_ktx_version}")
+    implementation(kotlin("stdlib", kotlin_version))
+}
+repositories {
+    mavenCentral()
 }

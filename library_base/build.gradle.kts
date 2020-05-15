@@ -1,8 +1,14 @@
+var kotlin_version = CoreVersion.KOTLIN
+var core_ktx_version = LibraryVersion.CORE_KTX
 plugins {
     id(GradlePluginId.ANDROID_LIBRARY)
     id(GradlePluginId.KOTLIN_ANDROID)
     id(GradlePluginId.KOTLIN_ANDROID_EXTENSIONS)
     id(GradlePluginId.KAPT)
+}
+apply {
+    plugin("kotlin-android")
+    plugin("kotlin-android-extensions")
 }
 
 android {
@@ -48,7 +54,8 @@ android {
         }
     }
 
-    dataBinding.isEnabled = true
+        buildFeatures.dataBinding = true
+    buildFeatures.viewBinding = true
 }
 
 dependencies {
@@ -77,7 +84,6 @@ dependencies {
     api(LibraryDependency.COORDINATOR_LAYOUT)
     api(LibraryDependency.RECYCLER_VIEW)
     api(LibraryDependency.MATERIAL)
-    api(LibraryDependency.K_ANDROID)
 
     // circle image view
     implementation(LibraryDependency.CIRCLE_IMAGE_VIEW)
@@ -98,5 +104,10 @@ dependencies {
     implementation(LibraryDependency.ICONICS_GOOGLE_MATERIAL)
     implementation(LibraryDependency.ICONICS_MATERIAL_DESIGN_ICONIC)
     implementation(LibraryDependency.ICONICS_FONTAWESOME)
+    implementation("androidx.core:core-ktx:${core_ktx_version}")
+    implementation(kotlin("stdlib", kotlin_version))
 
+}
+repositories {
+    mavenCentral()
 }

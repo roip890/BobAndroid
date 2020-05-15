@@ -6,6 +6,8 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import androidx.core.content.ContextCompat
@@ -15,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
-import com.aptenobytes.bob.feature.wish.BR
 import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentWishDetailBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
@@ -29,7 +30,6 @@ import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import com.mikepenz.iconics.utils.paddingDp
 import com.mikepenz.iconics.utils.sizeDp
-import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.fragment_wish_detail.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -126,13 +126,13 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
             bindWishViewModel(viewState.wish.toViewModel())
         }
 
-        this.progressBar.visible = viewState.isLoading
+        this.progressBar.visibility = if (viewState.isLoading) VISIBLE else GONE
         viewState.error?.let {
-            messageLayout.visible = true
-            messageImage.visible = false
-            messageAnimation.visible = true
+            messageLayout.visibility = VISIBLE
+            messageImage.visibility = GONE
+            messageAnimation.visibility = VISIBLE
         } ?: run {
-            messageLayout.visible = false
+            messageLayout.visibility = GONE
         }
 
     }

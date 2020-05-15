@@ -9,7 +9,7 @@ import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class NotificationNetworkDataModel(
-    @field:Json(name = "notificationId")
+    @field:Json(name = "id")
     val id: Long,
 
     @field:Json(name = "guestId")

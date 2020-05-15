@@ -1,9 +1,15 @@
+var kotlin_version = CoreVersion.KOTLIN
+var core_ktx_version = LibraryVersion.CORE_KTX
 plugins {
     id(GradlePluginId.ANDROID_DYNAMIC_FEATURE)
     id(GradlePluginId.KOTLIN_ANDROID)
     id(GradlePluginId.KOTLIN_ANDROID_EXTENSIONS)
     id(GradlePluginId.SAFE_ARGS)
     id(GradlePluginId.KAPT)
+}
+apply {
+    plugin("kotlin-android")
+    plugin("kotlin-android-extensions")
 }
 
 android {
@@ -56,7 +62,8 @@ android {
         }
     }
 
-    dataBinding.isEnabled = true
+    buildFeatures.dataBinding = true
+    buildFeatures.viewBinding = true
 
 }
 
@@ -87,4 +94,9 @@ dependencies {
     implementation(LibraryDependency.CIRCLE_IMAGE_VIEW)
 
     addTestDependencies()
+    implementation("androidx.core:core-ktx:${core_ktx_version}")
+    implementation(kotlin("stdlib", kotlin_version))
+}
+repositories {
+    mavenCentral()
 }

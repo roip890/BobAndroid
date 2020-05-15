@@ -65,6 +65,10 @@ class LoginViewModel(
         }
     }
 
+    fun goToBottomNav() {
+        navManager.navigateToBottomNav()
+    }
+
     private val intentChannel = BroadcastChannel<LoginIntent>(capacity = Channel.CONFLATED)
     suspend fun processIntent(intent: LoginIntent) {
         intentChannel.send(intent)

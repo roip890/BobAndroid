@@ -3,7 +3,6 @@ package com.aptenobytes.bob.feature.wish.presentation.wishlist
 import androidx.lifecycle.viewModelScope
 import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishesListFromSettingsUseCase
 import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishesListUseCase
-import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsResult
 import com.aptenobytes.bob.library.base.presentation.navigation.NavManager
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,7 +10,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import timber.log.Timber
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -98,7 +96,7 @@ class WishListViewModel(
     // navigation
     fun navigateToWishDetail(wishId: Long) {
         val navDirections = WishListFragmentDirections.actionWishListToWishDetail(wishId)
-        navManager.navigate(navDirections)
+        navManager.navigateDirection(navDirections)
     }
 
 }

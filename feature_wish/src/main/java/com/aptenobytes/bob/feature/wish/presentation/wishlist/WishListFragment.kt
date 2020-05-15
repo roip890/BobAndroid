@@ -2,12 +2,12 @@ package com.aptenobytes.bob.feature.wish.presentation.wishlist
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aptenobytes.bob.feature.wish.R
-import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.SetWishStatusFragment
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishViewHolder
 import com.aptenobytes.bob.feature.wish.presentation.model.WishViewModel
 import com.aptenobytes.bob.feature.wish.presentation.model.toViewModel
@@ -22,7 +22,6 @@ import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import com.mikepenz.iconics.utils.paddingDp
 import com.mikepenz.iconics.utils.sizeDp
-import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.fragment_wish_list.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flowOf
@@ -100,7 +99,7 @@ class WishListFragment : BaseContainerFragment(), WishListView {
             }
         )
         layoutManager = LinearLayoutManager(context)
-        loadMoreListener = RecyclerViewLoadMoreScrollListener(layoutManager as LinearLayoutManager).apply {
+        loadMoreListener = RecyclerViewLoadMoreScrollListener(layoutManager).apply {
             this.onLoadMore = {
                 loadMoreListener.keepLoad = true
                 adapter.addLoadingView()
@@ -176,11 +175,11 @@ class WishListFragment : BaseContainerFragment(), WishListView {
             }
         }
         this.loadMoreListener.isLoading = viewState.isLoading
-        errorAnimation.visible = viewState.error != null
+        errorAnimation.visibility = if (viewState.error != null) View.VISIBLE else GONE
         if (!viewState.isLoading) {
             swipeRefreshLayout.isRefreshing = false
         }
-        recyclerView.visible = viewState.error == null && !viewState.isLoading
+        recyclerView.visibility = if (viewState.error == null && !viewState.isLoading) View.VISIBLE else GONE
     }
 
 }

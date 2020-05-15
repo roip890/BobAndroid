@@ -2,6 +2,8 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
+var kotlin_version = CoreVersion.KOTLIN
+
 plugins {
     id(GradlePluginId.DETEKT)
     id(GradlePluginId.KTLINT_GRADLE)
@@ -18,6 +20,7 @@ plugins {
 
 // all projects = root project + sub projects
 allprojects {
+
     repositories {
         google()
         jcenter()
@@ -77,12 +80,6 @@ tasks {
                     if (rejected) {
                         reject("Release candidate")
                     }
-
-                    // kAndroid newest version is 0.8.8 (jcenter), however maven repository contains version 0.8.7 and
-                    // plugin fails to recognize it correctly
-                    if (candidate.group == "com.pawegio.kandroid") {
-                        reject("version ${candidate.version} is broken for ${candidate.group}'")
-                    }
                 }
             }
         }
@@ -114,5 +111,14 @@ task("staticCheck") {
 
         // By defining Gradle dependency all dependent tasks will run before this "empty" task
         dependsOn(taskDependencies)
+    }
+}
+buildscript {
+    dependencies {
+        "classpath"("com.android.tools.build:gradle:4.0.0-rc01")
+        classpath(kotlin("gradle-plugin", CoreVersion.KOTLIN))
+    }
+    repositories {
+        mavenCentral()
     }
 }

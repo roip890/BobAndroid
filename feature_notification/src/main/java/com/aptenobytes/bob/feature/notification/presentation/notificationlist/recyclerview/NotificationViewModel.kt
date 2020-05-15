@@ -2,7 +2,7 @@ package com.aptenobytes.bob.feature.notification.presentation.notificationlist.r
 
 import androidx.lifecycle.MutableLiveData
 import com.aptenobytes.bob.feature.notification.domain.model.notification.NotificationDomainModel
-import java.util.*
+import java.util.Date
 
 class NotificationViewModel(
     val id: MutableLiveData<Long> = MutableLiveData<Long>(),
@@ -26,7 +26,7 @@ fun NotificationDomainModel.toViewModel(): NotificationViewModel {
         content = MutableLiveData<String>(this.type),
         timeStamp = MutableLiveData<Date>(this.timeStamp),
         iconUrl = MutableLiveData<String>(this.iconUrl),
-        type = MutableLiveData<String>(this.iconUrl),
+        type = MutableLiveData<String>(this.type),
         value = MutableLiveData<String>(this.value),
         isRead = MutableLiveData<Boolean>(this.isRead)
     )

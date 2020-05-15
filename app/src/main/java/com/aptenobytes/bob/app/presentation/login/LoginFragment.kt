@@ -10,6 +10,7 @@ import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,7 +29,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
 import com.mikepenz.iconics.utils.sizeDp
-import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.activity_nav_host.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -194,18 +194,19 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
     @ExperimentalCoroutinesApi
     private fun render(viewState: LoginViewState) {
         viewState.user?.let {
-            val activity = activity as? NavHostActivity
-            activity?.let {
-                activity.navHostFragment?.findNavController()?.navInflater?.inflate(R.navigation.bottom_nav_graph)?.let { navGraph ->
-                    activity.navHostFragment.findNavController().graph = navGraph
-                    activity.appBarLayout.visible = true
-                    activity.bottomNav.visible = true
-                }
-            }
+            viewModel.goToBottomNav()
+//            val activity = activity as? NavHostActivity
+//            activity?.let {
+//                activity.navHostFragment?.findNavController()?.navInflater?.inflate(R.navigation.bottom_nav_graph)?.let { navGraph ->
+//                    activity.navHostFragment.findNavController().graph = navGraph
+//                    activity.appBarLayout.visibility = VISIBLE
+//                    activity.bottomNav.visibility = VISIBLE
+//                }
+//            }
         } ?: run {
-            loginSubmitButton.visible = !viewState.isLoading
-            progressBar.visible = viewState.isLoading
-            loginError.visible = viewState.error != null
+            loginSubmitButton.visibility = if (!viewState.isLoading) VISIBLE else View.GONE
+            progressBar.visibility = if (viewState.isLoading) VISIBLE else View.GONE
+            loginError.visibility = if (viewState.error != null) VISIBLE else View.GONE
             viewModel.displayError.postValue(viewState.error?.localizedMessage)
         }
     }
@@ -229,5 +230,6 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
             }
         }
     }
+
 
 }

@@ -1,8 +1,14 @@
+var kotlin_version = CoreVersion.KOTLIN
+var core_ktx_version = LibraryVersion.CORE_KTX
 plugins {
     id(GradlePluginId.ANDROID_DYNAMIC_FEATURE)
     id(GradlePluginId.KOTLIN_ANDROID)
     id(GradlePluginId.KOTLIN_ANDROID_EXTENSIONS)
     id(GradlePluginId.SAFE_ARGS)
+}
+apply {
+    plugin("kotlin-android")
+    plugin("kotlin-android-extensions")
 }
 
 android {
@@ -53,4 +59,9 @@ dependencies {
     implementation(project(ModuleDependency.APP))
 
     addTestDependencies()
+    implementation("androidx.core:core-ktx:${core_ktx_version}")
+    implementation(kotlin("stdlib", kotlin_version))
+}
+repositories {
+    mavenCentral()
 }

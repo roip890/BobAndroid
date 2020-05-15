@@ -4,7 +4,7 @@ import com.aptenobytes.bob.feature.notification.data.network.retrofit.response.G
 import retrofit2.http.*
 
 internal interface NotificationRetrofitService {
-    @GET("./NotificationServices/services/user/notifications/getPage?")
+    @GET("./NotificationServices/services/user/notification/getPage?")
     suspend fun getNotificationsAsync(
 
         @Query("notificationId") notificationId: Long? = null,

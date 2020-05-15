@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.aptenobytes.bob.feature.notification.presentation.notificationlist.recyclerview.NotificationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_horizontal"
+        android:background="@android:color/transparent"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        tools:targetApi="m"
+        tools:ignore="UnusedAttribute">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/notificationImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/notificationType"
+            android:text="@{viewModel.type}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:layout_constraintStart_toEndOf="@id/notificationImage"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"
+            android:textAlignment="textStart"/>
+
+        <TextView
+            android:id="@+id/notificationTimestamp"
+            android:text="@{viewModel.timeStampString}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:layout_constraintStart_toEndOf="@id/notificationImage"
+            app:layout_constraintTop_toBottomOf="@+id/notificationType"
+            android:textStyle="italic"
+            android:textAlignment="textStart"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

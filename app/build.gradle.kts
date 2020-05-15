@@ -1,5 +1,11 @@
 import com.android.build.gradle.internal.dsl.BaseFlavor
 import com.android.build.gradle.internal.dsl.DefaultConfig
+import com.android.build.gradle.api.ApplicationVariant
+import com.android.build.gradle.api.ApkVariantOutput
+import com.android.build.gradle.api.BaseVariantOutput
+
+var kotlin_version = CoreVersion.KOTLIN
+var core_ktx_version = LibraryVersion.CORE_KTX
 
 plugins {
     id(GradlePluginId.ANDROID_APPLICATION)
@@ -8,6 +14,10 @@ plugins {
     id(GradlePluginId.KTLINT_GRADLE)
     id(GradlePluginId.SAFE_ARGS)
     id(GradlePluginId.KAPT)
+}
+apply {
+    plugin("kotlin-android")
+    plugin("kotlin-android-extensions")
 }
 
 android {
@@ -75,14 +85,12 @@ android {
         }
     }
 
-    dataBinding.isEnabled = true
+    buildFeatures.dataBinding = true
+    buildFeatures.viewBinding = true
 
 }
 
 dependencies {
-    //kotlin android
-    api(LibraryDependency.K_ANDROID)
-
     // base library
     api(project(ModuleDependency.LIBRARY_BASE))
 
@@ -139,6 +147,8 @@ dependencies {
 
     // tests
     addTestDependencies()
+    implementation("androidx.core:core-ktx:${core_ktx_version}")
+    implementation(kotlin("stdlib", kotlin_version))
 }
 
 fun BaseFlavor.buildConfigFieldFromGradleProperty(gradlePropertyName: String) {
@@ -160,3 +170,43 @@ fun DefaultConfig.buildConfigField(name: String, value: Set<String>) {
     val strValue = value.joinToString(prefix = "{", separator = ",", postfix = "}", transform = { "\"$it\"" })
     buildConfigField("String[]", name, strValue)
 }
+repositories {
+    mavenCentral()
+}
+
+val bundletoolJar = project.rootDir.resolve("third_party/bundletool/bundletool-all-0.13.0.jar")
+
+android.applicationVariants.all(object : Action<ApplicationVariant> {
+    override fun execute(variant: ApplicationVariant) {
+        variant.outputs.forEach { output: BaseVariantOutput? ->
+            (output as? com.android.build.gradle.api.ApkVariantOutput)?.let { apkOutput: ApkVariantOutput ->
+                var filePath = apkOutput.outputFile.absolutePath
+                filePath = filePath.replaceAfterLast(".", "aab")
+                filePath = filePath.replace("build/outputs/apk/", "build/outputs/bundle/")
+                var outputPath = filePath.replace("build/outputs/bundle/", "build/outputs/apks/")
+                outputPath = outputPath.replaceAfterLast(".", "apks")
+
+                tasks.register<JavaExec>("buildApks${variant.name.capitalize()}") {
+                    classpath = files(bundletoolJar)
+                    args = listOf(
+                        "build-apks",
+                        "--overwrite",
+                        "--local-testing",
+                        "--bundle",
+                        filePath,
+                        "--output",
+                        outputPath
+                    )
+                    dependsOn("bundle${variant.name.capitalize()}")
+                }
+
+                tasks.register<JavaExec>("installApkSplitsForTest${variant.name.capitalize()}") {
+                    classpath = files(bundletoolJar)
+                    args = listOf("install-apks", "--apks", outputPath)
+                    dependsOn("buildApks${variant.name.capitalize()}")
+                }
+
+            }
+        }
+    }
+})

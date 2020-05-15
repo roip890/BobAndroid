@@ -1,24 +1,28 @@
 package com.aptenobytes.bob.feature.notification.presentation.notificationlist
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aptenobytes.bob.feature.notification.R
 import com.aptenobytes.bob.feature.notification.presentation.notificationlist.recyclerview.NotificationViewHolder
 import com.aptenobytes.bob.feature.notification.presentation.notificationlist.recyclerview.NotificationViewModel
-import com.aptenobytes.bob.feature.notification.presentation.notificationlist.recyclerview.toViewModel
 import com.aptenobytes.bob.feature.notification.presentation.notificationlist.recyclerview.notificationsAdapter
+import com.aptenobytes.bob.feature.notification.presentation.notificationlist.recyclerview.toViewModel
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
 import com.aptenobytes.bob.library.base.presentation.recyclerview.builder.recycleView
 import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.adapter.RecyclerViewLoadMoreAdapter
 import com.aptenobytes.bob.library.base.presentation.recyclerview.loadmore.listener.RecyclerViewLoadMoreScrollListener
-import com.pawegio.kandroid.visible
 import kotlinx.android.synthetic.main.fragment_notification_list.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.merge
@@ -96,6 +100,7 @@ class NotificationListFragment : BaseContainerFragment(), NotificationListView {
         ).apply {
             setHasFixedSize(true)
             addOnScrollListener(loadMoreListener)
+            recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.HORIZONTAL))
         }
     }
 
@@ -143,11 +148,11 @@ class NotificationListFragment : BaseContainerFragment(), NotificationListView {
             }
         }
         this.loadMoreListener.isLoading = viewState.isLoading
-        errorAnimation.visible = viewState.error != null
+            errorAnimation.visibility = if (viewState.error != null) VISIBLE else GONE
         if (!viewState.isLoading) {
             swipeRefreshLayout.isRefreshing = false
         }
-        recyclerView.visible = viewState.error == null && !viewState.isLoading
+        recyclerView.visibility = if (viewState.error == null && !viewState.isLoading) VISIBLE else GONE
     }
 
 }

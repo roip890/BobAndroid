@@ -1,12 +1,12 @@
 package com.aptenobytes.bob.app.presentation
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.plusAssign
 import androidx.navigation.ui.setupWithNavController
 import com.aptenobytes.bob.R
-import com.aptenobytes.bob.library.base.navigation.KeepStateNavigator
 import com.aptenobytes.bob.library.base.presentation.activity.BaseActivity
 import com.aptenobytes.bob.library.base.presentation.navigation.NavManager
 import kotlinx.android.synthetic.main.activity_nav_host.*
@@ -18,6 +18,8 @@ class NavHostActivity : BaseActivity() {
 
     private val navController get() = navHostFragment.findNavController()
 
+//    private var currentNavController: LiveData<NavController>? = null
+
     private val navManager: NavManager by instance<NavManager>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,47 +27,63 @@ class NavHostActivity : BaseActivity() {
 
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-//        // get fragment
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment)!!
-//
-//        // setup custom navigator
-//        val navigator = KeepStateNavigator(this, navHostFragment.childFragmentManager, R.id.navHostFragment)
-//        navController.navigatorProvider += navigator
-//
 
-        bottomNav.setupWithNavController(navController)
-
-        navManager.setOnNavEvent {
+        navManager.setOnDirectionNavEvent {
             navController.navigate(it)
         }
 
+        navManager.setOnResNavEvent {
+            navController.navigate(it)
+        }
+
+        navManager.setOnAppBarVisibilityEvent {visible ->
+            appBarLayout.visibility = if (visible) VISIBLE else GONE
+        }
+
+        navManager.setOnBottomNavVisibilityEvent { visible ->
+            bottomNav.visibility = if (visible) VISIBLE else GONE
+        }
+
+        navManager.setOnNavUpEvent {
+            navController.navigateUp()
+        }
+
+        navManager.setSetupControllerWithMainNavigationEvent {
+            setupControllerWishMainNavigationGraph()
+        }
+
+        navManager.setSetupControllerWithBottomNavigationEvent {
+            setupControllerWishBottomNavigationGraph()
+        }
+
+        setupControllerWishMainNavigationGraph()
+
     }
 
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//        setupBottomNavigationBar()
-//    }
-//
-//    private fun initBottomNavigation() {
-//        bottomNav.
-//    }
-//
-//    private fun initNavManager() {
-//        navManager.setOnNavEvent {
-//            navController.navigate(it)
-//        }
-//    }
-//
-//
-//
-//    private fun setupBottomNavigationBar() {
+    private fun setupControllerWishMainNavigationGraph() {
+        navHostFragment?.findNavController()?.navInflater?.inflate(R.navigation.app_nav_graph)?.let { navGraph ->
+            bottomNav.setupWithNavController(navController)
+            navHostFragment.findNavController().graph = navGraph
+            navManager.setAppBarVisible(visible = false)
+            navManager.setBottomNavVisible(visible = false)
+        }
+    }
+
+    private fun setupControllerWishBottomNavigationGraph() {
+
+        navHostFragment?.findNavController()?.navInflater?.inflate(R.navigation.bottom_nav_graph)?.let { navGraph ->
+            navHostFragment.findNavController().graph = navGraph
+            navManager.setAppBarVisible(visible = true)
+            navManager.setBottomNavVisible(visible = true)
+        }
+
+// try to make the nav bar persistence
 //        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNav)
 //
-//        navController.
 //        val navGraphIds = listOf(
-//            R.navigation.feature_wish_nav_graph,
-//            R.navigation.feature_profile_nav_graph,
-//            R.navigation.feature_favourite_nav_graph
+//            R.id.featureWishNavGraph,
+//            R.id.featureProfileNavGraph,
+//            R.id.featureNotificationNavGraph
 //        )
 //
 //        // Setup the bottom navigation view with a list of navigation graphs
@@ -76,10 +94,12 @@ class NavHostActivity : BaseActivity() {
 //            intent = intent
 //        )
 //        currentNavController = controller
-//    }
-//
-//    override fun onSupportNavigateUp(): Boolean {
-//        return currentNavController?.value?.navigateUp() ?: false
-//    }
+//        navManager.setAppBarVisible(visible = true)
+//        navManager.setBottomNavVisible(visible = true)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() ?: false
+    }
 
 }

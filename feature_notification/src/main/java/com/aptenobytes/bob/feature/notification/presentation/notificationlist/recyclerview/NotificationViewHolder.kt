@@ -6,11 +6,11 @@ import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.aptenobytes.bob.feature.notification.R
 import com.aptenobytes.bob.feature.notification.data.network.constants.NOTIFICATION_DATE_FORMAT
-import com.aptenobytes.bob.feature.notification.databinding.FragmentNotificationListItemBinding
+import com.aptenobytes.bob.feature.notification.databinding.NotificationItemBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NotificationViewHolder(val binding: FragmentNotificationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class NotificationViewHolder(val binding: NotificationItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(notification: NotificationViewModel) {
         binding.viewModel = notification
