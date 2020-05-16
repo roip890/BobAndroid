@@ -11,14 +11,6 @@ import org.kodein.di.generic.singleton
 
 internal val localDataModule = Kodein.Module("${FEATURE_NAME}RoomDataModule") {
 
-    bind<AuthDatabase>() with singleton {
-        AuthDatabase(
-            instance()
-        )
-    }
-
-    bind<AuthDao>() with provider { instance<AuthDatabase>().authDao() }
-
     bind<AuthLocalDataSource>() with singleton {
         AuthRoomDataSourceImpl(
             instance()

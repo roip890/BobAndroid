@@ -6,5 +6,6 @@ object GradlePluginVersion {
     const val GRADLE_VERSION_PLUGIN = "0.22.0"
     const val KOTLIN = CoreVersion.KOTLIN
     const val SAFE_ARGS = CoreVersion.NAVIGATION
+    const val ANTLR = "4.7.1"
 }
 

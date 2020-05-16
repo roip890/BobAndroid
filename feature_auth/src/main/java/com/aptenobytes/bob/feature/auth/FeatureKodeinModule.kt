@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.auth
 
-import com.aptenobytes.bob.feature.auth.feature.KodeinModuleProvider
+import com.aptenobytes.bob.app.feature.KodeinModuleProvider
 import com.aptenobytes.bob.feature.auth.data.dataModule
 import com.aptenobytes.bob.feature.auth.domain.domainModule
 import com.aptenobytes.bob.feature.auth.presentation.presentationModule

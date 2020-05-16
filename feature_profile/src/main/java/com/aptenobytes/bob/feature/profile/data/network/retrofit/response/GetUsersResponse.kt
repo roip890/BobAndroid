@@ -7,7 +7,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class GetUsersResponse(
+data class GetUsersResponse(
 
     @field:Json(name = "statusResponse")
     val statusResponse: AppStatusResponse?,

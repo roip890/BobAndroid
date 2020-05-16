@@ -13,6 +13,6 @@ internal val domainModule = Kodein.Module("${FEATURE_NAME}DomainModule") {
 
     bind<ProfileRepository>() with singleton { ProfileRepositoryImpl(instance(), instance(), instance(), instance()) }
 
-    bind() from singleton { GetUserBySessionUseCase(instance()) }
+    bind() from singleton { GetUserBySessionUseCase(instance(), instance()) }
 
 }

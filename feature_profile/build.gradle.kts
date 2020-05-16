@@ -65,6 +65,13 @@ android {
     buildFeatures.dataBinding = true
     buildFeatures.viewBinding = true
 
+    configurations.all {
+        resolutionStrategy {
+            force(GradlePluginId.ANTLR_RUNTIME)
+            force(GradlePluginId.ANTLR_TOOL)
+        }
+    }
+
 }
 
 dependencies {
@@ -97,6 +104,7 @@ dependencies {
     implementation("androidx.core:core-ktx:${core_ktx_version}")
     implementation(kotlin("stdlib", kotlin_version))
 }
+
 repositories {
     mavenCentral()
 }

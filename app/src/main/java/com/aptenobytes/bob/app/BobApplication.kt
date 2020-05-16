@@ -8,9 +8,8 @@ import com.aptenobytes.bob.app.feature.FeatureManager
 import com.aptenobytes.bob.app.kodein.FragmentArgsExternalSource
 import com.aptenobytes.bob.appModule
 import com.aptenobytes.bob.library.base.baseModule
-import com.google.android.play.core.splitcompat.SplitCompat
-import com.google.android.play.core.splitinstall.testing.FakeSplitInstallManager
-import com.google.android.play.core.splitinstall.testing.FakeSplitInstallManagerFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -21,6 +20,8 @@ False positive "Unused symbol" for a custom Android application class referenced
 https://youtrack.jetbrains.net/issue/KT-27971
 */
 class BobApplication : SplitCompatApplication(), KodeinAware {
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     override val kodein = Kodein.lazy {
         import(androidXModule(this@BobApplication))
         import(baseModule)

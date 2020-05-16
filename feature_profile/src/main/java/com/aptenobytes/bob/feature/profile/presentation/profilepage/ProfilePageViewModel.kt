@@ -21,6 +21,7 @@ class ProfilePageViewModel(
     val userLiveData: MutableLiveData<UserDomainModel> = MutableLiveData<UserDomainModel>()
 
     val emailString = MutableLiveData<String>()
+    val nameString = MutableLiveData<String>()
     val firstNameString = MutableLiveData<String>()
     val lastNameString = MutableLiveData<String>()
     val statusString = MutableLiveData<String>()

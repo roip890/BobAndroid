@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class UpdateUserRequest(
+data class UpdateUserRequest(
 
     @field:Json(name = "user")
     val user: UserNetworkDataModel

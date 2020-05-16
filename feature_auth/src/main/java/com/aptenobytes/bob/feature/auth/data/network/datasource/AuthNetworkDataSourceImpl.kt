@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.feature.auth.data.network.datasource
 
+import com.aptenobytes.bob.app.data.network.model.user.toDomainModel
 import com.aptenobytes.bob.app.data.network.model.user.toNetworkModel
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.aptenobytes.bob.feature.auth.data.network.retrofit.request.EmailLoginRequest

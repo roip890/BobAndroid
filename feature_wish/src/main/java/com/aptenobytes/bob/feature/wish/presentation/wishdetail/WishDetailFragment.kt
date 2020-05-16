@@ -57,6 +57,8 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
     private var isWishSmallHeaderVisible = false
     private var isWishBigHeaderVisible = true
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return this.view?.let {
             this.view
@@ -65,6 +67,7 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
                 Timber.v("onCreateView ${javaClass.simpleName}")
             }
             binding.lifecycleOwner = viewLifecycleOwner
+            binding.viewModel = viewModel
             binding.root
         }
     }
@@ -138,7 +141,7 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
     @FlowPreview
     private fun bindWishViewModel(wish: WishDomainModel) {
 
-        binding.viewModel.wishLiveData.postValue(wish)
+        binding.viewModel?.wishLiveData?.postValue(wish)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.executePendingBindings()
@@ -189,6 +192,12 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
             binding.viewModel?.statusString?.postValue(
                 wishStatusTypeToString(
                     status
+                )
+            )
+            binding.viewModel?.statusColor?.postValue(
+                wishStatusTypeToColor(
+                    status,
+                    requireContext()
                 )
             )
             binding.viewModel?.statusIcon?.postValue(

@@ -12,24 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavGraph
-import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import com.aptenobytes.bob.R
-import com.aptenobytes.bob.feature.auth.domain.model.user.UserDomainModel
-import com.aptenobytes.bob.feature.auth.presentation.NavHostActivity
-import com.aptenobytes.bob.databinding.FragmentLoginBinding
+import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
+import com.aptenobytes.bob.auth.R
+import com.aptenobytes.bob.auth.databinding.FragmentLoginBinding
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.library.fontawesome.FontAwesome
 import com.mikepenz.iconics.utils.sizeDp
-import kotlinx.android.synthetic.main.activity_nav_host.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -62,6 +53,8 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
         }
     }
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return this.view?.let {
             this.view
@@ -70,6 +63,7 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
                 Timber.v("onCreateView ${javaClass.simpleName}")
             }
             binding.lifecycleOwner = viewLifecycleOwner
+            binding.viewModel = viewModel
             binding.root
         }
     }
@@ -230,6 +224,4 @@ class LoginFragment() : BaseContainerFragment(), LoginView {
             }
         }
     }
-
-
 }

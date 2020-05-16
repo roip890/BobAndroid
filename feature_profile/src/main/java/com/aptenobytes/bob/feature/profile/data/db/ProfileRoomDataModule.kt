@@ -11,14 +11,6 @@ import org.kodein.di.generic.singleton
 
 internal val localDataModule = Kodein.Module("${FEATURE_NAME}RoomDataModule") {
 
-    bind<ProfileDatabase>() with singleton {
-        ProfileDatabase(
-            instance()
-        )
-    }
-
-    bind<ProfileDao>() with provider { instance<ProfileDatabase>().profileDao() }
-
     bind<ProfileLocalDataSource>() with singleton {
         ProfileRoomDataSourceImpl(
             instance()

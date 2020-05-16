@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.aptenobytes.bob.feature.notification.data.db.converters.DateConverter
+import com.aptenobytes.bob.app.data.db.converters.date.DateConverter
 import com.aptenobytes.bob.feature.notification.data.db.model.NotificationRoomDataModel
 
 @Database(entities = [(NotificationRoomDataModel::class)], version = 1, exportSchema = false)

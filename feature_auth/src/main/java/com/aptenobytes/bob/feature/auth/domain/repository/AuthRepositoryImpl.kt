@@ -1,6 +1,6 @@
 package com.aptenobytes.bob.feature.auth.domain.repository
 
-import com.aptenobytes.bob.feature.auth.domain.model.user.UserDomainModel
+import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.aptenobytes.bob.feature.auth.domain.datasource.AuthCacheDataSource
 import com.aptenobytes.bob.feature.auth.domain.datasource.AuthLocalDataSource
 import com.aptenobytes.bob.feature.auth.domain.datasource.AuthNetworkDataSource

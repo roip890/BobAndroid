@@ -11,6 +11,8 @@ object GradlePluginId {
     const val GRADLE_VERSION_PLUGIN = "com.github.ben-manes.versions"
     const val SAFE_ARGS = "androidx.navigation.safeargs.kotlin"
     const val KAPT = "org.jetbrains.kotlin.kapt"
+    const val ANTLR_TOOL = "org.antlr:antlr4-tool:${GradlePluginVersion.ANTLR}"
+    const val ANTLR_RUNTIME = "org.antlr:antlr4-runtime:${GradlePluginVersion.ANTLR}"
 }
 
 object GradleOldWayPlugins {

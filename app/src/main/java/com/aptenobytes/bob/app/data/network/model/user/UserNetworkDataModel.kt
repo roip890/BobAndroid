@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.app.data.network.model.user
 
+import com.aptenobytes.bob.app.data.network.constants.USER_DATE_FORMAT
 import com.aptenobytes.bob.app.data.network.enums.UserStatusNetworkDataType
 import com.aptenobytes.bob.app.data.network.enums.toDomainEnum
 import com.aptenobytes.bob.app.data.network.enums.toNetworkEnum
@@ -7,6 +8,8 @@ import com.aptenobytes.bob.app.data.utils.moshi.SingleToArray
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.text.SimpleDateFormat
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class UserNetworkDataModel(
@@ -25,7 +28,7 @@ data class UserNetworkDataModel(
     val password: String?,
     @field:Json(name = "phone")
     val phone: String?,
-    @field:Json(name = "imageUrl")
+    @field:Json(name = "image")
     val imageUrl: String?,
     @field:Json(name = "status")
     val status: UserStatusNetworkDataType?,
@@ -52,7 +55,7 @@ fun UserNetworkDataModel.toDomainModel(): UserDomainModel {
         phone = this.phone,
         imageUrl = this.imageUrl,
         status = this.status?.toDomainEnum(),
-        birthday = this.birthday,
+        birthday = this.birthday?.let { SimpleDateFormat(USER_DATE_FORMAT, Locale.ENGLISH).parse(this.birthday)} ?: run { null },
         permissionLevel = this.permissionLevel,
         departments = this.departments ?: listOf(),
         hotelId = this.hotelId ?: 0
@@ -71,7 +74,7 @@ fun UserDomainModel.toNetworkModel(): UserNetworkDataModel {
         phone = this.phone,
         imageUrl = this.imageUrl,
         status = this.status?.toNetworkEnum(),
-        birthday = this.birthday,
+        birthday = this.birthday?.let { SimpleDateFormat(USER_DATE_FORMAT, Locale.ENGLISH).format(this.birthday)} ?: run { null },
         permissionLevel = this.permissionLevel,
         departments = this.departments ?: listOf(),
         hotelId = this.hotelId ?: 0

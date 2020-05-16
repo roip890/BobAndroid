@@ -8,7 +8,7 @@ import com.squareup.moshi.Types
 import java.lang.reflect.Type
 
 
-internal class UserStatusListRoomDataModelConverter() {
+class UserStatusListRoomDataModelConverter() {
 
     @TypeConverter
     fun fromUserDepartmentRoomDataModel(userDepartmentListRoomDataModel: List<UserStatusRoomDataType>?): String? {

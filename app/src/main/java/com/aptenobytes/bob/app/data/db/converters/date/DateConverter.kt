@@ -1,9 +1,9 @@
-package com.aptenobytes.bob.feature.notification.data.db.converters
+package com.aptenobytes.bob.app.data.db.converters.date
 
 import androidx.room.TypeConverter
 import java.util.*
 
-internal class DateConverter {
+class DateConverter {
 
     @TypeConverter
     fun fromDate(date: Date?): Long? {

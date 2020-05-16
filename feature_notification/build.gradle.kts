@@ -62,8 +62,15 @@ android {
         }
     }
 
-        buildFeatures.dataBinding = true
+    buildFeatures.dataBinding = true
     buildFeatures.viewBinding = true
+
+    configurations.all {
+        resolutionStrategy {
+            force(GradlePluginId.ANTLR_RUNTIME)
+            force(GradlePluginId.ANTLR_TOOL)
+        }
+    }
 
 }
 

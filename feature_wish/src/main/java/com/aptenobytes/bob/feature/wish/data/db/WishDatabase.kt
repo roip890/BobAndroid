@@ -5,18 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.aptenobytes.bob.app.data.db.converters.date.DateConverter
 import com.aptenobytes.bob.app.data.db.converters.department.DepartmentRoomDataModelConverter
 import com.aptenobytes.bob.app.data.db.converters.department.DepartmentsListRoomDataModelConverter
 import com.aptenobytes.bob.app.data.db.converters.guest.GuestRoomDataModelConverter
 import com.aptenobytes.bob.app.data.db.converters.user.UserRoomDataModelConverter
 import com.aptenobytes.bob.feature.wish.data.db.converters.wishelement.WishElementListRoomDataModelConverter
 import com.aptenobytes.bob.feature.wish.data.db.converters.wishelement.WishElementRoomDataModelConverter
-import com.aptenobytes.bob.feature.wish.data.db.converters.wishstatus.UserStatusListRoomDataModelConverter
+import com.aptenobytes.bob.feature.wish.data.db.converters.wishstatus.WishStatusListRoomDataModelConverter
 import com.aptenobytes.bob.feature.wish.data.db.converters.wishstatus.WishStatusRoomDataTypeConverter
 import com.aptenobytes.bob.feature.wish.data.db.model.WishRoomDataModel
 
 @Database(entities = [(WishRoomDataModel::class)], version = 1, exportSchema = false)
 @TypeConverters(
+    DateConverter::class,
     DepartmentRoomDataModelConverter::class,
     DepartmentsListRoomDataModelConverter::class,
     GuestRoomDataModelConverter::class,
@@ -24,7 +26,7 @@ import com.aptenobytes.bob.feature.wish.data.db.model.WishRoomDataModel
     WishElementRoomDataModelConverter::class,
     WishElementListRoomDataModelConverter::class,
     WishStatusRoomDataTypeConverter::class,
-    UserStatusListRoomDataModelConverter::class
+    WishStatusListRoomDataModelConverter::class
 )
 abstract class WishDatabase : RoomDatabase() {
     abstract fun wishDao(): WishDao

@@ -2,6 +2,7 @@ package com.aptenobytes.bob.app.domain.model.user
 
 import com.aptenobytes.bob.app.domain.enums.userstatus.UserStatusType
 import com.squareup.moshi.JsonClass
+import java.util.*
 
 @JsonClass(generateAdapter = true)
 data class UserDomainModel(
@@ -15,7 +16,7 @@ data class UserDomainModel(
     val password: String? = null,
     val phone: String? = null,
     val status: UserStatusType? = null,
-    val birthday: String? = null,
+    val birthday: Date? = null,
     val imageUrl: String? = null,
     val permissionLevel: String? = null,
     val departments: List<String>? = listOf()

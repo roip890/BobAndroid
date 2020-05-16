@@ -15,6 +15,7 @@ import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.aptenobytes.bob.feature.profile.R
 import com.aptenobytes.bob.feature.profile.databinding.FragmentProfilePageBinding
+import com.aptenobytes.bob.feature.profile.presentation.utils.userStatusTypeToColor
 import com.aptenobytes.bob.feature.profile.presentation.utils.userStatusTypeToIcon
 import com.aptenobytes.bob.feature.profile.presentation.utils.userStatusTypeToString
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
@@ -56,6 +57,8 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
     private var isUserSmallHeaderVisible = false
     private var isUserBigHeaderVisible = true
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return this.view?.let {
             this.view
@@ -64,6 +67,7 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
                 Timber.v("onCreateView ${javaClass.simpleName}")
             }
             binding.lifecycleOwner = viewLifecycleOwner
+            binding.viewModel = viewModel
             binding.root
         }
     }
@@ -129,7 +133,7 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
     @FlowPreview
     private fun bindWishViewModel(user: UserDomainModel) {
 
-        binding.viewModel.userLiveData.postValue(user)
+        binding.viewModel?.userLiveData?.postValue(user)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.executePendingBindings()
@@ -144,6 +148,7 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
     @FlowPreview
     private fun updateWish(user: UserDomainModel?) {
         updateEmail(email = user?.email)
+        updateName(firstName = user?.firstName, lastName = user?.lastName)
         updateFirstName(firstName = user?.firstName)
         updateLastName(lastName = user?.lastName)
         updateImage(imageUrl = user?.imageUrl)
@@ -155,6 +160,18 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
     private fun updateEmail(email: String?) {
         email?.let {
             binding.viewModel?.emailString?.postValue(email)
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    private fun updateName(firstName: String?, lastName: String?) {
+        firstName?.let {
+            lastName?.let {
+                binding.viewModel?.nameString?.postValue("$firstName $lastName")
+            } ?: run {
+                binding.viewModel?.nameString?.postValue(firstName)
+            }
         }
     }
 
@@ -200,6 +217,12 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
             )
             binding.viewModel?.statusIcon?.postValue(
                 userStatusTypeToIcon(
+                    status,
+                    requireContext()
+                )
+            )
+            binding.viewModel?.statusColor?.postValue(
+                userStatusTypeToColor(
                     status,
                     requireContext()
                 )

@@ -10,6 +10,8 @@ import com.aptenobytes.bob.app.domain.domainModule
 import com.aptenobytes.bob.app.presentation.presentationModule
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
@@ -20,6 +22,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 val appModule = Kodein.Module("appModule") {
 
     import(presentationModule)

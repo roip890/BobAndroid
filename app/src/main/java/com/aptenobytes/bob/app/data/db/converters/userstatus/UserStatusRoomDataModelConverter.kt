@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.aptenobytes.bob.app.data.db.enums.UserStatusRoomDataType
 import com.squareup.moshi.Moshi
 
-internal class UserStatusRoomDataTypeConverter() {
+class UserStatusRoomDataModelConverter() {
 
     @TypeConverter
     fun fromUserStatusRoomDataType(userStatusRoomDataType: UserStatusRoomDataType?): String? {

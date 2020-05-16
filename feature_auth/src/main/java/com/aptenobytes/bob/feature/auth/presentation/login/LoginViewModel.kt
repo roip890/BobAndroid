@@ -3,7 +3,7 @@ package com.aptenobytes.bob.feature.auth.presentation.login
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.aptenobytes.bob.feature.auth.domain.model.user.UserDomainModel
+import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.aptenobytes.bob.feature.auth.domain.usecase.EmailLoginUseCase
 import com.aptenobytes.bob.library.base.presentation.navigation.NavManager
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseViewModel
