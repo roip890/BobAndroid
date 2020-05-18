@@ -78,8 +78,8 @@ fun WishNetworkDataModel.toDomainModel(): WishDomainModel {
         status = status,
         isFavorite = this.isFavorite,
 
-        departments = departments ?: listOf(),
-        elements = elements ?: listOf()
+        departments = departments,
+        elements = elements
     )
 }
 
@@ -109,7 +109,7 @@ fun WishDomainModel.toNetworkModel(): WishNetworkDataModel {
         status = status,
         isFavorite = this.isFavorite,
 
-        departments = departments ?: listOf(),
-        elements = elements ?: listOf()
+        departments = departments,
+        elements = elements
     )
 }

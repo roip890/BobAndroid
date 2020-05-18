@@ -1,5 +1,6 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishsettings
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.app.domain.usecase.GetDepartmentsListUseCase
@@ -20,6 +21,10 @@ class WishSettingsViewModel(
     private val getWishSettingsUseCase: GetWishSettingsUseCase,
     private val setWishSettingsUseCase: SetWishSettingsUseCase
 ) : BaseViewModel<WishSettingsViewState, WishSettingsAction>(WishSettingsViewState.initial()) {
+
+    var departments: MutableLiveData<List<DepartmentDomainModel>> = MutableLiveData<List<DepartmentDomainModel>>(listOf<DepartmentDomainModel>())
+
+    var wishSettings: MutableLiveData<WishSettingsDomainModel> = MutableLiveData<WishSettingsDomainModel>(WishSettingsDomainModel())
 
     private val intentChannel = BroadcastChannel<WishSettingsIntent>(capacity = Channel.CONFLATED)
     suspend fun processIntent(intent: WishSettingsIntent) {
@@ -53,6 +58,11 @@ class WishSettingsViewModel(
                 .flatMapConcat { flow {
                     logAction(WishSettingsAction.SetWishSettingsAction(wishSettings = it.wishSettings))
                     emit(WishSettingsAction.SetWishSettingsAction(wishSettings = it.wishSettings))
+                } },
+            filterIsInstance<WishSettingsIntent.SubmitWishSettingsIntent>()
+                .flatMapConcat { flow {
+                    logAction(WishSettingsAction.SubmitWishSettingsAction(wishSettings = it.wishSettings))
+                    emit(WishSettingsAction.SubmitWishSettingsAction(wishSettings = it.wishSettings))
                 } }
         )
     }
@@ -70,6 +80,10 @@ class WishSettingsViewModel(
             filterIsInstance<WishSettingsAction.SetWishSettingsAction>()
                 .flatMapConcat {
                     processSetWishSettings(it.wishSettings)
+                },
+            filterIsInstance<WishSettingsAction.SubmitWishSettingsAction>()
+                .flatMapConcat {
+                    processSubmitWishSettings(it.wishSettings)
                 }
         )
     }
@@ -116,6 +130,21 @@ class WishSettingsViewModel(
             }
             .catch {
                 emit(WishSettingsResult.SetWishSettingsResult.Failure(it))
+            }
+    }
+
+    private fun processSubmitWishSettings(wishSettings: WishSettingsDomainModel): Flow<WishSettingsResult.SubmitWishSettingsResult> {
+        return flow {
+            emit(setWishSettingsUseCase.execute(wishSettings))
+        }
+            .map {
+                WishSettingsResult.SubmitWishSettingsResult.Success(it) as WishSettingsResult.SubmitWishSettingsResult
+            }
+            .onStart {
+                emit(WishSettingsResult.SubmitWishSettingsResult.Loading)
+            }
+            .catch {
+                emit(WishSettingsResult.SubmitWishSettingsResult.Failure(it))
             }
     }
 
@@ -166,6 +195,23 @@ class WishSettingsViewModel(
                     error = null
                 )
                 is WishSettingsResult.SetWishSettingsResult.Failure -> state.copy(
+                    isLoading = false,
+                    wishSettings = WishSettingsDomainModel(),
+                    error = it.error
+                )
+                // submit settings
+                is WishSettingsResult.SubmitWishSettingsResult.Loading -> state.copy(
+                    isLoading = true,
+                    wishSettings = WishSettingsDomainModel(),
+                    error = null
+                )
+                is WishSettingsResult.SubmitWishSettingsResult.Success -> state.copy(
+                    isLoading = false,
+                    wishSettings = it.wishSettings,
+                    error = null,
+                    submit = true
+                )
+                is WishSettingsResult.SubmitWishSettingsResult.Failure -> state.copy(
                     isLoading = false,
                     wishSettings = WishSettingsDomainModel(),
                     error = it.error

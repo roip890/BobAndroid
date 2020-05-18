@@ -1,5 +1,7 @@
 package com.aptenobytes.bob.feature.profile.presentation.profilepage
 
+import android.Manifest
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,25 +13,29 @@ import androidx.lifecycle.lifecycleScope
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.aptenobytes.bob.app.domain.enums.userstatus.UserStatusType
-import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.aptenobytes.bob.feature.profile.R
 import com.aptenobytes.bob.feature.profile.databinding.FragmentProfilePageBinding
+import com.aptenobytes.bob.feature.profile.presentation.profileedit.ProfileEditFragment
+import com.aptenobytes.bob.feature.profile.presentation.profilepicturemenu.ProfilePictureMenuFragment
+import com.aptenobytes.bob.feature.profile.presentation.setuserstatus.SetUserStatusFragment
 import com.aptenobytes.bob.feature.profile.presentation.utils.userStatusTypeToColor
 import com.aptenobytes.bob.feature.profile.presentation.utils.userStatusTypeToIcon
 import com.aptenobytes.bob.feature.profile.presentation.utils.userStatusTypeToString
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
 import com.aptenobytes.bob.library.base.presentation.utils.startAlphaAnimation
 import com.google.android.material.appbar.AppBarLayout
+import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import com.mikepenz.iconics.utils.paddingDp
+import com.mikepenz.iconics.utils.sizeDp
 import kotlinx.android.synthetic.main.fragment_profile_page.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import org.kodein.di.generic.instance
 import timber.log.Timber
+import java.io.File
 import kotlin.math.abs
 
 
@@ -41,7 +47,6 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
         const val ALPHA_ANIMATIONS_DURATION = 200
     }
 
-
     @ExperimentalCoroutinesApi
     @FlowPreview
     private val viewModel: ProfilePageViewModel by instance<ProfilePageViewModel>()
@@ -49,6 +54,8 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
     override val layoutResourceId = R.layout.fragment_profile_page
 
     lateinit var binding: FragmentProfilePageBinding
+
+    var profilePictureMenuFragment: ProfilePictureMenuFragment? = null
 
     @ExperimentalCoroutinesApi
     @FlowPreview
@@ -78,7 +85,9 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
         super.onViewCreated(view, savedInstanceState)
         requireContext()
         setupAppBarCollapsingImage()
-        setupFloatingActionButton()
+        setupProfilePictureImageView()
+        setupStatusFloatingActionButton()
+        setupEditFloatingActionButton()
         bind()
     }
 
@@ -89,9 +98,65 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
 
     @FlowPreview
     @ExperimentalCoroutinesApi
-    private fun setupFloatingActionButton() {
-        this.floatingActionButton.setOnClickListener {
+    private fun setupProfilePictureImageView() {
+        this.userBigImage.setOnClickListener {
+            binding.viewModel?.userLiveData?.value?.let { user ->
+                profilePictureMenuFragment = ProfilePictureMenuFragment.newInstance(
+                    onChangeProfilePictureListener = {imageUrl ->
+                        binding.userBigImage.load(imageUrl) {
+                            crossfade(true)
+                            placeholder(com.aptenobytes.bob.R.drawable.ic_round_profile_avatar)
+                            error(com.aptenobytes.bob.R.drawable.ic_round_profile_avatar)
+                        }
+                    },
+                    onShowProfilePictureListener = {
+                        binding.viewModel?.userLiveData?.value?.let { user ->
+                            user.imageUrl?.let { imageUrl ->
+                                binding.viewModel?.navigateToProfilePicturePreview(imageUrl = imageUrl)
+                                profilePictureMenuFragment?.dismiss()
+                            }
+                        }
+                    }
+                )
+                profilePictureMenuFragment?.show(parentFragmentManager, SetUserStatusFragment.TAG)
+            }
+        }
+    }
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
+    private fun setupStatusFloatingActionButton() {
+        this.statusFloatingActionButton.setOnClickListener {
+            binding.viewModel?.userLiveData?.value?.let { user ->
+                val setWishStatusFragment = SetUserStatusFragment.newInstance(
+                    userId = user.id,
+                    onChangeStatusListener = {wishAfterChange ->
+                        binding.viewModel?.userLiveData?.postValue(wishAfterChange)
+                    }
+                )
+                setWishStatusFragment.show(parentFragmentManager, SetUserStatusFragment.TAG)
+            }
+        }
+    }
+
+    @FlowPreview
+    @ExperimentalCoroutinesApi
+    private fun setupEditFloatingActionButton() {
+        this.editFloatingActionButton.setImageDrawable(
+            IconicsDrawable(requireContext(), GoogleMaterial.Icon.gmd_edit).apply {
+                sizeDp = 28
+                paddingDp = 4
+            }
+        )
+        this.editFloatingActionButton.setOnClickListener {
+            val wishSettingsFragment = ProfileEditFragment.newInstance(
+                onSubmitProfileListener = {
+                    flowOf(ProfilePageIntent.GetUserBySessionIntent)
+                        .onEach { viewModel.processIntent(it) }
+                        .launchIn(lifecycleScope)
+                }
+            )
+            wishSettingsFragment.show(parentFragmentManager, ProfileEditFragment.TAG)
         }
     }
 
@@ -196,9 +261,8 @@ class ProfilePageFragment : BaseContainerFragment(), ProfilePageView, AppBarLayo
             imageUrl?.let {
                 binding.userBigImage.load(imageUrl) {
                     crossfade(true)
-                    placeholder(R.drawable.ic_image)
-                    error(R.drawable.ic_image)
-                    transformations(RoundedCornersTransformation(10F))
+                    placeholder(com.aptenobytes.bob.R.drawable.ic_round_profile_avatar)
+                    error(com.aptenobytes.bob.R.drawable.ic_round_profile_avatar)
                 }
             }
         } catch (e: Exception) {

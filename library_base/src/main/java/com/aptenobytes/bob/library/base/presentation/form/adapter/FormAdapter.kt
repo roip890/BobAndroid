@@ -25,6 +25,7 @@ fun formAdapter(
                 is MultiChoiceElement<*> -> FormLayout.MULTI_CHOICE.ordinal
                 is SingleChoiceElement<*> -> FormLayout.SINGLE_CHOICE.ordinal
                 is ListElement<*> -> FormLayout.LIST_CHOICE.ordinal
+                is PhoneElement -> FormLayout.PHONE.ordinal
                 is EditTextElement<*> -> FormLayout.EDIT_TEXT.ordinal
                 is TextViewElement<*> -> FormLayout.TEXT_VIEW.ordinal
                 else -> FormLayout.EMPTY.ordinal
@@ -46,6 +47,9 @@ fun formAdapter(
                     binding.lifecycleOwner = lifecycleOwner
                 }
                 FormLayout.DATETIME.ordinal -> DateTimeViewHolder(context, DataBindingUtil.inflate(inflater, R.layout.date_time, parent, false)).apply {
+                    binding.lifecycleOwner = lifecycleOwner
+                }
+                FormLayout.PHONE.ordinal -> PhoneViewHolder(context, DataBindingUtil.inflate(inflater, R.layout.phone, parent, false)).apply {
                     binding.lifecycleOwner = lifecycleOwner
                 }
                 FormLayout.EDIT_TEXT.ordinal -> EditTextViewHolder(context, DataBindingUtil.inflate(inflater, R.layout.edit_text, parent, false)).apply {

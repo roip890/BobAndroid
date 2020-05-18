@@ -95,7 +95,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/statusFloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_anchor="@id/appBarLayout"
@@ -216,6 +216,18 @@
             app:civ_border_overlay="true"
             app:layout_behavior="com.aptenobytes.bob.library.base.presentation.coordinatorlayout.AvatarImageBehavior"
             />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
+            app:backgroundTint="@color/colorAccent"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            app:fabSize="normal"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

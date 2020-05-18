@@ -17,30 +17,30 @@ data class UserNetworkDataModel(
     val id: Long,
 
     @field:Json(name = "email")
-    val email: String?,
+    val email: String? = null,
     @field:Json(name = "username")
-    val username: String?,
+    val username: String? = null,
     @field:Json(name = "firstName")
-    val firstName: String?,
+    val firstName: String? = null,
     @field:Json(name = "lastName")
-    val lastName: String?,
+    val lastName: String? = null,
     @field:Json(name = "password")
-    val password: String?,
+    val password: String? = null,
     @field:Json(name = "phone")
-    val phone: String?,
+    val phone: String? = null,
     @field:Json(name = "image")
-    val imageUrl: String?,
+    val imageUrl: String? = null,
     @field:Json(name = "status")
-    val status: UserStatusNetworkDataType?,
-    @field:Json(name = "birthday")
-    val birthday: String?,
+    val status: UserStatusNetworkDataType? = null,
+    @field:Json(name = "bday")
+    val birthday: String? = null,
     @field:Json(name = "permissionLevel")
-    val permissionLevel: String?,
+    val permissionLevel: String? = null,
     @SingleToArray
     @field:Json(name = "departments")
-    val departments: List<String>?,
+    val departments: List<String>? = null,
     @field:Json(name = "hotelId")
-    val hotelId: Long?
+    val hotelId: Long? = null
 )
 
 fun UserNetworkDataModel.toDomainModel(): UserDomainModel {
@@ -57,7 +57,7 @@ fun UserNetworkDataModel.toDomainModel(): UserDomainModel {
         status = this.status?.toDomainEnum(),
         birthday = this.birthday?.let { SimpleDateFormat(USER_DATE_FORMAT, Locale.ENGLISH).parse(this.birthday)} ?: run { null },
         permissionLevel = this.permissionLevel,
-        departments = this.departments ?: listOf(),
+        departments = this.departments,
         hotelId = this.hotelId ?: 0
     )
 }
@@ -76,7 +76,7 @@ fun UserDomainModel.toNetworkModel(): UserNetworkDataModel {
         status = this.status?.toNetworkEnum(),
         birthday = this.birthday?.let { SimpleDateFormat(USER_DATE_FORMAT, Locale.ENGLISH).format(this.birthday)} ?: run { null },
         permissionLevel = this.permissionLevel,
-        departments = this.departments ?: listOf(),
+        departments = this.departments,
         hotelId = this.hotelId ?: 0
     )
 }

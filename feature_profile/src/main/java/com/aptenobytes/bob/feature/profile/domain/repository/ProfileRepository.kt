@@ -35,4 +35,10 @@ interface ProfileRepository {
     // update user
     suspend fun updateUser(user: UserDomainModel): UserDomainModel?
 
+    // user status
+    suspend fun setUserStatus(userId: Long, status: UserStatusType): UserDomainModel?
+
+    // upload profile picture
+    suspend fun uploadProfilePicture(userId: Long, imagePath: String): String?
+
 }

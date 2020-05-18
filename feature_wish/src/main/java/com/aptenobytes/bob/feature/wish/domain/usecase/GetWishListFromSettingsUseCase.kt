@@ -4,7 +4,7 @@ import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 import com.aptenobytes.bob.feature.wish.domain.repository.WishRepository
 
-class GetWishesListFromSettingsUseCase(
+class GetWishListFromSettingsUseCase(
     private val wishRepository: WishRepository
 ) {
     suspend fun execute(index: Int = 0, limit: Int = 20): List<WishDomainModel> {

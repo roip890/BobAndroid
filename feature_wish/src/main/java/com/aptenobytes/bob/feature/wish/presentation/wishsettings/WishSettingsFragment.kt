@@ -17,6 +17,7 @@ import com.aptenobytes.bob.feature.wish.domain.enums.wishsort.WishSortType
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettingsDomainModel
 import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.filter.WishFilterDomainModel
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListViewModel
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
 import com.aptenobytes.bob.library.base.extensions.ui.dpToPx
 import com.aptenobytes.bob.library.base.presentation.form.bindings.classes.marginAll
@@ -44,19 +45,23 @@ import timber.log.Timber
 import java.util.*
 
 
-class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSettingsView {
+class WishSettingsFragment(
+    val onSubmitSettingListener: (() -> Unit)? = null
+) : BaseContainerBottomSheetDialogFragment(), WishSettingsView {
 
     @ExperimentalCoroutinesApi
     @FlowPreview
     private val viewModel: WishSettingsViewModel by instance<WishSettingsViewModel>()
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    private val wishListViewModel: WishListViewModel by instance<WishListViewModel>()
+
     override val layoutResourceId = R.layout.fragment_wish_settings
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private val stateObserver = Observer<WishSettingsViewState> { render(it) }
-
-    private var departments: List<DepartmentDomainModel> = listOf<DepartmentDomainModel>()
-
-    private var wishSettings: WishSettingsDomainModel = WishSettingsDomainModel()
 
     private var form: Form? = null
 
@@ -85,8 +90,12 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
 
     companion object{
         val TAG = "WISHES_SETTINGS"
-        fun newInstance(): WishSettingsFragment{
-            return WishSettingsFragment()
+        fun newInstance(
+            onSubmitSettingListener: (() -> Unit)? = null
+        ): WishSettingsFragment{
+            return WishSettingsFragment(
+                onSubmitSettingListener = onSubmitSettingListener
+            )
         }
     }
 
@@ -209,7 +218,7 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
             }
             multiChoice<DepartmentDomainModel>(
                 tag = WishSettingsTags.DEPARTMENTS.ordinal,
-                items = departments.toArrayList(),
+                items = viewModel.departments.value?.toArrayList() ?: arrayListOf(),
                 viewItemValue = {
                     it?.name
                 }
@@ -235,6 +244,12 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
     @ExperimentalCoroutinesApi
     @FlowPreview
     private fun bind() {
+        viewModel.departments.observe(viewLifecycleOwner, Observer {
+            this.updateDepartments(it)
+        })
+        viewModel.wishSettings.observe(viewLifecycleOwner, Observer {
+            this.updateForm(it)
+        })
         viewModel.stateLiveData.observe(viewLifecycleOwner, stateObserver)
         intents()
             .onEach { viewModel.processIntent(it) }
@@ -246,66 +261,62 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
         flowOf(WishSettingsIntent.GetDepartmentsListIntent, WishSettingsIntent.GetWishSettingsIntent)
     )
 
-    private fun saveDepartments(departments: List<DepartmentDomainModel>) {
-        this.departments = departments
-    }
-
-    private fun saveWishSettings(wishSettings: WishSettingsDomainModel) {
-        this.wishSettings = wishSettings
-    }
-
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private fun render(viewState: WishSettingsViewState) {
 
-        saveDepartments(viewState.departments)
+        if (viewState.submit) {
+            this.dismiss()
+            this.onSubmitSettingListener?.invoke()
+            return
+        }
 
-        renderDepartments()
+        viewModel.departments.postValue(viewState.departments)
 
-        saveWishSettings(viewState.wishSettings)
-
-        renderForm(wishSettings = viewState.wishSettings)
+        viewModel.wishSettings.postValue(viewState.wishSettings)
 
     }
 
-    private fun renderDepartments() {
+    private fun updateDepartments(departments: List<DepartmentDomainModel>?) {
         this.form?.let {
-            val departments: MultiChoiceElement<DepartmentDomainModel>? = form?.getFormElement(tag = WishSettingsTags.DEPARTMENTS.ordinal)
-            departments?.let {
-                departments.items = this.departments.toArrayList()
+            val departmentsElement: MultiChoiceElement<DepartmentDomainModel>? = form?.getFormElement(tag = WishSettingsTags.DEPARTMENTS.ordinal)
+            departmentsElement?.let {
+                departmentsElement.items = departments?.toArrayList() ?: arrayListOf()
             }
         }
     }
 
-    private fun renderForm(wishSettings: WishSettingsDomainModel) {
+    private fun updateForm(wishSettings: WishSettingsDomainModel?) {
 
         this.form?.let {
             val sort: EditTextElement<WishSortType>? = form?.getFormElement(tag = WishSettingsTags.SORT.ordinal)
             sort?.let {
-                sort.value.postValue(wishSettings.sort)
+                sort.value.postValue(wishSettings?.sort)
             }
 
             val title: EditTextElement<String>? = form?.getFormElement(tag = WishSettingsTags.TITLE.ordinal)
             title?.let {
-                title.value.postValue(wishSettings.filter?.type)
+                title.value.postValue(wishSettings?.filter?.type)
             }
 
             val minDate: DateTimeElement? = form?.getFormElement(tag = WishSettingsTags.MIN_DATE.ordinal)
             minDate?.let {
-                minDate.value.postValue(wishSettings.filter?.minTimestamp)
+                minDate.value.postValue(wishSettings?.filter?.minTimestamp)
             }
 
             val maxDate: DateTimeElement? = form?.getFormElement(tag = WishSettingsTags.MAX_DATE.ordinal)
             maxDate?.let {
-                maxDate.value.postValue(wishSettings.filter?.maxTimestamp)
+                maxDate.value.postValue(wishSettings?.filter?.maxTimestamp)
             }
 
             val statuses: MultiChoiceElement<WishStatusType>? = form?.getFormElement(tag = WishSettingsTags.STATUSES.ordinal)
             statuses?.let {
-                statuses.value.postValue(wishSettings.filter?.statuses)
+                statuses.value.postValue(wishSettings?.filter?.statuses)
             }
 
             val departments: MultiChoiceElement<DepartmentDomainModel>? = form?.getFormElement(tag = WishSettingsTags.DEPARTMENTS.ordinal)
             departments?.let {
-                departments.value.postValue(wishSettings.filter?.departments)
+                departments.value.postValue(wishSettings?.filter?.departments)
             }
         }
 
@@ -334,7 +345,7 @@ class WishSettingsFragment() : BaseContainerBottomSheetDialogFragment(), WishSet
 
                 val wishSettings = WishSettingsDomainModel(filter = filter, sort = sort)
 
-                flowOf(WishSettingsIntent.SetWishSettingsIntent(wishSettings = wishSettings))
+                flowOf(WishSettingsIntent.SubmitWishSettingsIntent(wishSettings = wishSettings))
                     .onEach { viewModel.processIntent(it) }
                     .launchIn(lifecycleScope)
 

@@ -16,19 +16,17 @@ open class TextViewElement<T>(
     var textColor: MutableLiveData<Int> = MutableLiveData<Int>()
     ): BaseFormElement<T>(tag = tag, initialValue = MutableLiveData<T>(initialValue)) {
 
-    var valueTextObserver = Observer<String> {text: String? ->
-        Timber.v("valueTextObserver")
+    open var valueTextObserver = Observer<String> { text: String? ->
         val valueParsed = parseValue(text)
         if (valueParsed != value.value) value.postValue(valueParsed)
     }
 
-    var textValueObserver = Observer<T> {value: T? ->
-        Timber.v("textValueObserver")
+    open var textValueObserver = Observer<T> {value: T? ->
         val valueViewed = viewValue(value)
         if (valueViewed != text.value) text.postValue(valueViewed)
     }
 
-    var initialValueObserver = Observer<T> {initialValue: T? ->
+    open var initialValueObserver = Observer<T> {initialValue: T? ->
         value.postValue(initialValue)
         text.postValue(viewValue(initialValue))
     }

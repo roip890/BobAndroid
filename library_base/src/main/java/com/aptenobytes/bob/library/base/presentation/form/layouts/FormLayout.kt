@@ -4,6 +4,7 @@ enum class FormLayout {
     EMPTY,
     TEXT_VIEW,
     EDIT_TEXT,
+    PHONE,
     DATETIME,
     MULTI_CHOICE,
     SINGLE_CHOICE,

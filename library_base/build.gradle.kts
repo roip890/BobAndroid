@@ -107,6 +107,28 @@ dependencies {
     implementation("androidx.core:core-ktx:${core_ktx_version}")
     implementation(kotlin("stdlib", kotlin_version))
 
+    // permissions
+    implementation(LibraryDependency.K_PERMISSIONS)
+    implementation(LibraryDependency.K_PERMISSIONS_COROUTINES)
+
+    // image picker
+    implementation(LibraryDependency.IMAGE_PICKER)
+
+    // photo view
+    implementation(LibraryDependency.PHOTO_VIEW)
+
+    // zoom layout
+    implementation(LibraryDependency.ZOOM_LAYOUT)
+
+    // inline activity result
+    implementation(LibraryDependency.INLINE_ACTIVITY_RESULT)
+
+    // country code picker
+    implementation(LibraryDependency.COUNTRY_CODE_PICKER)
+
+    // country code picker
+    implementation(LibraryDependency.LIB_PHONE_NUMBER)
+
 }
 repositories {
     mavenCentral()

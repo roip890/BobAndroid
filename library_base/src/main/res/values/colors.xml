@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="colorPrimary">@color/sea_3</color>
+    <color name="colorPrimaryDark">@color/dark_blue</color>
+    <color name="colorAccent">@color/sun_3</color>
+
+    <color name="backgroundColor">@color/white</color>
+    <color name="backgroundInverseColor">@color/dark_blue</color>
+    <color name="iconColor">@color/dark_blue</color>
+    <color name="textColor">@color/dark_blue</color>
+    <color name="toolbarTitleColor">@color/white</color>
+    <color name="toolbarSubtitleColor">@color/white</color>
+
+    <!--    login-->
+    <color name="loginPrimaryBackgroundColor">@color/sea_3</color>
+    <color name="loginSecondaryBackgroundColor">@color/sea_1</color>
+
+    <!--    social-->
+    <color name="facebookColor">#3b5998</color>
+    <color name="twitterColor">#00acee</color>
+    <color name="googlePlusColor">#db4a39</color>
+
+</resources>

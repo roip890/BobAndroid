@@ -97,4 +97,26 @@ object LibraryDependency {
     const val ICONICS_PIXEDEN_7_STROKE = "com.mikepenz:pixeden-7-stroke-typeface:${IconsVersion.ICONICS_PIXEDEN_7_STROKE}"
     const val ICONICS_MATERIAL_DESIGN_ICONS_DX = "com.mikepenz:material-design-icons-dx-typeface:${IconsVersion.ICONICS_MATERIAL_DESIGN_ICONS_DX}"
 
+    // permissions
+    const val K_PERMISSIONS = "com.github.fondesa:kpermissions:${LibraryVersion.K_PERMISSIONS}"
+    const val K_PERMISSIONS_COROUTINES = "com.github.fondesa:kpermissions-coroutines:${LibraryVersion.K_PERMISSIONS}"
+
+    // image picker
+    const val IMAGE_PICKER = "com.github.dhaval2404:imagepicker:${LibraryVersion.IMAGE_PICKER}"
+
+    // zoom layout
+    const val ZOOM_LAYOUT = "com.otaliastudios:zoomlayout:${LibraryVersion.ZOOM_LAYOUT}"
+
+    // photo view
+    const val PHOTO_VIEW = "com.github.chrisbanes:PhotoView:${LibraryVersion.PHOTO_VIEW}"
+
+    // inline activity result
+    const val INLINE_ACTIVITY_RESULT = "com.github.florent37:inline-activity-result-kotlin:${LibraryVersion.INLINE_ACTIVITY_RESULT}"
+
+    // country code picker
+    const val COUNTRY_CODE_PICKER = "com.hbb20:ccp:${LibraryVersion.COUNTRY_CODE_PICKER}"
+
+    // libphonenumber
+    const val LIB_PHONE_NUMBER = "io.michaelrocks:libphonenumber-android:${LibraryVersion.LIB_PHONE_NUMBER}"
+
 }

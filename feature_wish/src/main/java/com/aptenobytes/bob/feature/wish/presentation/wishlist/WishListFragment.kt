@@ -9,10 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aptenobytes.bob.feature.wish.R
-import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishItemViewHolder
 import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishItemViewModel
-import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.wishesAdapter
 import com.aptenobytes.bob.feature.wish.presentation.wishsettings.WishSettingsFragment
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListIntent
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListView
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListViewModel
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListViewState
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.WishItemViewHolder
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.recyclerview.wishesAdapter
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
 import com.aptenobytes.bob.library.base.presentation.recyclerview.builder.recycleView
@@ -117,6 +121,8 @@ class WishListFragment : BaseContainerFragment(), WishListView {
         }
     }
 
+    @ExperimentalCoroutinesApi
+    @FlowPreview
     private fun setupFloatingActionButton() {
         this.floatingActionButton.setImageDrawable(
             IconicsDrawable(requireContext(), GoogleMaterial.Icon.gmd_filter).apply {
@@ -125,7 +131,13 @@ class WishListFragment : BaseContainerFragment(), WishListView {
             }
         )
         this.floatingActionButton.setOnClickListener {
-            val wishSettingsFragment = WishSettingsFragment.newInstance()
+            val wishSettingsFragment = WishSettingsFragment.newInstance(
+                onSubmitSettingListener = {
+                    flowOf(WishListIntent.GetWishListIntent(index = 0, limit = loadAmount, refresh = true))
+                        .onEach { viewModel.processIntent(it) }
+                        .launchIn(lifecycleScope)
+                }
+            )
             wishSettingsFragment.show(parentFragmentManager, WishSettingsFragment.TAG)
         }
     }

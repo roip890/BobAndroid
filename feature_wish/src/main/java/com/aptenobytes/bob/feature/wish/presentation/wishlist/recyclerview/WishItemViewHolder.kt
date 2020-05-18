@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.aptenobytes.bob.app.domain.model.department.DepartmentDomainModel
-import com.aptenobytes.bob.feature.wish.R
 import com.aptenobytes.bob.feature.wish.databinding.FragmentWishListItemBinding
 import com.aptenobytes.bob.feature.wish.domain.enums.wishstatus.WishStatusType
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
@@ -14,8 +13,6 @@ import com.aptenobytes.bob.feature.wish.presentation.utils.wishDepartmentsToStri
 import com.aptenobytes.bob.feature.wish.presentation.utils.wishStatusTypeToIcon
 import com.aptenobytes.bob.feature.wish.presentation.utils.wishStatusTypeToString
 import com.aptenobytes.bob.feature.wish.presentation.utils.wishTimeStampToString
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import java.util.*
 
 class WishItemViewHolder(val context: Context, val binding: FragmentWishListItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -50,8 +47,8 @@ class WishItemViewHolder(val context: Context, val binding: FragmentWishListItem
             iconUrl?.let {
                 binding.wishImage.load(iconUrl) {
                     crossfade(true)
-                    placeholder(R.drawable.ic_image)
-                    error(R.drawable.ic_image)
+                    placeholder(com.aptenobytes.bob.R.drawable.ic_round_room_service_avatar)
+                    error(com.aptenobytes.bob.R.drawable.ic_round_room_service_avatar)
                     transformations(RoundedCornersTransformation(10F))
                 }
             }

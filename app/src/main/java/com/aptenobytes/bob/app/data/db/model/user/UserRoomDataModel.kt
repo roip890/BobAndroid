@@ -71,7 +71,7 @@ fun UserRoomDataModel.toDomainModel(): UserDomainModel {
         status = this.status,
         birthday = this.birthday,
         permissionLevel = this.permissionLevel,
-        departments = this.departments ?: listOf(),
+        departments = this.departments,
         hotelId = this.hotelId
     )
 }
@@ -90,6 +90,6 @@ fun UserDomainModel.toRoomModel(): UserRoomDataModel =
         status = this.status,
         birthday = this.birthday,
         permissionLevel = this.permissionLevel,
-        departments = this.departments ?: listOf(),
+        departments = this.departments,
         hotelId = this.hotelId
     )

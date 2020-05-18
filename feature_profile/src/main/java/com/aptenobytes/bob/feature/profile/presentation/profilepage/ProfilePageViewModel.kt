@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aptenobytes.bob.app.domain.model.user.UserDomainModel
 import com.aptenobytes.bob.feature.profile.domain.usecase.GetUserBySessionUseCase
+import com.aptenobytes.bob.library.base.presentation.navigation.NavManager
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.*
 @FlowPreview
 @ExperimentalCoroutinesApi
 class ProfilePageViewModel(
+    private val navManager: NavManager,
     private val getUserBySessionUseCase: GetUserBySessionUseCase
 ) : BaseViewModel<ProfilePageViewState, ProfilePageAction>(ProfilePageViewState.initial()) {
 
@@ -58,12 +60,12 @@ class ProfilePageViewModel(
         return merge(
             filterIsInstance<ProfilePageAction.GetUserBySessionAction>()
                 .flatMapConcat {
-                    processGetWishDetail()
+                    processGetUserBySession()
                 }
         )
     }
 
-    private fun processGetWishDetail(): Flow<ProfilePageResult.GetUserBySessionResult> {
+    private fun processGetUserBySession(): Flow<ProfilePageResult.GetUserBySessionResult> {
         return flow {
             emit(getUserBySessionUseCase.execute())
         }
@@ -101,7 +103,10 @@ class ProfilePageViewModel(
         }
     }
 
+    // navigation
+    fun navigateToProfilePicturePreview(imageUrl: String) {
+        val navDirections = ProfilePageFragmentDirections.actionProfilePageToProfilePicturePreview(imageUrl)
+        navManager.navigateDirection(navDirections)
+    }
 
 }
-
-

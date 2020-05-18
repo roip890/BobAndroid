@@ -106,7 +106,8 @@
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:fabSize="normal"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:focusable="true" />
 
         <LinearLayout
             android:id="@+id/messageLayout"

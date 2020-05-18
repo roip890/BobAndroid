@@ -2,7 +2,10 @@ package com.aptenobytes.bob.feature.profile.data.network.retrofit.service
 
 import com.aptenobytes.bob.feature.profile.data.network.retrofit.request.UpdateUserRequestWrapper
 import com.aptenobytes.bob.feature.profile.data.network.retrofit.response.GetUsersResponseWrapper
+import com.aptenobytes.bob.feature.profile.data.network.retrofit.response.UpdateProfilePictureResponseWrapper
 import com.aptenobytes.bob.feature.profile.data.network.retrofit.response.UpdateUserResponseWrapper
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 internal interface ProfileRetrofitService {
@@ -30,5 +33,13 @@ internal interface ProfileRetrofitService {
     suspend fun updateUserAsync(
         @Body updateUserRequestWrapper: UpdateUserRequestWrapper
     ): UpdateUserResponseWrapper?
+
+    @Multipart
+    @POST("./FilesServices/services/user/upload/profile")
+    suspend fun uploadProfilePictureAsync(
+        @Query("user") userId: String,
+        @Query("name") imageName: String,
+        @Part imageFile: MultipartBody.Part
+    ): UpdateProfilePictureResponseWrapper?
 
 }

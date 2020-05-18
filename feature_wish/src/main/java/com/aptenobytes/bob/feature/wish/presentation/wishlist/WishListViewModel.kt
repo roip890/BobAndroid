@@ -1,8 +1,11 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishlist
 
 import androidx.lifecycle.viewModelScope
-import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishesListFromSettingsUseCase
+import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishListFromSettingsUseCase
 import com.aptenobytes.bob.feature.wish.domain.usecase.GetWishesListUseCase
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListIntent
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListResult
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListViewState
 import com.aptenobytes.bob.library.base.presentation.navigation.NavManager
 import com.aptenobytes.bob.library.base.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,7 +19,7 @@ import kotlinx.coroutines.flow.*
 class WishListViewModel(
     private val navManager: NavManager,
     private val getWishesListUseCase: GetWishesListUseCase,
-    private val getWishesListFromSettingsUseCase: GetWishesListFromSettingsUseCase
+    private val getWishListFromSettingsUseCase: GetWishListFromSettingsUseCase
 ) : BaseViewModel<WishListViewState, WishListAction>(WishListViewState.initial()) {
 
     private val intentChannel = BroadcastChannel<WishListIntent>(capacity = Channel.CONFLATED)
@@ -56,7 +59,7 @@ class WishListViewModel(
 
     private fun processGetWishList(index: Int, limit: Int, refresh: Boolean): Flow<WishListResult.GetWishListResult> {
         return flow {
-            emit(getWishesListFromSettingsUseCase.execute(index, limit))
+            emit(getWishListFromSettingsUseCase.execute(index, limit))
         }
             .map {
                 WishListResult.GetWishListResult.Success(it, refresh) as WishListResult.GetWishListResult

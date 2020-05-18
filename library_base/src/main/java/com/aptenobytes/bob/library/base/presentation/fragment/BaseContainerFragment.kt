@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes
 import com.aptenobytes.bob.library.base.presentation.bottomsheetdialogfragment.InjectionBottomSheetDialogFragment
 import timber.log.Timber
 
-abstract class BaseContainerFragment : InjectionBottomSheetDialogFragment() {
+abstract class BaseContainerFragment : InjectionFragment() {
 
     @get:LayoutRes
     protected abstract val layoutResourceId: Int

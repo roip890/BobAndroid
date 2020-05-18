@@ -1,6 +1,7 @@
 package com.aptenobytes.bob.feature.wish.presentation.wishlist
 
 import com.aptenobytes.bob.feature.wish.domain.model.wish.WishDomainModel
+import com.aptenobytes.bob.feature.wish.presentation.wishlist.WishListResult
 import com.aptenobytes.bob.library.base.presentation.mvi.BaseResult
 
 sealed class WishListResult : BaseResult {

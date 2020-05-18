@@ -5,6 +5,12 @@ import com.aptenobytes.bob.feature.wish.domain.model.wishessettings.WishSettings
 import com.aptenobytes.bob.library.base.presentation.mvi.BaseResult
 
 sealed class WishSettingsResult : BaseResult {
+    sealed class GetDepartmentsListResult : WishSettingsResult() {
+        object Loading : GetDepartmentsListResult()
+        data class Success(val departments: List<DepartmentDomainModel>) : GetDepartmentsListResult()
+        data class Failure(val error: Throwable) : GetDepartmentsListResult()
+    }
+
     sealed class GetWishSettingsResult : WishSettingsResult() {
         object Loading : GetWishSettingsResult()
         data class Success(val wishSettings: WishSettingsDomainModel) : GetWishSettingsResult()
@@ -17,9 +23,9 @@ sealed class WishSettingsResult : BaseResult {
         data class Failure(val error: Throwable) : SetWishSettingsResult()
     }
 
-    sealed class GetDepartmentsListResult : WishSettingsResult() {
-        object Loading : GetDepartmentsListResult()
-        data class Success(val departments: List<DepartmentDomainModel>) : GetDepartmentsListResult()
-        data class Failure(val error: Throwable) : GetDepartmentsListResult()
+    sealed class SubmitWishSettingsResult : WishSettingsResult() {
+        object Loading : SubmitWishSettingsResult()
+        data class Success(val wishSettings: WishSettingsDomainModel) : SubmitWishSettingsResult()
+        data class Failure(val error: Throwable) : SubmitWishSettingsResult()
     }
 }

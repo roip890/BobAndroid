@@ -1,6 +1,7 @@
 package com.aptenobytes.bob.feature.profile.data.network.datasource
 
 import com.aptenobytes.bob.app.data.network.enums.toNetworkEnum
+import com.aptenobytes.bob.app.data.network.model.user.UserNetworkDataModel
 import com.aptenobytes.bob.app.data.network.model.user.toDomainModel
 import com.aptenobytes.bob.app.data.network.model.user.toNetworkModel
 import com.aptenobytes.bob.app.domain.enums.usersort.UserSortType
@@ -12,6 +13,12 @@ import com.aptenobytes.bob.feature.profile.data.network.retrofit.request.UpdateU
 import com.aptenobytes.bob.feature.profile.data.network.retrofit.service.ProfileRetrofitService
 import com.aptenobytes.bob.feature.profile.domain.datasource.ProfileNetworkDataSource
 import com.aptenobytes.bob.library.base.extensions.collections.toArrayList
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -67,5 +74,33 @@ internal class ProfileNetworkDataSourceImpl(
             ?.user
             ?.toDomainModel()
 
+    override suspend fun setUserStatus(userId: Long, status: UserStatusType): UserDomainModel?
+        = profileRetrofitService.updateUserAsync(
+        updateUserRequestWrapper = UpdateUserRequestWrapper(
+            request = UpdateUserRequest(
+                user = UserNetworkDataModel(
+                    id = userId,
+                    status = status.toNetworkEnum()
+                )
+            )
+        )
+    )
+        ?.response
+        ?.user
+        ?.toDomainModel()
+
+    override suspend fun uploadProfilePicture(userId: Long, imagePath: String): String? {
+        val profilePicture = File(imagePath)
+        val requestFile = profilePicture.asRequestBody("image".toMediaTypeOrNull())
+        val body = MultipartBody.Part.createFormData("img", profilePicture.name, requestFile)
+
+        return profileRetrofitService.uploadProfilePictureAsync(
+            userId = userId.toString(),
+            imageName = profilePicture.name,
+            imageFile = body
+        )
+            ?.response
+            ?.url
+    }
 
 }

@@ -26,6 +26,28 @@ object LibraryVersion {
 
     // third party libs
     const val MATERIAL_DIALOGS = "3.3.0"
+
+    // permissions
+    const val K_PERMISSIONS = "3.1.2"
+
+    // image picker
+    const val IMAGE_PICKER = "1.7.1"
+
+    // photo view
+    const val PHOTO_VIEW = "2.0.0"
+
+    // zoom layout
+    const val ZOOM_LAYOUT = "1.7.1"
+
+    // inline activity result
+    const val INLINE_ACTIVITY_RESULT = "1.0.4"
+
+    // country code picker
+    const val COUNTRY_CODE_PICKER = "2.3.9"
+
+    // libphonenumber
+    const val LIB_PHONE_NUMBER = "8.12.3"
+
 }
 
 object IconsVersion {

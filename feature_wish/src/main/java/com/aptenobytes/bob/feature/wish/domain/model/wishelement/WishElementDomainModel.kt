@@ -4,9 +4,9 @@ data class WishElementDomainModel(
 
     val id: Long = 0,
 
-    val key: String? = "",
-    val value: String? = "",
-    val type: String? = "",
-    val order: Long? = 0
+    val key: String? = null,
+    val value: String? = null,
+    val type: String? = null,
+    val order: Long? = null
 
 )

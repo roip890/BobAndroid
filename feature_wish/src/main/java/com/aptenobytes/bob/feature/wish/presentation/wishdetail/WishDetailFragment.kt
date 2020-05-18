@@ -91,11 +91,11 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
     @ExperimentalCoroutinesApi
     private fun setupFloatingActionButton() {
         this.floatingActionButton.setOnClickListener {
-            binding.viewModel?.let { wishViewModel ->
+            binding.viewModel?.wishLiveData?.value?.let { wish ->
                 val setWishStatusFragment = SetWishStatusFragment.newInstance(
-                    wishId = viewModel.getWishId(),
+                    wishId = wish.id,
                     onChangeStatusListener = {wishAfterChange ->
-                        wishViewModel.wishLiveData.postValue(wishAfterChange)
+                        binding.viewModel?.wishLiveData?.postValue(wishAfterChange)
                     }
                 )
                 setWishStatusFragment.show(parentFragmentManager, SetWishStatusFragment.TAG)
@@ -175,8 +175,8 @@ class WishDetailFragment : BaseContainerFragment(), WishDetailView, AppBarLayout
             iconUrl?.let {
                 binding.wishBigImage.load(iconUrl) {
                     crossfade(true)
-                    placeholder(R.drawable.ic_image)
-                    error(R.drawable.ic_image)
+                    placeholder(com.aptenobytes.bob.R.drawable.ic_round_room_service_avatar)
+                    error(com.aptenobytes.bob.R.drawable.ic_round_room_service_avatar)
                     transformations(RoundedCornersTransformation(10F))
                 }
             }

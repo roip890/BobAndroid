@@ -6,6 +6,23 @@
     <fragment android:id="@+id/profilePageFragment"
         android:name="com.aptenobytes.bob.feature.profile.presentation.profilepage.ProfilePageFragment"
         android:label="Profile"
-        app:moduleName="feature_profile"/>
+        app:moduleName="feature_profile">
+
+        <action
+            android:id="@+id/actionProfilePageToProfilePicturePreview"
+            app:destination="@id/profilePicturePreviewFragment"/>
+
+    </fragment>
+
+    <fragment android:id="@+id/profilePicturePreviewFragment"
+        android:name="com.aptenobytes.bob.feature.profile.presentation.profilepage.profilepicturepreview.ProfilePicturePreviewFragment"
+        android:label="Profile Picture"
+        app:moduleName="feature_profile">
+
+        <argument
+            android:name="imageUrl"
+            app:argType="string"/>
+
+    </fragment>
 
 </navigation>

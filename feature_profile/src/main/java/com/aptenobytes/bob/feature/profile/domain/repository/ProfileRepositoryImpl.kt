@@ -47,8 +47,19 @@ class ProfileRepositoryImpl(
         )
     }
 
+    // update user
     override suspend fun updateUser(user: UserDomainModel): UserDomainModel? {
         return profileNetworkDataSource.updateUser(user = user)
+    }
+
+    // user status
+    override suspend fun setUserStatus(userId: Long, status: UserStatusType): UserDomainModel? {
+        return profileNetworkDataSource.setUserStatus(userId = userId, status = status)
+    }
+
+    // upload profile picture
+    override suspend fun uploadProfilePicture(userId: Long, imagePath: String): String? {
+        return profileNetworkDataSource.uploadProfilePicture(userId = userId, imagePath = imagePath)
     }
 
 

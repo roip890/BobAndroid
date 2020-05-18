@@ -7,4 +7,5 @@ sealed class WishSettingsAction : BaseAction {
     object GetDepartmentsListAction : WishSettingsAction()
     object GetWishSettingsAction : WishSettingsAction()
     class SetWishSettingsAction(val wishSettings: WishSettingsDomainModel) : WishSettingsAction()
+    class SubmitWishSettingsAction(val wishSettings: WishSettingsDomainModel) : WishSettingsAction()
 }

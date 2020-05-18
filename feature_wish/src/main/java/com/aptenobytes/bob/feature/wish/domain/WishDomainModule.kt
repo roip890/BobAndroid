@@ -13,7 +13,7 @@ internal val domainModule = Kodein.Module("${FEATURE_NAME}DomainModule") {
 
     bind<WishRepository>() with singleton { WishRepositoryImpl(instance(), instance(), instance(), instance()) }
 
-    bind() from singleton { GetWishesListFromSettingsUseCase(instance()) }
+    bind() from singleton { GetWishListFromSettingsUseCase(instance()) }
 
     bind() from singleton { GetWishesListUseCase(instance()) }
 

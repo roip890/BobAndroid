@@ -22,6 +22,7 @@ import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.recyclerview.
 import com.aptenobytes.bob.feature.wish.presentation.setwishstatus.recyclerview.wishStatusAdapter
 import com.aptenobytes.bob.library.base.extensions.ui.action
 import com.aptenobytes.bob.library.base.extensions.ui.snack
+import com.aptenobytes.bob.library.base.presentation.bottomsheetdialogfragment.BaseContainerBottomSheetDialogFragment
 import com.aptenobytes.bob.library.base.presentation.fragment.BaseContainerFragment
 import com.aptenobytes.bob.library.base.presentation.recyclerview.adapter.RecyclerViewAdapter
 import com.aptenobytes.bob.library.base.presentation.recyclerview.builder.recycleView
@@ -39,7 +40,7 @@ import org.kodein.di.generic.instance
 class SetWishStatusFragment(
     val wishId: Long,
     val onChangeStatusListener: ((status: WishDomainModel?) -> Unit)? = null
-) : BaseContainerFragment(), SetWishStatusView {
+) : BaseContainerBottomSheetDialogFragment(), SetWishStatusView {
 
     @ExperimentalCoroutinesApi
     @FlowPreview
@@ -144,8 +145,6 @@ class SetWishStatusFragment(
         }
         viewState.wish?.let { wish ->
             onChangeStatusListener?.invoke(wish)
-//            val c: ConstraintLayout? = activity?.findViewById(com.aptenobytes.bob.R.id.navHostActivityContainer)
-//            c?.let { Snackbar.make(it, "Status changed!", Snackbar.LENGTH_LONG) }?.show()
             val rootView: View? = activity?.window?.decorView?.findViewById(android.R.id.content)
             rootView?.snack(message = "Status changed!", length = Snackbar.LENGTH_LONG) {
                 this.view.setBackgroundColor(ContextCompat.getColor(requireContext(), com.aptenobytes.bob.R.color.faded_green))

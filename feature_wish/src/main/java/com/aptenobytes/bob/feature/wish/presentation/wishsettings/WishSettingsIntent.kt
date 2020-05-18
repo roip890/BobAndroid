@@ -7,4 +7,5 @@ sealed class WishSettingsIntent : BaseIntent {
     object GetDepartmentsListIntent : WishSettingsIntent()
     object GetWishSettingsIntent : WishSettingsIntent()
     class SetWishSettingsIntent(val wishSettings: WishSettingsDomainModel) : WishSettingsIntent()
+    class SubmitWishSettingsIntent(val wishSettings: WishSettingsDomainModel) : WishSettingsIntent()
 }

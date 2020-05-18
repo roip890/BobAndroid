@@ -92,8 +92,8 @@ internal fun WishRoomDataModel.toDomainModel(): WishDomainModel {
         status = status,
         isFavorite = this.isFavorite,
 
-        departments = departments ?: listOf(),
-        elements = elements ?: listOf()
+        departments = departments,
+        elements = elements
     )
 }
 
@@ -124,8 +124,8 @@ internal fun WishDomainModel.toRoomModel(): WishRoomDataModel {
         status = status,
         isFavorite = this.isFavorite,
 
-        departments = departments ?: listOf(),
-        elements = elements ?: listOf()
+        departments = departments,
+        elements = elements
     )
 }
 

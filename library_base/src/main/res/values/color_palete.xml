@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="outer_space">#2B2E30</color>
+    <color name="shark">#1A1E21</color>
+    <color name="mine_shaft">#3D3D3D</color>
+    <color name="red_orange">#FB3430</color>
+    <color name="white">#FFFFFF</color>
+
+    <!--    blue-->
+    <color name="dark_blue">#051923</color>
+
+    <!--    gray-->
+    <color name="light_gray">#f0f2f1</color>
+
+    <!--    sea-->
+    <color name="sea_5">#014c77</color>
+    <color name="sea_4">#078cb8</color>
+    <color name="sea_3">#05a8c0</color>
+    <color name="sea_2">#44c1c3</color>
+    <color name="sea_1">#76e7e1</color>
+
+    <!--    sun-->
+    <color name="sun_5">#f6e74e</color>
+    <color name="sun_4">#f7e96d</color>
+    <color name="sun_3">#f7ee93</color>
+    <color name="sun_2">#f7eea9</color>
+    <color name="sun_1">#f7f2bb</color>
+
+    <!--    status-summer-->
+    <color name="summer_red">#f6826f</color>
+    <color name="summer_orange">#f4a05a</color>
+    <color name="summer_yellow">#f3d753</color>
+    <color name="summer_green">#68c999</color>
+    <color name="summer_blue">#536698</color>
+
+    <!--    status-faded-->
+    <color name="faded_red">#d44d54</color>
+    <color name="faded_orange">#e4812a</color>
+    <color name="faded_yellow">#ebd67b</color>
+    <color name="faded_green">#63c17b</color>
+    <color name="faded_blue">#258385</color>
+
+</resources>

@@ -49,6 +49,14 @@ fun <T> Form.label(
     return addFormElement(TextViewElement<T>(tag = tag, initialValue = initialValue, viewValue = viewValue, parseValue = parseValue).apply(init))
 }
 
+fun Form.phone(
+    tag: Int = -1,
+    initialValue: String? = null,
+    init: PhoneElement.() -> Unit = {}
+): PhoneElement {
+    return addFormElement(PhoneElement(tag = tag, initialValue = initialValue).apply(init))
+}
+
 fun Form.datetime(
     tag: Int = -1,
     initialValue: Date? = null,
